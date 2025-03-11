@@ -175,7 +175,58 @@ main{
      color:red;
      font-weight:bold;
      font-size:20px;
-   }   
+   }
+      .container{
+      background-color:#fff;
+      height:65px;
+    }
+    .container ul li{
+      padding-left:5px;
+      width:100%;
+      font-size:22px;
+      color:#fff;
+      list-style-type:none;
+      font-weight:bolder;
+      text-transform:uppercase;
+      animation: light 1s linear 0s infinite normal;
+    }
+    @keyframes light{
+      0%{
+        color: #fff;
+        text-shadow:0;
+      }
+      80%{
+        color: #fff;
+        text-shadow:0;
+      }
+      100%{
+        color:#00d7ff;
+        text-shadow: 2px 2px 5px #9000ff;
+      }
+    } 
+        .container ul li:nth-child(1){
+          animation-delay:0s;
+        }
+        .container ul li:nth-child(2){
+          animation-delay:0.3s;
+        }        
+        .container ul li:nth-child(3){
+          animation-delay:0.5s;
+        }
+        .container ul li:nth-child(4){
+          animation-delay:0.7s;
+        }        
+        .container ul li:nth-child(5){
+          animation-delay:0.9s;
+        }     
+        
+    .container ul{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:100%;
+      height: 100%;
+    }
  </style>
  <title>B.Tech [AI and ML]</title>
 </head>
@@ -183,7 +234,21 @@ main{
   <div id="function">
    <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
    <div class="hd">AI & ML 2025</div>
-   <div class="loader"></div> 
+   <!--<div class="loader"></div>-->
+   <div class="container">
+    <ul>
+      <li>A</li>
+      <li>I</li>
+      <li>&</li>
+      <li>M</li>
+      <li>L</li>
+      <li>-</li>
+      <li>2</li>
+      <li>0</li>
+      <li>2</li>
+      <li>5</li>
+    </ul>
+   </div>
   </div>
   <h2 class="heading">Bachelor of Technology , CSE</h2>
   <marquee class="welcome" behavior="normal" direction="left" scrollamount="8" onmouseover="stop"onmouseout="start">🔥 Welcome to  Artificial Intelligence & Machine Learning Portal 🔥 </marquee>
