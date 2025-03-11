@@ -115,12 +115,75 @@ main{
   img{
     margin-top:5px;
   }
+  .loader {
+            width:50px;
+            height:50px;
+            border-radius:50%;
+            border: 8px solid transparent;
+            border-top-color: #ff0055;
+            border-bottom-color: #00ffcc;
+            border-left-color: #ffcc00;
+            border-right-color: #6600ff;
+            animation: spin 1s linear infinite, colorChange 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes colorChange {
+            0% {
+                border-top-color: #ff0055;
+                border-bottom-color: #00ffcc;
+                border-left-color: #ffcc00;
+                border-right-color: #6600ff;
+            }
+            25% {
+                border-top-color: #00ffcc;
+                border-bottom-color: #6600ff;
+                border-left-color: #ff0055;
+                border-right-color: #ffcc00;
+            }
+            50% {
+                border-top-color: #6600ff;
+                border-bottom-color: #ff0055;
+                border-left-color: #00ffcc;
+                border-right-color: #ffcc00;
+            }
+            75% {
+                border-top-color: #ffcc00;
+                border-bottom-color: #ff0055;
+                border-left-color: #6600ff;
+                border-right-color: #00ffcc;
+            }
+            100% {
+                border-top-color: #ff0055;
+                border-bottom-color: #00ffcc;
+                border-left-color: #ffcc00;
+                border-right-color: #6600ff;
+            }
+        }
+   #function{
+     display:flex;
+     align-items:center;
+     align-content:center;
+     justify-content:space-between;
+     margin-right:10px;
+   }
+   .hd{
+     color:red;
+     font-weight:bold;
+     font-size:20px;
+   }   
  </style>
  <title>B.Tech [AI and ML]</title>
 </head>
 <body>
-  <div>
+  <div id="function">
    <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
+   <div class="hd">AI & ML 2025</div>
+   <div class="loader"></div> 
   </div>
   <h2 class="heading">Bachelor of Technology , CSE</h2>
   <marquee class="welcome" behavior="normal" direction="left" scrollamount="8" onmouseover="stop"onmouseout="start">🔥 Welcome to  Artificial Intelligence & Machine Learning Portal 🔥 </marquee>
