@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Login Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #6b6bff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin: 0;
+        }
+        .login-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+        }
+        input:hover{
+          border:2px solid orange;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>AI & ML Login Portal</h2>
+        <input type="text" id="username" placeholder="Enter Username">
+        <input type="text" id="idNumber" placeholder="Enter Registration No. or Roll No.">
+        <button onclick="validateLogin()">Login</button>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <script>
+        const users = {
+             "DEVESH CHAK": { reg: "2418380249", roll: "2411001" },
+            "PRIYANSHU": { reg: "2418380250", roll: "2411002" },
+            "AKSHAT": { reg: "2418380246", roll: "2411003" },
+            "PIYUSH BHARDWAJ": { reg: "2418380251", roll: "2411004" },
+            "AMAN KUMAR": { reg: "2418380252", roll: "2411005" },
+            "AASHISH AYAN": { reg: "2418380253", roll: "2411006" },
+            "MUSKAN": { reg: "2418380254", roll: "2411007" },
+            "KHUSHI NEHRA": { reg: "2418380255", roll: "2411008" },
+            "JATIN KUMAR": { reg: "2418380256", roll: "2411009" },
+            "YASH DUTT SATI": { reg: "2418380257", roll: "2411010" },
+            "PRIYANSHU": { reg: "2418380258", roll: "2411011" }, 
+            "SIMON": { reg: "2418380259", roll: "2411012" },
+            "KARTIK YADAV": { reg: "2418380260", roll: "2411013" },
+            "PAVITRA": { reg: "2418380261", roll: "2411014" },
+            "VANSH": { reg: "2418380262", roll: "2411015" },
+            "SHRUTI DHARIWAL": { reg: "2418380263", roll: "2411016" },
+            "YASH": { reg: "2418380264", roll: "2411017" },
+            "RICHARD JOSHUA": { reg: "2418380265", roll: "2411018" },
+            "TEENA PARMAR": { reg: "2418380266", roll: "2411019" },
+            "MUKUL": { reg: "2418380267", roll: "2411020" },
+            "PREETI KUMARI": { reg: "2418380268", roll: "2411021" },
+            "SHIVAM": { reg: "2418380269", roll: "2411022" },
+            "HIMANSHU YADAV": { reg: "2418380270", roll: "2411023" },
+            "KARTIKAY": { reg: "2418380271", roll: "2411024" },
+            "RITU YADAV": { reg: "2418380272", roll: "2411025" },
+            "SUNIL KUMAR": { reg: "2418380273", roll: "2411026" },
+            "JATIN": { reg: "2418380274", roll: "2411027" },
+            "SUMIT": { reg: "2418380275", roll: "2411028" },
+            "DIPONWALI": { reg: "2418380276", roll: "2411029" },
+            "DIVYA RAJ": { reg: "2418380277", roll: "2411030" },
+            "VIPUL KUMAR": { reg: "2418380278", roll: "2411031" },
+            "RAVI KUMAR": { reg: "2418380279", roll: "2411032" },
+            "SAUMYA ASHUTOSH KUMAR": { reg: "2418380280", roll: "2411033" },
+            "BARU": { reg: "2418380281", roll: "2411034" },
+            "ISHDEEP VERMA": { reg: "2418380282", roll: "2411035" },
+            "SAHIL BHAYRE": { reg: "2418380283", roll: "2411036" },
+            "PANKAJ KUMAR": { reg: "2418380284", roll: "2411037" },
+            "MADHAV CHAWLA": { reg: "2418380285", roll: "2411038" },
+            "NISHA RANI": { reg: "2418380286", roll: "2411039" }
+            "HANSHU MOHMED": { reg: "2418380287", roll: "2411040" },
+            "ARYAN JANGRA": { reg: "2418380288", roll: "2411041" },
+            "PARINEETA SAINI": { reg: "2418380289", roll: "2411042" },
+            "DIVYANSH": { reg: "2418380290", roll: "2411043" },
+            "DUSHYANT KASHYAP": { reg: "2418380291", roll: "2411044" },
+            "SONAL POONIA": { reg: "2418380293", roll: "2411046" },
+            "HRITIK RATHEE": { reg: "2418380294", roll: "2411047" },
+            "NITIN": { reg: "2418380295", roll: "2411048" },
+            "AARADHYA": { reg: "2418380297", roll: "2411050" },
+            "VINEET": { reg: "2418380298", roll: "2411051" },
+            "AASHISH": { reg: "2418380299", roll: "2411052" },
+            "MEHAK GUPTA": { reg: "2418380300", roll: "2411053" },
+            "VISHAL RUHIL": { reg: "2418380301", roll: "2411054" },
+            "PRATIK": { reg: "2418380302", roll: "2411055" },
+            "KANISHK": { reg: "2418380303", roll: "2411056" },
+            "PRANJAL": { reg: "2418380304", roll: "2411057" },
+            "GAGANDEEP CHAUDHARY": { reg: "2418380305", roll: "2411058" },
+            "HARIKESH SINGH": { reg: "2418380306", roll: "2411059" },
+            "MD SHAHID": { reg: "2418380307", roll: "2411060" },
+            "PRINCE MANGLA": { reg: "2418380308", roll: "2411061" },
+            "KUNAL VATS": { reg: "2418380309", roll: "2411062" },
+            "VINAY KUMAR": { reg: "2418380310", roll: "2411063" },
+            "DHRUV": { reg: "2418380311", roll: "2411064" },
+            "LAKSH MUNJAL": { reg: "2418380312", roll: "2411065" },
+            "UDAY AGGARWAL": { reg: "2418380313", roll: "2411066" },
+            "PRINCE PAREEK": { reg: "2418380314", roll: "2411067" },
+            "SUHAIL KHAN": { reg: "2418380315", roll: "2411068" },
+            "ASHISH HOODA": { reg: "2418380316", roll: "2411069" },
+            "PRANEEL KOUL": { reg: "2418380317", roll: "2411070" },
+            "SUNAKSHI PIKHEN": { reg: "2418380318", roll: "2411073" },
+            "KUNAL PANOTRA": { reg: "2418380319", roll: "2411074" },
+            "ANMOL VERMA": { reg: "2418380320", roll: "2411075" },
+            "SUMIT KUMAR": { reg: "2418380321", roll: "2411076" }
+        };
+
+        function validateLogin() {
+            const username = document.getElementById("username").value.trim().toUpperCase();
+            const idNumber = document.getElementById("idNumber").value.trim();
+            const errorMessage = document.getElementById("error-message");
+
+            errorMessage.textContent = "";
+
+            if (!username || !idNumber) {
+                errorMessage.textContent = "Username and Registration No. / Roll No. are required.";
+                return;
+            }
+
+            if (users[username] && (users[username].reg === idNumber || users[username].roll === idNumber)) {
+                window.location.href = "AIML.html";
+            } else {
+                errorMessage.textContent = "Invalid credentials. Please try again.";
+            }
+        }
+    </script>
+
+</body>
+</html>
