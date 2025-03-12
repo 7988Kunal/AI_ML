@@ -1,344 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet"href="https://icons8.com/icons/set/menu-bar">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    *{
-      margin:0;
-      padding:0;
-    }
-    .heading{
-      height:60px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      align-content:center;
-      text-align:center;
-      /*margin-top:10px;*/
-      background:linear-gradient(green,blue);
-      color:#fff;
-    }
-    .welcome{
-      animation: welcome 0.4s linear 0s infinite normal;
-      font-size:17px;
-      margin-top:5px;
-      margin-bottom:5px;
-    }
-    @keyframes welcome{
-  0%{
-    color:transparent;
-  -webkit-text-stroke: 1.5px #28a745;
-  }
-  50%{
-    color:transparent;
-  -webkit-text-stroke: 1.5px blue;
-  }
-100%{
-  color:transparent;
-  -webkit-text-stroke: 1.5px #dc3545;
-  }
-}
-.info{
-  padding:5px;
-  /*height:340px;*/
-  background-color:#fff;
-  border-radius:10px;
-  margin:5px;
-  border:1px solid gray;
-  box-shadow:2px 2px 4px 2px #9ec9fb6d;
-}
-h3{
-  margin-top:10px;
-  color:rgb(139,3,3);
-}
-h4 a{
-  text-decoration:none;
-  margin-left:10px;
-}
-.imp{
-  padding:5px;
-  /*height:220px;*/
-  background-color:#fff;
-  border-radius:10px;
-  margin:5px;
-  border:1px solid gray;
-  box-shadow:2px 2px 4px 2px #9ec9fb6d;
-}
-#sub{
-   color:rgba(5,59,77,0.822);
-}
-#sub:hover{
-  font-size:17px;
-  color:red;
-  text-decoration:underline;
-}
-.announcement{
-  padding:5px;
-  /*height:110px;*/
- /* background:linear-gradient(green,white,orange);*/
- background-color:#fff;
-  border-radius:10px;
-  margin:5px;
-  border:1px solid gray;
-  box-shadow:2px 2px 4px 2px #9ec9fb6d;
-}
-header{
-  font-size:18px;
-  color:darkred;
-  font-weight:bold;
-  margin-top:5px;
-}
-.foot{
-  height:20px;
-  background:linear-gradient(green,white,orange);
-  border-radius:0px;
-  border:1px solid;
-  box-shadow:2px 2px 4px 2px #9ec9fb6d;
-}
-footer{
-  background-color:#000;
-  padding:5px;
-  height:150px;
-  color:#fff;
-}
-.disclaimer{
-  color:#fff;
-  margin-bottom:5px;
-}
-main{
-  color:rgb(8,116,194);
-}
-  img{
-    margin-top:5px;
-  }
-  .loader {
-            width:50px;
-            height:50px;
-            border-radius:50%;
-            border: 8px solid transparent;
-            border-top-color: #ff0055;
-            border-bottom-color: #00ffcc;
-            border-left-color: #ffcc00;
-            border-right-color: #6600ff;
-            animation: spin 1s linear infinite, colorChange 2s linear infinite;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
-
-        @keyframes colorChange {
-            0% {
-                border-top-color: #ff0055;
-                border-bottom-color: #00ffcc;
-                border-left-color: #ffcc00;
-                border-right-color: #6600ff;
-            }
-            25% {
-                border-top-color: #00ffcc;
-                border-bottom-color: #6600ff;
-                border-left-color: #ff0055;
-                border-right-color: #ffcc00;
-            }
-            50% {
-                border-top-color: #6600ff;
-                border-bottom-color: #ff0055;
-                border-left-color: #00ffcc;
-                border-right-color: #ffcc00;
-            }
-            75% {
-                border-top-color: #ffcc00;
-                border-bottom-color: #ff0055;
-                border-left-color: #6600ff;
-                border-right-color: #00ffcc;
-            }
-            100% {
-                border-top-color: #ff0055;
-                border-bottom-color: #00ffcc;
-                border-left-color: #ffcc00;
-                border-right-color: #6600ff;
-            }
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
         }
-   #function{
-     display:flex;
-     align-items:center;
-     align-content:center;
-     justify-content:space-between;
-     /*margin-right:10px;*/
-   }
-   .hd{
-     color:red;
-     font-weight:bold;
-     font-size:20px;
-   }
-      .container{
-      background-color:#fff;
-      height:65px;
-    }
-    .container ul li{
-      padding-left:5px;
-      width:100%;
-      font-size:22px;
-      color:#fff;
-      list-style-type:none;
-      font-weight:bolder;
-      text-transform:uppercase;
-      animation: light 1s linear 0s infinite normal;
-    }
-    @keyframes light{
-      0%{
-        color: #fff;
-        text-shadow:0;
-      }
-      80%{
-        color: #fff;
-        text-shadow:0;
-      }
-      100%{
-        color:#00d7ff;
-        text-shadow: 2px 2px 5px #9000ff;
-      }
-    } 
-       .container ul li:nth-child(1){
-          animation-delay:0s;
-         }
-        .container ul li:nth-child(2){
-          animation-delay:0.3s;
-        }        
-        .container ul li:nth-child(3){
-          animation-delay:0.5s;
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
         }
-        .container ul li:nth-child(4){
-          animation-delay:0.7s;
-        }        
-        .container ul li:nth-child(5){
-          animation-delay:0.9s;
-        }   
-        
-    .container ul{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      width:100%;
-      height: 100%;
-    }
- </style>
- <title>B.Tech [AI and ML]</title>
+        .btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: #ff0000;
+            font-size: 14px;
+            display: none;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div id="function">
-   <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
-   <div class="hd">AI & ML 2025</div>
- <!--<div class="container">
-    <ul>
-      <li>A</li>
-      <li>I</li>
-      <li>&</li>
-      <li>M</li>
-      <li>L</li>
-      <li>-</li>
-      <li>2</li>
-      <li>0</li>
-      <li>2</li>
-      <li>5</li>
-    </ul>
-   </div>-->
-   <div class="loader"></div>
-  </div>
-  <h2 class="heading">Bachelor of Technology , CSE</h2>
-  <marquee class="welcome" behavior="normal" direction="left" scrollamount="8" onmouseover="stop"onmouseout="start">🔥 Welcome to  Artificial Intelligence & Machine Learning Portal 🔥 </marquee>
-  <div class="info">
-    <h3> >>📚  B.Tech [ AI & ML ] Semester-1 << </h3>
-    <br>
-    <h4><a id="sub" href="#"> ~MATHEMATICS-I~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~BEE (Basic Electrical Engineering)~</a></h4>
-    <br>
-    <h4><a id="sub"href="#"> ~PHYSICS~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~ED (Enginerring Drawing)~</a></h4>
-    <br>
-    <h4><a id="sub"href="#"> ~PHYSICS-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~ED-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~BEE (Basic Electrical Engineering )-LAB~</a></h4>
-    <br>
-  </div>
-  <br>
-  <div class="info">
-    <h3> >>📚  B.Tech [ AI & ML ] Semester-2 << </h3>
-    <br>
-    <h4><a id="sub" href="https://jmp.sh/k2xu36As"> ~MATHEMATICS-II~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~PPS (programming Problem Solving)~</a></h4>
-    <br>
-    <h4><a id="sub"href="Maintenance.html"> ~CHEMISTRY~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~WORK SHOP~</a></h4>
-    <br>
-    <h4><a id="sub"href="#"> ~CHEMISTRY-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~WORK SHOP-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~PPS (programming Problem Solving)-LAB~</a></h4>
-    <br>
-  </div>
-  <br>
-  <div class="info">
-    <h3> >> 📜 AI & ML Sem-1 Exam Papers << </h3>
-    <br>
-    <h4><a id="sub" href="https://jmp.sh/s/VRLIdl5zlrzNUbatss3M"> ~MATHEMATICS-I~</a></h4>
-    <br>
-    <h4><a id="sub"href="https://jmp.sh/s/q142wLQroa5gLRpUPBfi">~PHYSICS~</a></h4>
-    <br>
-    <h4><a id="sub"href="https://jmp.sh/s/QfvWWOHr5fh9tpN5V4XQ"> ~ENGLISH~</a></h4>
-    <br>
-    <h4><a id="sub"href="https://jmp.sh/s/qnBl32BNxroEkIIaRrj1">~BEE (Basic Electrical Enginerring )~</a></h4>
-    <br>
-  </div>
-  <br>    
-  <div class="imp">
-    <h3> >>🔗 Important Links << </h3>
-    <br>
-    <h4><a href="https://mdu.ac.in/default.aspx">~MDU,Rohtak~</a></h4>
-    <br>
-    <h4><a href="https://mdu.samarth.edu.in/index.php/site/login">~MDU Samarth Portal~</a></h4>
-    <br>
-    <h4><a href="https://student.mdu.ac.in/">~MDU Student Portal~</a></h4>
-    <br>
-    <h4><a href="https://result.mdurtk.in/postexam/result.aspx">~MDU Result ,Rohtak~</a></h4>
-    <br>
-  </div>
-  <br>
-  <div class="announcement">
-    <header>****Important Announcements****</header>
-    <br>
-    <h4 id="sub">~~Only Mathematics-II Syllabus is accessible~~</h4> 
-    <!-- <br>
-    <h4 id="sub">~~BEE paper is unavailable~~</h4>-->
-    <br>
-  </div>
-  <br>
-  <div class="info">
-   <h3> >> Explore New Features << </h3>
-   <br>
-   <h4><a href="https://www.blackbox.ai/">~Black Box AI~</a></h4>
-   <br>
-  </div>
-  <br>       
-  <footer>
-    <h3 class="disclaimer">Disclaimer</h3>
-    <p>This site is used for education purpose and providing Important data or information only not for other means.</p>
-    <br>
-    <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak</main>
-  </footer>
-  <div class="foot"></div>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
- </body>
+    <div class="container">
+        <h2>AI & ML Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Enter Username" required>
+            <p class="error" id="userError">Username must be at least 3 characters</p>
+            <input type="text" id="rollNumber" placeholder="Enter Roll Number" required>
+            <p class="error" id="rollError">Roll number must be between 2411001 and 2411076</p>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value.trim();
+            let rollNumber = document.getElementById("rollNumber").value.trim();
+            let userError = document.getElementById("userError");
+            let rollError = document.getElementById("rollError");
+
+            userError.style.display = "none";
+            rollError.style.display = "none";
+
+            if (username.length < 3) {
+                userError.style.display = "block";
+                return;
+            }
+
+            if (!/^\d{7}$/.test(rollNumber) || rollNumber < "2411001" || rollNumber > "2411076") {
+                rollError.style.display = "block";
+                return;
+            }
+
+            window.location.href = "AIML.html";
+        });
+    </script>
+</body>
 </html>
