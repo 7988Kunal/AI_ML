@@ -10,17 +10,14 @@
     *{
       margin:0;
       padding:0;
-    }
-    .heading{
-      height:60px;
-      display:flex;
-      align-items: center;
-      justify-content:center;
-      align-content:center;
-      text-align:center;
-      /*margin-top:10px;*/
-      background:linear-gradient(green,blue);
-      color:#fff;
+    } 
+  .heading {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 15px;
+      background: linear-gradient(to right, #28a745, #007bff);
+      color: white;
     }
     .welcome{
       animation: welcome 0.4s linear 0s infinite normal;
@@ -53,11 +50,19 @@
 }
 h3{
   margin-top:10px;
-  color:rgb(139,3,3);
+  color:red;
 }
 h4 a{
+  font-weight:lighter;
+  color:#fff;
   text-decoration:none;
   margin-left:10px;
+}
+h4{
+  border-radius:5px;
+  font-size:16px;
+  padding:15px;
+ background-color:green; 
 }
 .imp{
   padding:5px;
@@ -69,13 +74,14 @@ h4 a{
   box-shadow:2px 2px 4px 2px #9ec9fb6d;
 }
 #sub{
-   color:rgba(5,59,77,0.822);
+  /* color:rgba(5,59,77,0.822);*/
+  color:#fff;
 }
-#sub:hover{
-  font-size:17px;
-  color:red;
+/*#sub:hover{
+   font-size:17px;
+   color:red;
   text-decoration:underline;
-}
+}*/
 .announcement{
   padding:5px;
  /* height:110px;*/
@@ -88,7 +94,7 @@ h4 a{
 }
 header{
   font-size:18px;
-  color:darkred;
+  color:red;
   font-weight:bold;
   margin-top:5px;
 }
@@ -231,11 +237,69 @@ img{
       width:100%;
       height: 100%;
     }
+    
+      .news-item {
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .news-title {
+            background: #0078D7;
+            color: white;
+            padding: 15px;
+            font-size:16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-title:hover {
+            background: #005bb5;
+        }
+        .news-content {
+            display: none;
+            padding:10px;
+            font-size: 16px;
+            background: #fff;
+            color: #333;
+            border-top: 1px solid #ddd;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .expanded .arrow {
+            transform: rotate(180deg);
+        }
+    #exam{
+      padding:15px;
+      background:linear-gradient(rgb(11,219,247),rgb(11,247,173));
+      font-size:16px;
+      color:#fff;
+      border-radius:5px;
+    }
+    #exam a{
+      font-weight:bold;
+    }
+    #sub0{
+      padding:15px;
+      background-color:#ec7704;
+      font-size:16px;
+      color:#fff;
+      border-radius:5px;
+    }
  </style>
  <title>B.Tech [AI and ML]</title>
 </head>
 <body>
-  <div id="function">
+  <!-- Search Bar -->
+<div style="text-align:center; margin: 15px;">
+    <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="🔍 Search here..." 
+           style="width: 80%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid gray;">
+</div>
+ <!--<div id="function">
    <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
   <!-- <div class="container">
      <ul>
@@ -251,64 +315,162 @@ img{
       <li>5</li>
     </ul>
   </div>-->
-  <div class="hd">AI & ML 2025</div>
-   <div class="loader"></div>
-  </div>
+<!--<div class="hd">AI & ML 2025</div>
+    <div class="loader"></div>
+   </div>-->
   <h2 class="heading">Bachelor of Technology , CSE</h2>
   <marquee class="welcome" behavior="normal" direction="left" scrollamount="8" onmouseover="stop"onmouseout="start">🔥 Welcome to  Artificial Intelligence & Machine Learning Portal 🔥 </marquee>
   <div class="info">
-    <h3> >>📚  B.Tech [ AI & ML ] Semester-1 << </h3>
+    <h3>📚  B.Tech [ AI & ML ] Semester-1</h3>
     <br>
-    <h4><a id="sub" href="#"> ~MATHEMATICS-I~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~BEE (Basic Electrical Engineering )~</a></h4>
-    <br>
-    <h4><a id="sub"href="Maintenance.html"> ~PHYSICS~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~ENGLISH~</a></h4>
-    <br>
-    <h4><a id="sub"href="#"> ~PHYSICS-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~ED (Engineering Graphics & Drawing-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~BEE (Basics Electrical Engineering)-LAB~</a></h4>
-    <br>
+    <div class="news-item">
+            <div class="news-title">
+                MATHEMATICS-I <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub" href="#"> ~MATHEMATICS-I~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              BEE (Basic Electrical Enginerring )<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+               <!-- <h4><a id="sub"href="#">~BEE (Basic Electrical Enginerring )~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              ENGLISH <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#"> ~ENGLISH~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+                PHYSICS<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#">~PHYSICS~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              PHYSICS-LAB<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!-- <h4><a id="sub"href="#"> ~PHYSICS-LAB~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              ED (Engineering Graphics & Drawing)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~ED (Engineering Graphics & Drawing)-LAB~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+              BEE (Basics Electrical Engineering)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~BEE (Basics Electrical Engineering)-LAB~</a></h4>-->
+            </div>
+        </div>
+      <br>
   </div>
   <br>
   <div class="info">
-    <h3> >>📚  B.Tech [ AI & ML ] Semester-2 << </h3>
+    <h3>📚  B.Tech [ AI & ML ] Semester-2</h3>
     <br>
-    <h4><a id="sub" href="https://jmp.sh/k2xu36As"> ~MATHEMATICS-II~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~PPS (programming Problem Solving)~</a></h4>
-    <br>
-    <h4><a id="sub"href="Maintenance.html"> ~CHEMISTRY~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~WORK SHOP~</a></h4>
-    <br>
-    <h4><a id="sub"href="#"> ~CHEMISTRY-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~WORK SHOP-LAB~</a></h4>
-    <br>
-    <h4><a id="sub"href="#">~PPS (programming Problem Solving)-LAB~</a></h4>
-    <br>
+    <div class="news-item">
+            <div class="news-title">
+                MATHEMATICS-II <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+                <h4><a id="sub" href="https://jmp.sh/k2xu36As"> ~MATHEMATICS-II Part-1~</a></h4>
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              PPS (programming Problem Solving)<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+               <!-- <h4><a id="sub"href="#">~PPS (programming Problem Solving)~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              CHEMISTRY <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#"> ~CHEMISTRY~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+                WORK SHOP<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#">~WORK SHOP~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              CHEMISTRY-LAB<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!-- <h4><a id="sub"href="#"> ~CHEMISTRY-LAB~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              WORK SHOP-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~WORK SHOP-LAB~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+              PPS (programming Problem Solving)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~PPS (programming Problem Solving)-LAB~</a></h4>-->
+            </div>
+        </div>
+      <br>
   </div>
   <br>
   <div class="info">
-    <h3> >> AI & ML Sem-1 Exam Papers << </h3>
+    <h3>  AI & ML Sem-1 Exam Papers</h3>
     <br>
-    <h4><a id="sub" href="https://jmp.sh/s/VRLIdl5zlrzNUbatss3M"> ~MATHEMATICS-I~</a></h4>
+    <h4 id="exam"><a id="sub" href="https://jmp.sh/s/VRLIdl5zlrzNUbatss3M"> ~MATHEMATICS-I~</a></h4>
     <br>
-    <h4><a id="sub"href="https://jmp.sh/s/q142wLQroa5gLRpUPBfi">~PHYSICS~</a></h4>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/s/q142wLQroa5gLRpUPBfi">~PHYSICS~</a></h4>
     <br>
-    <h4><a id="sub"href="https://jmp.sh/s/QfvWWOHr5fh9tpN5V4XQ"> ~ENGLISH~</a></h4>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/s/QfvWWOHr5fh9tpN5V4XQ"> ~ENGLISH~</a></h4>
     <br>
-    <h4><a id="sub"href="https://jmp.sh/2y2Rv06m">~BEE (Basic Electrical Enginerring )~</a></h4>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/2y2Rv06m">~BEE (Basic Electrical Enginerring )~</a></h4>
     <br>
   </div>
   <br>
   <div class="imp">
-    <h3> >>🔗 Important Links << </h3>
+    <h3>🔗 Important Links</h3>
     <br>
     <h4><a href="https://mdu.ac.in/default.aspx">~MDU,Rohtak~</a></h4>
     <br>
@@ -321,16 +483,16 @@ img{
   </div>
   <br>
   <div class="announcement">
-    <header>****Important Announcements****</header>
+    <header>📢 Important Announcements</header>
     <br>
-    <h4 id="sub">~~Only Mathematics-II Syllabus is accessible~~</h4>
+    <h4 id="sub0">~~Only Mathematics-II Syllabus is accessible~~</h4>
     <br>
   </div>
-  <br>
-  <div class="info">
-    <h3> >> Explore New Features  << </h3>
     <br>
-    <h4><a id="sub" href="https://www.blackbox.ai"> ~Black Box AI~</a></h4>
+  <div class="info">
+    <h3>  Explore New Features</h3>
+    <br>
+    <h4 id="exam"><a id="sub" href="https://www.blackbox.ai"> ~Black Box AI~</a></h4>
     <br>
   </div>
   <br>
@@ -340,7 +502,50 @@ img{
     <br>
     <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak</main>
   </footer>
-  <div class="foot"></div>
+  <!--<div class="foot"></div>-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+   document.querySelectorAll(".news-title").forEach(item => {
+            item.addEventListener("click", function() {
+                let content = this.nextElementSibling;
+                let parent = this.parentElement;
+                
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    parent.classList.remove("expanded");
+                } else {
+                    document.querySelectorAll(".news-content").forEach(sec => sec.style.display = "none");
+                    document.querySelectorAll(".news-item").forEach(item => item.classList.remove("expanded"));
+                    
+                    content.style.display = "block";
+                    parent.classList.add("expanded");
+                }
+            });
+        });
+  </script>
+  <script>
+function searchFunction() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let items = document.querySelectorAll('.news-item, .info, .imp, .announcement, h4, h3');
+
+    items.forEach(item => {
+        let text = item.innerText.toLowerCase();
+        if (text.includes(input)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
+
+    // Ensure sections with visible items remain visible
+    document.querySelectorAll('.info, .imp, .announcement').forEach(section => {
+        if (section.querySelectorAll('h4[style="display: block;"]').length > 0) {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    });
+}
+</script>
 </body>
 </html>
