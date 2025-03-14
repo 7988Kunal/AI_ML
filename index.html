@@ -58,7 +58,7 @@
     </style>
 </head>
 <body>
-
+ 
     <div class="login-container">
         <h2>AI & ML Login Portal</h2>
         <input type="text" id="username" placeholder="Username / Registration No. / Roll No.">
@@ -149,7 +149,7 @@
             errorMessage.textContent = "";
 
             if (username.length < 3) {
-                errorMessage.textContent = "Username must be at least 3 characters long.";
+                errorMessage.textContent = "Username / Registration no./Roll no. cannot be blank";
                 return;
             }
 
