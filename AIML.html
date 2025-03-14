@@ -323,15 +323,131 @@ img{
      background-color:#0000008f;
      color:#fff;
    }
+           /* Google-like colors */
+        :root {
+            --blue: #4285F4;
+            --red: #EA4335;
+            --yellow: #FBBC05;
+            --green: #34A853;
+            --white: #ffffff;
+            --black: #202124;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Search bar container */
+        .search-container {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--blue);
+            border-radius: 25px;
+            padding: 8px;
+            background: var(--white);
+            transition: 0.3s;
+            width: 50%;
+            min-width: 300px;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: var(--blue);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--red);
+        }
+
+        /* Hidden results section */
+        #results {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: var(--black);
+            margin-top: 20px;
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: var(--red);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .search-box {
+                width: 80%;
+            }
+        }
  </style>
  <title>B.Tech (AI and ML)</title>
 </head>
 <body>
   <!-- Search Bar -->
-<div style="text-align:center; margin: 15px;">
+<!--<div style="text-align:center; margin: 15px;">
     <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="🔍 Search here..." 
            style="width: 80%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid gray;">
-</div>
+</div>-->
+    <!-- Search Bar at the Top -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search AI & ML topics...">
+            <button onclick="performSearch()">🔍</button>
+        </div>
+    </div>
+
+    <!-- Results Section (Initially Hidden) -->
+    <div id="results"></div>
 <div class="theme">
  <li>
   <img id="dp"src="https://i.ibb.co/rG4tYC9P/file-4ckfr42v8-Pys-MKzqj-Jg-Li-K.webp" alt="file-4ckfr42v8-Pys-MKzqj-Jg-Li-K" border="0">
@@ -564,8 +680,8 @@ img{
             });
         });
   </script>
-  <script>
-function searchFunction() {
+  <!--<script>
+   function searchFunction() {
     let input = document.getElementById('searchInput').value.toLowerCase();
     let items = document.querySelectorAll('.news-item, .info, .imp, .announcement, h4, h3');
 
@@ -587,6 +703,68 @@ function searchFunction() {
         }
     });
 }
-</script>
+  </script>-->
+   <script>
+        async function performSearch() {
+            let query = document.getElementById("searchInput").value.trim();
+            let resultsDiv = document.getElementById("results");
+
+            if (query === "") {
+                resultsDiv.style.display = "none"; // Hide if empty search
+                return;
+            }
+
+            resultsDiv.style.display = "block"; // Show results section
+            resultsDiv.innerHTML = "<h1>Searching...</h1>";
+
+            // 🔍 Search within the website content
+            let siteResults = searchInPage(query);
+
+            // 🔍 Wikipedia search
+            let wikiResults = await fetchWikipediaResults(query);
+
+            // 🌍 Google search link
+            let googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}+AI+ML`;
+
+            // 🏆 Display results
+            resultsDiv.innerHTML = "<h1>Search Results:</h1>";
+            siteResults.forEach(item => {
+                resultsDiv.innerHTML += `<p><a href="${item.url}" target="_blank">${item.title}</a></p>`;
+            });
+
+            wikiResults.forEach(item => {
+                resultsDiv.innerHTML += `<p><a href="${item.url}" target="_blank">${item.title}</a></p>`;
+            });
+
+            resultsDiv.innerHTML += `<p><a href="${googleUrl}" target="_blank">See more results on Google</a></p>`;
+        }
+
+        function searchInPage(query) {
+            // Simulated site content search (Replace with actual data)
+            let siteContent = [
+                { title: "Introduction to AI", url: "ai-intro.html" },
+                { title: "Machine Learning Basics", url: "ml-basics.html" },
+                { title: "Deep Learning Concepts", url: "deep-learning.html" },
+                { title: "Neural Networks Explained", url: "neural-networks.html" }
+            ];
+
+            return siteContent.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+        }
+
+        async function fetchWikipediaResults(query) {
+            let wikiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${query}+AI+ML&format=json&origin=*`;
+
+            try {
+                let response = await fetch(wikiUrl);
+                let data = await response.json();
+                return data.query.search.map(item => ({
+                    title: item.title,
+                    url: `https://en.wikipedia.org/wiki/${item.title.replace(/ /g, "_")}`
+                }));
+            } catch (error) {
+                return [];
+            }
+        }
+    </script>
 </body>
 </html>
