@@ -282,16 +282,47 @@ img{
     }
     #exam a{
       font-weight:lighter;
-      color:black;
+      color:Black;
     }
     #sub0{
+      font-weight:400;
       padding:15px;
-      font-weight:light;
       background-color:#ec7704;
       font-size:16px;
       color:#fff;
       border-radius:5px;
     }
+   .theme{
+     background-color:#fff;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     margin:15px;
+     margin-bottom:0px;
+    /* border:1px solid;*/
+     height:70px;
+   }
+   #dp{
+     height:100%;
+     width:100%;
+     object-fit:cover;
+   }
+   .theme li{
+     list-style-type:none;
+     height:100%;
+     width:100%;
+     overflow:hidden;
+   }
+   #theme_name{
+     margin:15px;
+     margin-top:0px;
+     font-weight:300;
+     height:25px;
+     display:flex;
+     justify-content:center;
+     align-content:center;
+     align-items:center;
+     background-color:#0000008f;
+     color:#fff;
+   }
  </style>
  <title>B.Tech (AI and ML)</title>
 </head>
@@ -301,6 +332,14 @@ img{
     <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="🔍 Search here..." 
            style="width: 80%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid gray;">
 </div>
+<div class="theme">
+ <li>
+  <img id="dp"src="https://i.ibb.co/rG4tYC9P/file-4ckfr42v8-Pys-MKzqj-Jg-Li-K.webp" alt="file-4ckfr42v8-Pys-MKzqj-Jg-Li-K" border="0">
+ </li>
+</div>
+<li id="theme_name">
+    Happy Holi
+  </li>
  <!--<div id="function">
    <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
   <!-- <div class="container">
@@ -459,7 +498,7 @@ img{
   </div>
   <br>
   <div class="info">
-    <h3> 📜 AI & ML Sem-1 Exam Papers</h3>
+    <h3>  AI & ML Sem-1 Exam Papers</h3>
     <br>
     <h4 id="exam"><a id="sub" href="https://jmp.sh/s/VRLIdl5zlrzNUbatss3M"> ~MATHEMATICS-I~</a></h4>
     <br>
@@ -492,7 +531,7 @@ img{
   </div>
     <br>
   <div class="info">
-    <h3> ***Explore New Features***</h3>
+    <h3>***Explore New Features***</h3>
     <br>
     <h4 id="exam"><a id="sub" href="https://www.blackbox.ai"> ~Black Box AI~</a></h4>
     <br>
@@ -500,7 +539,7 @@ img{
   <br>
   <footer>
     <h3 class="disclaimer">Disclaimer</h3>
-    <p style="margin-left:5px;">This site is used for education purpose and providing Important data or information only not for other means.</p>
+    <p style="margin-left:10px;">This site is used for education purpose and providing Important data or information only not for other means.</p>
     <br>
     <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak</main>
   </footer>
