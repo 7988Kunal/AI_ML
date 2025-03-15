@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet"href="https://icons8.com/icons/set/menu-bar">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    *{
+      margin:0;
+      padding:0;
+    } 
+  .heading {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 15px;
+      background: linear-gradient(to right, #28a745, #007bff);
+      color: white;
+    }
+    .welcome{
+      animation: welcome 0.4s linear 0s infinite normal;
+      font-size:17px;
+      margin-top:5px;
+      margin-bottom:5px;
+    }
+    @keyframes welcome{
+  0%{
+    color:transparent;
+  -webkit-text-stroke: 1.5px #28a745;
+  }
+  50%{
+    color:transparent;
+  -webkit-text-stroke: 1.5px blue;
+  }
+100%{
+  color:transparent;
+  -webkit-text-stroke: 1.5px #dc3545;
+  }
+}
+.info{
+  padding:5px;
+ /* height:340px;*/
+  background-color:#fff;
+  border-radius:10px;
+  margin:5px;
+  border:1px solid gray;
+  box-shadow:2px 2px 4px 2px #9ec9fb6d;
+}
+h3{
+  margin-top:10px;
+  color:red;
+}
+h4 a{
+  font-weight:lighter;
+  color:#fff;
+  text-decoration:none;
+  margin-left:10px;
+}
+h4{
+  border-radius:5px;
+  font-size:16px;
+  padding:15px;
+ background-color:green; 
+}
+.imp{
+  padding:5px;
+ /* height:220px;*/
+  background-color:#fff;
+  border-radius:10px;
+  margin:5px;
+  border:1px solid gray;
+  box-shadow:2px 2px 4px 2px #9ec9fb6d;
+}
+#sub{
+  /* color:rgba(5,59,77,0.822);*/
+  color:#fff;
+}
+/*#sub:hover{
+   font-size:17px;
+   color:red;
+  text-decoration:underline;
+}*/
+.announcement{
+  padding:5px;
+ /* height:110px;*/
+ /* background:linear-gradient(green,white,orange);*/
+ background-color:#fff;
+  border-radius:10px;
+  margin:5px;
+  border:1px solid gray;
+  box-shadow:2px 2px 4px 2px #9ec9fb6d;
+}
+header{
+  font-size:18px;
+  color:red;
+  font-weight:bold;
+  margin-top:5px;
+}
+.foot{
+  height:20px;
+  background:linear-gradient(green,white,orange);
+  border-radius:0px;
+  border:1px solid;
+  box-shadow:2px 2px 4px 2px #9ec9fb6d;
+}
+footer{
+  background-color:#000;
+  padding:5px;
+  height:150px;
+  color:#fff;
+}
+.disclaimer{
+  color:#fff;
+  margin-bottom:5px;
+}
+main{
+  color:rgb(8,116,194);
+}
+img{
+  margin-top:5px;
+}
+        .loader {
+            width:50px;
+            height:50px;
+            border-radius:50%;
+            border: 8px solid transparent;
+            border-top-color: #ff0055;
+            border-bottom-color: #00ffcc;
+            border-left-color: #ffcc00;
+            border-right-color: #6600ff;
+            animation: spin 1s linear infinite, colorChange 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { 
+              transform:rotate(0deg);
+            }
+            100% {
+              transform:rotate(360deg); 
+            }
+        }
+
+        @keyframes colorChange {
+            0% {
+                border-top-color: #ff0055;
+                border-bottom-color: #00ffcc;
+                border-left-color: #ffcc00;
+                border-right-color: #6600ff;
+            }
+            25% {
+                border-top-color: #00ffcc;
+                border-bottom-color: #6600ff;
+                border-left-color: #ff0055;
+                border-right-color: #ffcc00;
+            }
+            50% {
+                border-top-color: #6600ff;
+                border-bottom-color: #ff0055;
+                border-left-color: #00ffcc;
+                border-right-color: #ffcc00;
+            }
+            75% {
+                border-top-color: #ffcc00;
+                border-bottom-color: #ff0055;
+                border-left-color: #6600ff;
+                border-right-color: #00ffcc;
+            }
+            100% {
+                border-top-color: #ff0055;
+                border-bottom-color: #00ffcc;
+                border-left-color: #ffcc00;
+                border-right-color: #6600ff;
+            }
+        }
+   #function{
+     display:flex;
+     align-items:center;
+     align-content:center;
+     justify-content:space-between;
+     margin-right:10px;
+   }
+   .hd{
+     color:red;
+     font-weight:bold;
+     font-size:20px;
+   }
+   .container{
+      background-color:#fff;
+      height:60px;
+    }
+    .container ul li{
+      padding-left:5px;
+      width:100%;
+      font-size:22px;
+      color:#fff;
+      list-style-type:none;
+      font-weight:bolder;
+      text-transform:uppercase;
+      animation: light 1s linear 0s infinite normal;
+    }
+    @keyframes light{
+      0%{
+        color: #fff;
+        text-shadow:0;
+      }
+      80%{
+        color: #fff;
+        text-shadow:0;
+      }
+      100%{
+        color:#00d7ff;
+        text-shadow: 2px 2px 5px #9000ff;
+      }
+    } 
+        .container ul li:nth-child(1){
+          animation-delay:0s;
+        }
+        .container ul li:nth-child(2){
+          animation-delay:0.3s;
+        }        
+        .container ul li:nth-child(3){
+          animation-delay:0.5s;
+        }
+        .container ul li:nth-child(4){
+          animation-delay:0.7s;
+        }        
+        .container ul li:nth-child(5){
+          animation-delay:0.9s;
+        }     
+        
+    .container ul{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:100%;
+      height: 100%;
+    }
+    
+      .news-item {
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .news-title {
+            background: #0078D7;
+            color: white;
+            padding: 15px;
+            font-size:16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-title:hover {
+            background: #005bb5;
+        }
+        .news-content {
+            display: none;
+            padding:10px;
+            font-size: 16px;
+            background: #fff;
+            color: #333;
+            border-top: 1px solid #ddd;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .expanded .arrow {
+            transform: rotate(180deg);
+        }
+    #exam{
+      padding:15px;
+      background:linear-gradient(rgb(11,219,247),rgb(11,247,173));
+      font-size:16px;
+      color:#fff;
+      border-radius:5px;
+    }
+    #exam a{
+      font-weight:lighter;
+      color:Black;
+    }
+    #sub0{
+      font-weight:400;
+      padding:15px;
+      background-color:#ec7704;
+      font-size:16px;
+      color:#fff;
+      border-radius:5px;
+    }
+   .theme{
+     background-color:#fff;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     margin:15px;
+     margin-bottom:0px;
+    /* border:1px solid;*/
+     height:70px;
+   }
+   #dp{
+     height:100%;
+     width:100%;
+     object-fit:cover;
+   }
+   .theme li{
+     list-style-type:none;
+     height:100%;
+     width:100%;
+     overflow:hidden;
+   }
+   #theme_name{
+     margin:15px;
+     margin-top:0px;
+     font-weight:300;
+     height:25px;
+     display:flex;
+     justify-content:center;
+     align-content:center;
+     align-items:center;
+     background-color:#0000008f;
+     color:#fff;
+   }
+           /* Google-like colors */
+        :root {
+            --blue: #4285F4;
+            --red: #EA4335;
+            --yellow: #FBBC05;
+            --green: #34A853;
+            --white: #ffffff;
+            --black: #202124;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Search bar container */
+        .search-container {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /*position: sticky;
+            top: 0;
+            z-index: 1000;*/
+        }
+
+        .search-box {
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            border: 2px solid var(--blue);
+            border-radius: 25px;
+            padding: 8px;
+            background: var(--white);
+            transition: 0.3s;
+            width: 50%;
+            min-width: 300px;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: var(--blue);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--red);
+        }
+
+        /* Hidden results section */
+        #results {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: var(--black);
+            margin-top: 20px;
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: var(--red);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .search-box {
+                width: 80%;
+            }
+        }
+ </style>
+ <title>B.Tech (AI and ML)</title>
+</head>
+<body>
+  <!-- Search Bar -->
+<!--<div style="text-align:center; margin: 15px;">
+    <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="🔍 Search here..." 
+           style="width: 80%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid gray;">
+</div>-->
+    <!-- Search Bar at the Top -->
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search AI & ML topics...">
+            <button onclick="performSearch()">🔍</button>
+        </div>
+    </div>
+
+    <!-- Results Section (Initially Hidden) -->
+    <div id="results"></div>
+<div class="theme">
+ <li>
+  <img id="dp"src="https://i.ibb.co/rG4tYC9P/file-4ckfr42v8-Pys-MKzqj-Jg-Li-K.webp" alt="file-4ckfr42v8-Pys-MKzqj-Jg-Li-K" border="0">
+ </li>
+</div>
+<li id="theme_name">
+    Happy Holi
+  </li>
+ <!--<div id="function">
+   <img src="https://i.ibb.co/MDF8qWjm/IMG-20250311-154515.jpg" alt="IMG-20250311-154515" border="0"height="70px"width="90px">
+  <!-- <div class="container">
+     <ul>
+      <li>A</li>
+      <li>I</li>
+      <li>&</li>
+      <li>M</li>
+      <li>L</li>
+      <li>-</li>
+      <li>2</li>
+      <li>0</li>
+      <li>2</li>
+      <li>5</li>
+    </ul>
+  </div>-->
+<!--<div class="hd">AI & ML 2025</div>
+    <div class="loader"></div>
+   </div>-->
+  <h2 class="heading">Bachelor of Technology , CSE</h2>
+  <marquee class="welcome" behavior="normal" direction="left" scrollamount="8" onmouseover="stop"onmouseout="start">🔥 Welcome to  Artificial Intelligence & Machine Learning Portal 🔥 </marquee>
+  <div class="info">
+    <h3>📚  B.Tech [ AI & ML ] Semester-1</h3>
+    <br>
+    <div class="news-item">
+            <div class="news-title">
+                MATHEMATICS-I <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub" href="#"> ~MATHEMATICS-I~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              BEE (Basic Electrical Enginerring )<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+               <!-- <h4><a id="sub"href="#">~BEE (Basic Electrical Enginerring )~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              ENGLISH <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#"> ~ENGLISH~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+                PHYSICS<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#">~PHYSICS~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              PHYSICS-LAB<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!-- <h4><a id="sub"href="#"> ~PHYSICS-LAB~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              ED (Engineering Graphics & Drawing)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~ED (Engineering Graphics & Drawing)-LAB~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+              BEE (Basics Electrical Engineering)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~BEE (Basics Electrical Engineering)-LAB~</a></h4>-->
+            </div>
+        </div>
+      <br>
+  </div>
+  <br>
+  <div class="info">
+    <h3>📚  B.Tech [ AI & ML ] Semester-2</h3>
+    <br>
+    <div class="news-item">
+            <div class="news-title">
+                MATHEMATICS-II <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+                <h4><a id="sub" href="https://jmp.sh/k2xu36As"> ~MATHEMATICS-II Part-1~</a></h4>
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              PPS (programming Problem Solving)<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+                <h4><a id="sub"href="https://jmp.sh/chxbqg3l">~PPS (programming Problem Solving) Unit-1~</a></h4>
+                <br>
+                <h4><a id="sub"href="https://jmp.sh/Fa58ovpj">~PPS (programming Problem Solving) Unit-2~</a></h4>
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              CHEMISTRY <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#"> ~CHEMISTRY~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+                WORK SHOP<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+             <!--<h4><a id="sub"href="#">~WORK SHOP~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              CHEMISTRY-LAB<span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!-- <h4><a id="sub"href="#"> ~CHEMISTRY-LAB~</a></h4>-->
+            </div>
+        </div>
+
+        <div class="news-item">
+            <div class="news-title">
+              WORK SHOP-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~WORK SHOP-LAB~</a></h4>-->
+            </div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">
+              PPS (programming Problem Solving)-LAB <span class="arrow">▼</span>
+            </div>
+            <div class="news-content">
+              <!--<h4><a id="sub"href="#">~PPS (programming Problem Solving)-LAB~</a></h4>-->
+            </div>
+        </div>
+      <br>
+  </div>
+  <br>
+  <div class="info">
+    <h3> 📝 AI & ML Sem-1 Exam Papers</h3>
+    <br>
+    <h4 id="exam"><a id="sub" href="https://jmp.sh/s/VRLIdl5zlrzNUbatss3M"> ~MATHEMATICS-I~</a></h4>
+    <br>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/s/q142wLQroa5gLRpUPBfi">~PHYSICS~</a></h4>
+    <br>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/s/QfvWWOHr5fh9tpN5V4XQ"> ~ENGLISH~</a></h4>
+    <br>
+    <h4 id="exam"><a id="sub"href="https://jmp.sh/2y2Rv06m">~BEE (Basic Electrical Enginerring )~</a></h4>
+    <br>
+  </div>
+  <br>
+  <div class="imp">
+    <h3>🔗 Important Links</h3>
+    <br>
+    <h4><a href="https://mdu.ac.in/default.aspx">~MDU,Rohtak~</a></h4>
+    <br>
+    <h4><a href="https://mdu.samarth.edu.in/index.php/site/login">~MDU Samarth Portal~</a></h4>
+    <br>
+    <h4><a href="https://student.mdu.ac.in/">~MDU Student Portal~</a></h4>
+    <br>
+    <h4><a href="https://result.mdurtk.in/postexam/result.aspx">~MDU Result ,Rohtak~</a></h4>
+    <br>
+  </div>
+  <br>
+  <div class="announcement">
+    <header>📢 Important Announcements</header>
+    <br>
+    <h4 id="sub0">~~Search anything related to AI~~</h4>
+    <br>
+    <h4 id="sub0">~~Only Mathematics-II and PPS Syllabus is accessible~~</h4>
+    <br>
+  </div>
+    <br>
+  <div class="info">
+    <h3>***Explore New Features***</h3>
+    <br>
+    <h4 id="exam"><a id="sub" href="https://www.blackbox.ai"> ~Black Box AI~</a></h4>
+    <br>
+  </div>
+  <br>
+  <footer>
+    <h3 class="disclaimer">Disclaimer</h3>
+    <p style="margin-left:10px;">This site is used for education purpose and providing Important data or information only not for other means.</p>
+    <br>
+    <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak</main>
+  </footer>
+  <!--<div class="foot"></div>-->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+   document.querySelectorAll(".news-title").forEach(item => {
+            item.addEventListener("click", function() {
+                let content = this.nextElementSibling;
+                let parent = this.parentElement;
+                
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    parent.classList.remove("expanded");
+                } else {
+                    document.querySelectorAll(".news-content").forEach(sec => sec.style.display = "none");
+                    document.querySelectorAll(".news-item").forEach(item => item.classList.remove("expanded"));
+                    
+                    content.style.display = "block";
+                    parent.classList.add("expanded");
+                }
+            });
+        });
+  </script>
+  <!--<script>
+   function searchFunction() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let items = document.querySelectorAll('.news-item, .info, .imp, .announcement, h4, h3');
+
+    items.forEach(item => {
+        let text = item.innerText.toLowerCase();
+        if (text.includes(input)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+    });
+
+    // Ensure sections with visible items remain visible
+    document.querySelectorAll('.info, .imp, .announcement').forEach(section => {
+        if (section.querySelectorAll('h4[style="display: block;"]').length > 0) {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    });
+}
+  </script>-->
+   <script>
+        async function performSearch() {
+            let query = document.getElementById("searchInput").value.trim();
+            let resultsDiv = document.getElementById("results");
+
+            if (query === "") {
+                resultsDiv.style.display = "none"; // Hide if empty search
+                return;
+            }
+
+            resultsDiv.style.display = "block"; // Show results section
+            resultsDiv.innerHTML = "<h1>Searching...</h1>";
+
+            // 🔍 Search within the website content
+            let siteResults = searchInPage(query);
+
+            // 🔍 Wikipedia search
+            let wikiResults = await fetchWikipediaResults(query);
+
+            // 🌍 Google search link
+            let googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}+AI+ML`;
+
+            // 🏆 Display results
+            resultsDiv.innerHTML = "<h1>Search Results:</h1>";
+            siteResults.forEach(item => {
+                resultsDiv.innerHTML += `<p><a href="${item.url}" target="_blank">${item.title}</a></p>`;
+            });
+
+            wikiResults.forEach(item => {
+                resultsDiv.innerHTML += `<p><a href="${item.url}" target="_blank">${item.title}</a></p>`;
+            });
+
+            resultsDiv.innerHTML += `<p><a href="${googleUrl}" target="_blank">See more results on Google</a></p>`;
+        }
+
+        function searchInPage(query) {
+            // Simulated site content search (Replace with actual data)
+            let siteContent = [
+                { title: "Introduction to AI", url: "ai-intro.html" },
+                { title: "Machine Learning Basics", url: "ml-basics.html" },
+                { title: "Deep Learning Concepts", url: "deep-learning.html" },
+                { title: "Neural Networks Explained", url: "neural-networks.html" }
+            ];
+
+            return siteContent.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+        }
+
+        async function fetchWikipediaResults(query) {
+            let wikiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${query}+AI+ML&format=json&origin=*`;
+
+            try {
+                let response = await fetch(wikiUrl);
+                let data = await response.json();
+                return data.query.search.map(item => ({
+                    title: item.title,
+                    url: `https://en.wikipedia.org/wiki/${item.title.replace(/ /g, "_")}`
+                }));
+            } catch (error) {
+                return [];
+            }
+        }
+    </script>
+</body>
+</html>
