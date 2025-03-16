@@ -856,7 +856,7 @@ img{
             }
         }
     </script>
- <!--   <script>
+ <!--<script>
         let comments = JSON.parse(localStorage.getItem("comments")) || [];
         let userLikes = JSON.parse(localStorage.getItem("userLikes")) || {};
 
@@ -966,7 +966,9 @@ img{
 
         window.onload = renderComments;
     </script>-->
-<!--  <script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+<script>
     let comments = JSON.parse(localStorage.getItem("comments")) || [];
 let userLikes = JSON.parse(localStorage.getItem("userLikes")) || {};
 const badWords = ["badword1", "badword2", "badword3"]; // Add more bad words
@@ -1095,110 +1097,7 @@ function toggleComments() {
 }
 
  window.onload = renderComments;
-</script>-->
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
-<script>
-// 🔹 Replace with your Firebase config
- const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-// 🔹 Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-function generateUserId() {
-    if (!localStorage.getItem("userId")) {
-        let userId = "user_" + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem("userId", userId);
-    }
-    return localStorage.getItem("userId");
-}
-
-function postComment() {
-    let commentText = document.getElementById("commentInput").value.trim();
-    let userId = generateUserId();
-
-    if (commentText === "") {
-        alert("Comment cannot be empty!");
-        return;
-    }
-
-    db.collection("comments").add({
-        text: commentText,
-        likes: 0,
-        userId,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        document.getElementById("commentInput").value = "";
-    }).catch(error => {
-        console.error("Error posting comment:", error);
-    });
-}
-
-function renderComments() {
-    let commentSection = document.getElementById("commentsSection");
-    commentSection.innerHTML = "";
-
-    db.collection("comments").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-        commentSection.innerHTML = "";
-        let currentUser = generateUserId();
-
-        snapshot.forEach(doc => {
-            let comment = doc.data();
-            let commentId = doc.id;
-            let isOwner = comment.userId === currentUser;
-
-            let commentDiv = document.createElement("div");
-            commentDiv.classList.add("comment");
-            commentDiv.innerHTML = `
-                <p>${comment.text}</p>
-                <div class="actions">
-                    <button class="like-btn" onclick="likeComment('${commentId}')">
-                        👍 <span id="like-count-${commentId}">${comment.likes}</span>
-                    </button>
-                    ${isOwner ? `<button class="edit-btn" onclick="editComment('${commentId}', '${comment.text}')">Edit</button>
-                    <button class="delete-btn" onclick="deleteComment('${commentId}')">Delete</button>` : ""}
-                </div>
-            `;
-            commentSection.appendChild(commentDiv);
-        });
-    });
-}
-
-function likeComment(commentId) {
-    let userId = generateUserId();
-    let userLikesRef = db.collection("likes").doc(`${userId}_${commentId}`);
-
-    userLikesRef.get().then(doc => {
-        if (!doc.exists) {
-            db.collection("comments").doc(commentId).update({
-                likes: firebase.firestore.FieldValue.increment(1)
-            });
-            userLikesRef.set({ liked: true });
-        }
-    });
-}
-
-function editComment(commentId, currentText) {
-    let newComment = prompt("Edit your comment:", currentText);
-    if (newComment && newComment.trim() !== "") {
-        db.collection("comments").doc(commentId).update({ text: newComment });
-    }
-}
-
-  function deleteComment(commentId) {
-    db.collection("comments").doc(commentId).delete();
- }
-
- window.onload = renderComments;
 </script>
+<!-- Firebase SDK -->
 </body>
 </html>
