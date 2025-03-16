@@ -497,6 +497,11 @@ img{
             text-align: center;
             font-size: 14px;
         }
+        .like-btn.liked {
+    color: #555;
+    cursor: not-allowed;
+}
+        
         @media (max-width: 600px) {
             .comment-box { width: 90%; }
             .btn { font-size: 14px; }
@@ -873,9 +878,17 @@ img{
             }
         }
     </script>
-    <script>
+        <script>
         let comments = JSON.parse(localStorage.getItem("comments")) || [];
-        const badWords = ["badword1", "badword2", "badword3"];
+        let userLikes = JSON.parse(localStorage.getItem("userLikes")) || {};
+
+        function generateUserId() {
+            if (!localStorage.getItem("userId")) {
+                let userId = "user_" + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem("userId", userId);
+            }
+            return localStorage.getItem("userId");
+        }
 
         function postComment() {
             let commentText = document.getElementById("commentInput").value.trim();
@@ -884,11 +897,6 @@ img{
                 alert("Comment cannot be empty!");
                 return;
             }
-
-            badWords.forEach(word => {
-                let regex = new RegExp(word, "gi");
-                commentText = commentText.replace(regex, "****");
-            });
 
             let commentId = comments.length;
             comments.push({ id: commentId, text: commentText, likes: 0 });
@@ -901,14 +909,21 @@ img{
         function renderComments() {
             let commentSection = document.getElementById("commentsSection");
             commentSection.innerHTML = "";
+            let userId = generateUserId();
 
             comments.forEach((comment, index) => {
+                let hasLiked = userLikes[userId] && userLikes[userId][index];
+                let likeDisabled = hasLiked ? "disabled" : "";
+                let likedClass = hasLiked ? "liked" : "";
+
                 let commentDiv = document.createElement("div");
                 commentDiv.classList.add("comment");
                 commentDiv.innerHTML = `
                     <p id="comment-${index}">${comment.text}</p>
                     <div class="actions">
-                        <button class="like-btn" onclick="likeComment(${index})">👍 <span id="like-count-${index}">${comment.likes}</span></button>
+                        <button class="like-btn ${likedClass}" onclick="likeComment(${index})" ${likeDisabled}>
+                            👍 <span id="like-count-${index}">${comment.likes}</span>
+                        </button>
                         <button class="edit-btn" onclick="editComment(${index})">Edit</button>
                         <button class="delete-btn" onclick="deleteComment(${index})">Delete</button>
                     </div>
@@ -919,14 +934,27 @@ img{
             document.querySelector(".show-comments").style.display = comments.length > 0 ? "block" : "none";
         }
 
+        function likeComment(index) {
+            let userId = generateUserId();
+
+            if (!userLikes[userId]) {
+                userLikes[userId] = {};
+            }
+
+            if (!userLikes[userId][index]) {
+                comments[index].likes += 1;
+                userLikes[userId][index] = true;
+
+                localStorage.setItem("comments", JSON.stringify(comments));
+                localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+                renderComments();
+            }
+        }
+
         function editComment(index) {
             let newComment = prompt("Edit your comment:", comments[index].text);
             if (newComment !== null && newComment.trim() !== "") {
-                badWords.forEach(word => {
-                    let regex = new RegExp(word, "gi");
-                    newComment = newComment.replace(regex, "****");
-                });
-
                 comments[index].text = newComment;
                 localStorage.setItem("comments", JSON.stringify(comments));
                 renderComments();
@@ -935,14 +963,16 @@ img{
 
         function deleteComment(index) {
             comments.splice(index, 1);
-            localStorage.setItem("comments", JSON.stringify(comments));
-            renderComments();
-        }
 
-        function likeComment(index) {
-            comments[index].likes += 1;
+            let userId = generateUserId();
+            if (userLikes[userId]) {
+                delete userLikes[userId][index];
+            }
+
             localStorage.setItem("comments", JSON.stringify(comments));
-            document.getElementById(`like-count-${index}`).innerText = comments[index].likes;
+            localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+            renderComments();
         }
 
         function toggleComments() {
