@@ -794,30 +794,6 @@ img{
             });
         });
   </script>
-  <!--<script>
-   function searchFunction() {
-    let input = document.getElementById('searchInput').value.toLowerCase();
-    let items = document.querySelectorAll('.news-item, .info, .imp, .announcement, h4, h3');
-
-    items.forEach(item => {
-        let text = item.innerText.toLowerCase();
-        if (text.includes(input)) {
-            item.style.display = "block";
-        } else {
-            item.style.display = "none";
-        }
-    });
-
-    // Ensure sections with visible items remain visible
-    document.querySelectorAll('.info, .imp, .announcement').forEach(section => {
-        if (section.querySelectorAll('h4[style="display: block;"]').length > 0) {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
-    });
-}
-  </script>-->
    <script>
         async function performSearch() {
             let query = document.getElementById("searchInput").value.trim();
@@ -880,7 +856,7 @@ img{
             }
         }
     </script>
-        <script>
+ <!--   <script>
         let comments = JSON.parse(localStorage.getItem("comments")) || [];
         let userLikes = JSON.parse(localStorage.getItem("userLikes")) || {};
 
@@ -989,19 +965,136 @@ img{
         }
 
         window.onload = renderComments;
-    </script>
-    <script>
-      {
-      "rules": {
-        "comments": {
-         ".read": true,
-         ".write": "auth != null",
-         "$commentId": {
-        ".validate": "!data.exists()"
-      }
+    </script>-->
+  <script>
+    let comments = JSON.parse(localStorage.getItem("comments")) || [];
+let userLikes = JSON.parse(localStorage.getItem("userLikes")) || {};
+const badWords = ["badword1", "badword2", "badword3"]; // Add more bad words
+
+function generateUserId() {
+    if (!localStorage.getItem("userId")) {
+        let userId = "user_" + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem("userId", userId);
     }
-  }
+    return localStorage.getItem("userId");
 }
-    </script>
+
+function postComment() {
+    let commentText = document.getElementById("commentInput").value.trim();
+    let userId = generateUserId();
+
+    if (commentText === "") {
+        alert("Comment cannot be empty!");
+        return;
+    }
+
+    if (containsBadWords(commentText)) {
+        alert("Your comment contains inappropriate words!");
+        return;
+    }
+
+    let commentId = comments.length;
+    comments.push({ id: commentId, text: commentText, likes: 0, userId });
+
+    localStorage.setItem("comments", JSON.stringify(comments));
+    document.getElementById("commentInput").value = "";
+    renderComments();
+}
+
+function containsBadWords(text) {
+    return badWords.some(word => text.toLowerCase().includes(word));
+}
+
+function renderComments() {
+    let commentSection = document.getElementById("commentsSection");
+    commentSection.innerHTML = "";
+    let currentUser = generateUserId();
+
+    comments.forEach((comment, index) => {
+        let hasLiked = userLikes[currentUser] && userLikes[currentUser][index];
+        let likeDisabled = hasLiked ? "disabled" : "";
+        let likedClass = hasLiked ? "liked" : "";
+        let isOwner = comment.userId === currentUser;
+
+        let commentDiv = document.createElement("div");
+        commentDiv.classList.add("comment");
+        commentDiv.innerHTML = `
+            <p>${comment.text}</p>
+            <div class="actions">
+                <button class="like-btn ${likedClass}" onclick="likeComment(${index})" ${likeDisabled}>
+                    👍 <span id="like-count-${index}">${comment.likes}</span>
+                </button>
+                ${isOwner ? `<button class="edit-btn" onclick="editComment(${index})">Edit</button>
+                <button class="delete-btn" onclick="deleteComment(${index})">Delete</button>` : ""}
+            </div>
+        `;
+        commentSection.appendChild(commentDiv);
+    });
+
+    document.querySelector(".show-comments").style.display = comments.length > 0 ? "block" : "none";
+}
+
+function likeComment(index) {
+    let userId = generateUserId();
+
+    if (!userLikes[userId]) {
+        userLikes[userId] = {};
+    }
+
+    if (!userLikes[userId][index]) {
+        comments[index].likes += 1;
+        userLikes[userId][index] = true;
+
+        localStorage.setItem("comments", JSON.stringify(comments));
+        localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+        renderComments();
+    }
+}
+
+function editComment(index) {
+    let userId = generateUserId();
+
+    if (comments[index].userId === userId) {
+        let newComment = prompt("Edit your comment:", comments[index].text);
+        if (newComment !== null && newComment.trim() !== "") {
+            comments[index].text = newComment;
+            localStorage.setItem("comments", JSON.stringify(comments));
+            renderComments();
+        }
+    } else {
+        alert("You can only edit your own comment!");
+    }
+}
+
+function deleteComment(index) {
+    let userId = generateUserId();
+
+    if (comments[index].userId === userId) {
+        comments.splice(index, 1);
+        delete userLikes[userId][index];
+
+        localStorage.setItem("comments", JSON.stringify(comments));
+        localStorage.setItem("userLikes", JSON.stringify(userLikes));
+
+        renderComments();
+    } else {
+        alert("You can only delete your own comment!");
+    }
+}
+
+function toggleComments() {
+    let commentSection = document.getElementById("commentsSection");
+    if (commentSection.style.display === "none" || commentSection.style.display === "") {
+        commentSection.style.display = "block";
+        document.querySelector(".show-comments").innerText = "Hide comments";
+    } else {
+        commentSection.style.display = "none";
+        document.querySelector(".show-comments").innerText = "See all comments";
+    }
+}
+
+ window.onload = renderComments;
+</script>
 </body>
 </html>
