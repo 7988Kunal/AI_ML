@@ -990,5 +990,18 @@ img{
 
         window.onload = renderComments;
     </script>
+    <script>
+      {
+      "rules": {
+        "comments": {
+         ".read": true,
+         ".write": "auth != null",
+         "$commentId": {
+        ".validate": "!data.exists()"
+      }
+    }
+  }
+}
+    </script>
 </body>
 </html>
