@@ -423,6 +423,86 @@ img{
         a:hover {
             color: var(--red);
         }
+        
+        
+         .comment-box {
+           display:flex;
+           flex-direction:column;
+            background: #ffffff;
+            padding:11px;
+            border-radius: 10px;
+            border:1px solid gray;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin:7px;
+        }
+        textarea{
+            margin-top:5px;
+            height:50px;
+            padding:10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn {
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            /*width: 100%;*/
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .comments-section {
+            margin-top: 20px;
+            display: none;
+        }
+        .comment {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .edit-btn, .delete-btn, .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .edit-btn { color: #28a745; }
+        .delete-btn { color: #dc3545; }
+        .like-btn {
+            color: #007BFF;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .show-comments {
+            color: #007BFF;
+            cursor: pointer;
+            margin-top: 15px;
+            display: block;
+            text-align: center;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .comment-box { width: 90%; }
+            .btn { font-size: 14px; }
+        }
+        
+        
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -670,6 +750,16 @@ img{
     <br>
   </div>
   <br>
+      <div class="comment-box">
+        <h3>Leave a Comment</h3>
+        <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+        <button class="btn" onclick="postComment()">Post Comment</button>
+        
+        <span class="show-comments" onclick="toggleComments()">See all comments</span>
+
+        <div class="comments-section" id="commentsSection"></div>
+    </div>
+  <br>
   <footer>
     <h3 class="disclaimer">Disclaimer</h3>
     <p style="margin-left:10px;">This site is used for education purpose and providing Important data or information only not for other means.</p>
@@ -782,6 +872,91 @@ img{
                 return [];
             }
         }
+    </script>
+    <script>
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        const badWords = ["badword1", "badword2", "badword3"];
+
+        function postComment() {
+            let commentText = document.getElementById("commentInput").value.trim();
+
+            if (commentText === "") {
+                alert("Comment cannot be empty!");
+                return;
+            }
+
+            badWords.forEach(word => {
+                let regex = new RegExp(word, "gi");
+                commentText = commentText.replace(regex, "****");
+            });
+
+            let commentId = comments.length;
+            comments.push({ id: commentId, text: commentText, likes: 0 });
+
+            localStorage.setItem("comments", JSON.stringify(comments));
+            document.getElementById("commentInput").value = "";
+            renderComments();
+        }
+
+        function renderComments() {
+            let commentSection = document.getElementById("commentsSection");
+            commentSection.innerHTML = "";
+
+            comments.forEach((comment, index) => {
+                let commentDiv = document.createElement("div");
+                commentDiv.classList.add("comment");
+                commentDiv.innerHTML = `
+                    <p id="comment-${index}">${comment.text}</p>
+                    <div class="actions">
+                        <button class="like-btn" onclick="likeComment(${index})">👍 <span id="like-count-${index}">${comment.likes}</span></button>
+                        <button class="edit-btn" onclick="editComment(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deleteComment(${index})">Delete</button>
+                    </div>
+                `;
+                commentSection.appendChild(commentDiv);
+            });
+
+            document.querySelector(".show-comments").style.display = comments.length > 0 ? "block" : "none";
+        }
+
+        function editComment(index) {
+            let newComment = prompt("Edit your comment:", comments[index].text);
+            if (newComment !== null && newComment.trim() !== "") {
+                badWords.forEach(word => {
+                    let regex = new RegExp(word, "gi");
+                    newComment = newComment.replace(regex, "****");
+                });
+
+                comments[index].text = newComment;
+                localStorage.setItem("comments", JSON.stringify(comments));
+                renderComments();
+            }
+        }
+
+        function deleteComment(index) {
+            comments.splice(index, 1);
+            localStorage.setItem("comments", JSON.stringify(comments));
+            renderComments();
+        }
+
+        function likeComment(index) {
+            comments[index].likes += 1;
+            localStorage.setItem("comments", JSON.stringify(comments));
+            document.getElementById(`like-count-${index}`).innerText = comments[index].likes;
+        }
+
+        function toggleComments() {
+            let commentSection = document.getElementById("commentsSection");
+            if (commentSection.style.display === "none" || commentSection.style.display === "") {
+                commentSection.style.display = "block";
+                document.querySelector(".show-comments").innerText = "Hide comments";
+            } else {
+                commentSection.style.display = "none";
+                document.querySelector(".show-comments").innerText = "See all comments";
+            }
+        }
+
+        window.onload = renderComments;
     </script>
 </body>
 </html>
