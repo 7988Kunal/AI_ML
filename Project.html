@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>AI & ML Projects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #101820;
+            color: white;
+            text-align: center;
+        }
+        .projects-section {
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .projects-section h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .projects-section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .project-box {
+            background: linear-gradient(145deg, #1e1e1e, #292929);
+            padding: 20px;
+            border-radius: 12px;
+            width: 280px;
+            text-align: center;
+            transition: 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .project-box:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(145deg, #292929, #3d3d3d);
+            border-color: #00c6ff;
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.8);
+        }
+        .project-box h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+        .project-box p {
+            font-size: 16px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="projects-section">
+        <h1>AI & ML Projects</h1>
+        <p>Explore our latest AI & ML projects, featuring cutting-edge innovations and research.</p>
+        <div class="projects-container">
+            <a href="#" class="project-box" onclick="playClickSound()">
+                <h3>Chatbot AI</h3>
+                <p>An AI-powered chatbot for real-time conversations.</p>
+            </a>
+            <a href="#" class="project-box" onclick="playClickSound()">
+                <h3>Image Recognition</h3>
+                <p>A deep learning model that detects objects in images.</p>
+            </a>
+            <a href="#" class="project-box" onclick="playClickSound()">
+                <h3>Stock Prediction</h3>
+                <p>ML model for analyzing stock market trends.</p>
+            </a>
+            <a href="#" class="project-box" onclick="playClickSound()">
+                <h3>AI Resume Analyzer</h3>
+                <p>AI tool for analyzing resumes and providing suggestions.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Audio Element for Click Sound -->
+    <audio id="clickSound">
+        <source src="click.mp3" type="audio/mpeg">
+        <source src="click.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function playClickSound() {
+            let sound = document.getElementById("clickSound");
+
+            // Reset audio to the beginning and play
+            sound.currentTime = 0;
+            sound.play().catch(error => console.log("Audio Play Error: ", error));
+        }
+    </script>
+
+</body>
+</html>
