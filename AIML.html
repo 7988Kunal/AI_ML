@@ -640,7 +640,97 @@ img{
                 display: none;
             }
         }
-      
+      .Z{
+      color:black;
+    }
+        .syllabus-container {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f5ff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .syllabus-header {
+            color: #333;
+            font-size: 22px; /* Adjusted to fit in one line */
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .syllabus-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .syllabus-dropdown-box {
+            width: 90%;
+            max-width: 300px;
+            text-align: left;
+        }
+
+        .syllabus-btn {
+            display:flex;
+            justify-content:space-between;
+            align-content:center;
+            width:100%;
+            padding:12px;
+            font-size:18px;
+            background: linear-gradient(135deg, #007BFF, #00D4FF);
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .syllabus-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #00A0E3);
+            transform: scale(1.02);
+        }
+
+        .syllabus-content-box {
+            display: none;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 5px;
+        }
+
+        .syllabus-content-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .syllabus-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .syllabus-item:last-child {
+            border-bottom: none;
+        }
+
+        .syllabus-topic {
+            display: none;
+            padding-left: 20px;
+            font-size: 14px;
+            color: #666;
+          }
+        @media (min-width: 768px) {
+            .syllabus-wrapper {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+        }
       
         @media (max-width: 600px) {
             .comment-box { width: 90%; }
