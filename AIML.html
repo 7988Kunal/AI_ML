@@ -720,6 +720,125 @@ img{
       border:0px;
       font-size:15px;
     }
+    .contact-section {
+      padding: 40px 20px;
+      background-color: #f6f8fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .contact-form {
+      background: #ffffff;
+      padding: 35px 25px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-sizing: border-box;
+      border: 1px solid #d0d7de;
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #24292f;
+      font-size:14px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      padding: 12px 10px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      font-size:14px;
+      background: none;
+      box-sizing: border-box;
+      background-color: #fff;
+      color: #24292f;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      background: #ffffff;
+      color: #57606a;
+      font-size:14px;
+      transition: 0.3s;
+      padding: 0 4px;
+      pointer-events: none;
+    }
+
+    .input-group input:focus + label,
+    .input-group textarea:focus + label,
+    .input-group input:not(:placeholder-shown) + label,
+    .input-group textarea:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 10px;
+      color: #0969da;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .contact-form button {
+      background: #2da44e;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size:14px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 5px;
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      background: #218639;
+    }
+
+    .toast {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background: #2da44e;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      animation: fadeInOut 3s ease forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(-20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-20px); }
+    }
+
+    @media (max-width: 600px) {
+      .contact-form {
+        padding: 25px 15px;
+      }
+
+      .contact-form h2 {
+        font-size: 1.4rem;
+      }
+      }
+    
       @media (min-width: 769px) {
             font{
               width:150px;
@@ -1243,6 +1362,31 @@ Structures, File Handling.
     <h4 id="exam"><a id="sub" href="https://openai.com/index/chatgpt/"> ~OpenAI -ChatGPT~</a></h4>
     <br>
   </div>
+  <br>
+  <section class="contact-section">
+    <form class="contact-form" id="contactForm" action="https://formspree.io/f/xnnpwgdk" method="POST">
+      <h2 style="font-size:17px;">Contact Me</h2>
+
+      <div class="input-group">
+        <input type="text" name="name" id="name" required placeholder=" " />
+        <label for="name">Your Name</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" name="email" id="email" required placeholder=" " />
+        <label for="email">Your Email</label>
+      </div>
+
+      <div class="input-group">
+        <textarea name="message" id="message" required placeholder=" "></textarea>
+        <label for="message">Your Message</label>
+      </div>
+
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <div class="toast" id="toast">Message sent successfully!</div>
  <!-- <br>
       <div class="comment-box">
         <h3>Leave a Comment</h3>
@@ -1353,6 +1497,40 @@ Structures, File Handling.
             var topic = document.getElementById(id);
             topic.style.display = topic.style.display === "block" ? "none" : "block";
         }
+     </script>
+     <script>
+       const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const endpoint = form.action;
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          toast.style.display = 'block';
+          setTimeout(() => {
+            toast.style.display = 'none';
+          }, 3000);
+          form.reset();
+        } else {
+          const err = await response.json();
+          alert(err.message || 'Submission failed. Please try again.');
+        }
+      } catch (error) {
+        alert('Error sending message. Please check your internet connection or try again.');
+      }
+    });
      </script>
  <!--<script>
         let comments = JSON.parse(localStorage.getItem("comments")) || [];
