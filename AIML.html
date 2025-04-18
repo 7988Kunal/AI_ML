@@ -1926,22 +1926,7 @@ function toggleComments() {
 // Load comments when page loads
 window.onload = renderComments;
 </script>-->
-  <script>
-    // Protect Page: Redirect if not logged in
-window.addEventListener('DOMContentLoaded', () => {
-  const username = sessionStorage.getItem("username");
-  const regNo = sessionStorage.getItem("registrationNumber");
-  const rollNo = sessionStorage.getItem("rollNumber");
 
-  if (!username || !regNo || !rollNo) {
-    // Not logged in - redirect to login page
-    window.location.href = "index.html";
-  }
-});
-    sessionStorage.setItem("username", username);
-sessionStorage.setItem("registrationNumber", registrationNumber);
-sessionStorage.setItem("rollNumber", rollNumber);
-  <script/>
 <!-- Firebase SDK -->
 <script>
     function toggleMenu() {
