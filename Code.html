@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>C Programming Codes</title>
+
+  <!-- Prism CSS for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+
+  <!-- Prism JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+  <style>
+    #heading {
+      text-align: center;
+      font-family: cursive;
+      font-size:25px;
+      color: red;
+    }
+    .fullcode {
+      background-color: #fff;
+      border: 1px solid gray;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    pre {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="heading">C Programming Codes for PPS Assignment</h2>
+  <div class="fullcode">
+    First Phase
+   <pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+    int a = 5;
+    printf("a");
+    getch();
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+    int a = 5;
+    printf("%d", a);
+    getch();
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+void main()
+
+{
+
+int a=7;
+
+float b=7.0;
+
+char c='X';
+
+printf("%d %f %c", a,b,c);
+
+getch();
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+ /* This code is used to print simple intrest from pre defined values*/
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+
+int p,t; 
+
+float si,r;
+
+p=4000;
+
+t=2;
+
+r=6.5;
+
+si=(p*r*t)/100;
+
+printf("%f", si);
+
+getch();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used to calculate
+  the sum of two values. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+
+int a, b, sum=0;
+
+printf("Enter the values of a,b: ");
+
+scanf("%d%d", &a,&b); //input statement
+
+sum=a+b; // calculation
+
+printf("The sum of numbers entered by you is: ");
+
+printf("%d", sum); // print statement to display the output on screen
+
+getch();
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is used to print different data types on display. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+
+ int a;
+
+float b;
+
+char c;
+
+printf("Enter the values of a, b, and c: ");
+
+scanf("%d %f %c", &a, &b, &c); // Space before sc to avoid buffer issue
+
+printf("%d %f %c", a, b, c);
+
+getch();
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used to calculate the area of circle. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+#define pi 3.142 //defining global constant
+
+void main() {
+
+int r; // radius of circle
+
+float area_circle; // area_circle is area of the circle
+
+printf("Enter radius of circle: ");
+
+scanf("%d", &r);
+
+area_circle=(pi*r*r); //calculation of area of circle=ar
+
+printf(" %f", area_circle);
+
+getch();
+    
+}
+   </code>
+  </pre>
+  Second Phase
+  <pre>
+   <code class="language-c">
+/* This code is used to change upper case character into lower case and vice versa. */
+#include &lt;stdio.h&gt;
+char change_case, input;
+void main() {
+
+printf("Enter the character: ");
+
+scanf("%c", &input); // Ensure a space before %c to handle previous input
+
+if (input >= 'a' && input <= 'z') {
+
+change_case = input - 32; // Convert to uppercase
+
+}
+
+else if (input >= 'A' && input <= 'Z') {
+
+change_case = input + 32; // Convert to lowercase
+
+}
+
+else {
+
+printf("Invalid input! Please enter a letter.\n");
+
+return; // Exit the program if input is not a letter
+
+}
+
+printf("Changed case: %c\n", change_case); // Print the changed case
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is an example of conditional or decision making statement. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i=20;
+
+if(i>10){
+
+printf("%d", i);
+
+ }
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is used to tell whether you are eligible in election or not by the predefined age in code. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+
+int age=17;
+
+if (age>=18)
+
+{
+
+printf("You are eligible for voting in election");
+
+getch();
+
+}
+
+else{
+
+printf("You are not eligible for voting in election");
+
+getch();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is an example of nested if(). */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i = 7, j = 5, k = 9;
+
+if(i < 10) {
+
+ if(j == 5) {
+
+  if(k > 7) {
+
+printf("%d\t%d\t%d\n", i, j, k);
+
+   }
+
+  }
+
+ }
+getch();    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is an example of if-else type. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+        int i=10;
+
+if(i>7)
+
+{
+
+printf("%d",i);
+
+}
+
+else{
+
+printf("Value is smaller than 7");
+
+}
+
+getch();
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used to tell whether you are eligible to fight the election. */
+#include &lt;stdio.h&gt;
+
+void main() {
+int age;
+
+char grad, ind, mf;
+
+printf("Enter your age: ");
+
+scanf("%d", &age); 
+
+getchar();
+
+printf("Enter 'g' for graduate or 'n' for non-graduate: ");
+
+scanf("%c", &grad);
+
+getchar(); 
+
+printf("Enter 'y' if Indian Citizen or 'n' for non-Indian: ");
+
+scanf("%c", &ind);
+
+getchar();
+
+printf("Enter 'm' for male or 'f' for female: ");
+
+scanf("%c", &mf);
+
+if (age >= 18) { // Check if the person is of voting age
+
+        if (grad == 'g') { // Check if the person is a graduate
+
+            if (ind == 'y') { // Check if the person is an Indian citizen
+
+                printf("Ok, you are eligible to fight in the election.\n");
+
+            } else {
+
+                printf("Only Indians are eligible to fight in the election.\n");
+
+            }
+
+        } else {
+
+            printf("Only graduates are eligible to fight in the election.\n");
+
+        }
+
+    } else {
+
+        printf("You are underage and can't fight in the election.\n");
+
+    }
+
+}
+    
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is used to calculate the basic salary of an employee based on the condition: 
+
+1. If clerk house rent allowances=0 else 8%. 
+
+2. If basic salary <= 300, dearness allowence = 70% else 85%. 
+
+3. Total salary is sum of all these. */
+#include &lt;stdio.h&gt;
+
+void main() {
+
+    float hra, da, total_salary; 
+
+    int bs;
+
+    char clerk;
+
+    // Input basic salary and designation
+
+    printf("Enter Basic Salary: ");
+
+    scanf("%d", &bs);
+
+    getchar(); // To consume the newline character left by previous scanf
+
+    printf("Enter 'y' if you area a clerk else 'n': ");
+
+    scanf("%c", &clerk);
+
+    if (bs <= 300) {
+
+        da = (bs*70)/100; // Clerk gets 0 HRA
+
+    } else {
+
+        da = (bs*85)/100; // 8% of basic salary for other employees
+
+    }
+
+    if (clerk =='y') {
+
+        hra=0; // 70% of basic salary if salary is less than 3000
+
+    } else if(clerk=='n') {
+
+        hra=(bs*8)/100; // 85% of basic salary if salary is more than or equal to 3000
+
+    }
+
+    total_salary = bs + hra + da;
+
+    // Output the total salary
+
+    printf("Total Salary: %.2f\n", total_salary);
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used to print the day of a week. */
+#include &lt;stdio.h&gt;
+
+void main() {
+    int day;
+
+    printf("Enter a number (1-7) to get the day of the week: ");
+
+    scanf("%d", &day);
+
+    // Switch case to print the corresponding day
+
+    switch (day) {
+
+        case 1:
+
+            printf("Monday\n");
+
+            break;
+
+        case 2:
+
+            printf("Tuesday\n");
+
+            break;
+
+        case 3:
+
+            printf("Wednesday\n");
+
+            break;
+
+        case 4:
+
+            printf("Thursday\n");
+
+            break;
+
+        case 5:
+
+            printf("Friday\n");
+
+            break;
+
+        case 6:
+
+            printf("Saturday\n");
+
+            break;
+
+        case 7:
+
+            printf("Sunday\n");
+
+            break;
+
+        default:
+
+            printf("Invalid! Please enter a number between 1 and 7.\n");
+
+    }
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+int a = 5;
+// Global variable
+void main() {
+int b= 6;
+
+//Global variable to c but local variable to a
+
+{
+
+int c= 7;
+
+// Local variable for both a & b
+
+printf("%d", c);
+
+}
+
+printf("%d", b);
+
+printf("%d",a);
+
+getch();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i=1;
+
+// while loop
+
+while(i<=5)
+
+{
+
+printf("%d",i);
+
+i++;
+
+}
+
+getch();
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+ // To print all even number s between 10 and 30.
+
+int i=11;
+
+// while loop
+
+while(i<=30)
+
+{
+
+if(i%2==0)
+
+{
+
+printf("%d",i);
+
+}
+
+i++;
+
+}
+
+getch();
+
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i=0;
+
+while(i<20)
+{
+i++;
+if(i%7==0)
+break;
+printf("%d",i);
+}
+getch();
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i=0;
+
+while(i<20)
+
+{
+
+i++;
+
+if(i%3==0)
+
+continue;
+
+printf("%d",i);
+
+}
+
+getch();
+
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i=1,j=1;
+
+while(i<=3)
+
+{
+
+while(j<=3)
+
+{
+
+printf("%d%d\n",i,j);
+
+j++;
+
+}
+
+i++;
+
+}
+
+getch();
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is used to reverse the digits of a number. */
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+//print the digits of a number in reverse
+
+long int n;
+
+printf("Enter a number: ");
+
+scanf("%ld", &n);
+
+while(n)
+
+{
+
+printf("%ld", n%10);
+
+n=n/10;
+
+}
+
+getch();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+int i;
+
+//for( ; ; ) loop
+
+for(i=1;i<5;i++)//for
+
+{
+
+printf("%d", i);
+
+}
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+//To reverse the digits of a no, using for loop
+
+long int n, sum=0;
+
+printf("enter the no.: ");
+
+scanf("%ld",&n);
+
+printf("the reverse no. is: ");
+
+//for( ; ; ) loop
+
+for(sum=0;n;)//for(initialisation;condition;updation/modification)
+
+{
+
+sum=(sum*10)+n%10;
+
+n=n/10;
+
+}
+
+printf("%ld", sum);
+
+getch();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+#include &lt;stdio.h&gt;
+#include &lt;conio.h&gt;
+
+void main() {
+// nested for() loop
+
+int a, b;
+
+for(a=1;a<=3;a++)
+
+{
+
+for(b=1;b<=2;b++)
+
+{
+
+printf("%d%d\n",a,b);
+
+}
+
+}
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This code is used to calculate the sum of series: 1 + 3/2! + 5/3! + 7/4! +...........  up to n terms. */
+#include &lt;stdio.h&gt;
+
+void main() { 
+    int n;
+
+    double sum = 0.0, fact = 1.0;
+
+    printf("Enter the number of terms up to which you want to sum up: ");
+
+    scanf("%d", &n);
+
+    for (int i = 1; i <= n; i++) {
+
+        fact *= i;  // Calculate factorial
+
+        sum += (2.0 * i - 1) / fact;  // Add the term to the sum
+
+    }
+
+    printf("The sum of the series up to %d terms: %lf\n", n, sum);
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used to check whethe a number is Armstrong number or not. */
+#include &lt;stdio.h&gt;
+
+void main() {
+   int num, actual, remainder, result = 0, n = 0, power;
+
+    printf("Enter a number: ");
+
+    scanf("%d", &num);
+
+    actual = num;
+
+    while (actual != 0) {
+
+        actual /= 10;
+
+        ++n;
+
+    }
+
+    actual = num;
+
+    while (actual != 0) {
+
+        remainder = actual % 10;
+
+        power = 1;
+
+        for (int i = 1; i <= n; i++) {
+
+            power *= remainder;
+
+        }
+
+        result += power;
+
+        actual /= 10;
+
+    }
+
+    if (result == num) {
+
+        printf("%d is an Armstrong number.\n", num);
+
+    } else {
+
+        printf("%d is not an Armstrong number.\n", num);
+
+    }
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+#include &lt;stdio.h&gt;
+void fibonacci(int n) {
+
+    int first = 1, second = 1, next;
+
+    printf("Fibonacci Series: %d %d", first, second);
+
+    for (int i = 3; i <= n; i++) {
+
+        next = first + second;
+
+        printf(" %d", next);
+
+        first = second;
+
+        second = next;
+
+    }
+
+    printf("\n");
+
+}
+
+int main() {
+
+    int n;
+
+    printf("Enter the number of terms: ");
+
+    scanf("%d", &n);
+
+    if (n < 1) {
+
+        printf("Please enter a positive integer.\n");
+
+    } else if (n == 1) {
+
+        printf("Fibonacci Series: 1\n");
+
+    } else {
+
+        fibonacci(n);
+
+    }
+
+    return 0;
+
+}
+ </code>
+</pre>
+Third Phase
+<pre>
+    <code class="language-c">
+/* This code is an example of user defined function.*/
+#include &lt;stdio.h&gt;
+#define pi 3.142
+
+float area_circle(int);  // Function prototype
+
+void main()
+
+{
+
+    int r;
+
+    float area11;
+
+    printf("Enter radius of circle: ");
+
+    scanf("%d", &r);    // Input statement
+
+    area1 = area_circle(r);  // Function call
+
+    printf("Area of the circle: %f\n", area1);  // Output the result
+
+}
+
+
+float area_circle(int x)  // Function definition with parameter type specified
+
+{
+
+    float area1;
+
+    area1 = (pi * x * x);  // Area of the circle formula
+
+    return area1;
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* This function is used to change the case of a character by returning value from a user defined function.*/
+#include &lt;stdio.h&gt;
+
+char change_case(char);  //Function prototype
+
+void main()
+
+{
+
+    char m1;
+
+    printf("Enter the character: ");
+
+    scanf("%c",&m1);
+
+    m1 = change_case(m1);  //return call
+
+    printf("%c",m1);
+
+} 
+
+
+char change_case(char n)
+
+{
+
+    if(n>='a' && n<='z')
+
+    {
+
+        return (n-32);
+
+    }
+
+    else if(n>='A' && n<='Z')
+
+    {
+
+        return(n+32);
+
+    }
+
+}
+
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* THIS IS AN EXAMPLE OF USING MULTIPLE 
+
+USER DEFINED FUNCTION IN SINGLE CODE. */
+#include &lt;stdio.h&gt;
+void fun();
+
+void main(){
+
+    void show();
+
+    fun();
+
+}
+
+void show()
+
+{
+
+    printf(" This is void show.");
+
+    getchar();
+
+}
+
+void fun()
+
+{
+
+    printf("This is void fun.");
+
+    show();
+
+    getchar();
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* THIS IS AN EXAMPLE OF USING MULTIPLE USER DEFINED FUNCTION IN SINGLE CODE. */
+#include &lt;stdio.h&gt;
+void fun();
+
+void show();
+
+int a=10; //global variable
+
+void main()
+
+{
+
+    int b=5;  //b is local var. to a but global to c
+
+    printf(" %d",a);
+
+    fun();
+
+    show();
+
+    getchar();
+
+}
+
+void fun()
+
+{
+
+    int c=20;  // c is local to both a and b
+
+    printf(" %d",c);
+
+}
+
+void show()
+
+{
+
+    int d=50; // d is local to all a b and c
+
+    printf(" %d",d);
+
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/*This programme is used to define the address of the memory of data cell in which the variable is stored.*/ 
+#include &lt;stdio.h&gt;
+
+void main() { 
+     int a=5, b=10;
+
+     int *p;
+
+     p = &a;
+
+     printf("%d ",a);
+
+     printf("%d ",*p);
+
+     printf("%u ",p);
+
+   p = &b;
+
+     printf("%d ",b);
+
+     printf("%d ",*p);
+
+     printf("%u ",p);
+
+     getchar();
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/*This programme is an exaple of call by value method.*/ 
+#include &lt;stdio.h&gt;
+
+void fun(int *, int *); //function prototype
+
+ void main(){
+
+     int a=5, b=10;
+
+     fun(&a,&b);  // function call
+
+     printf("%d %d", a,b);
+
+     getchar();
+
+ }
+
+ void fun(int *x, int *y){
+
+    *x = *x+100;
+
+    *y = *y+100;
+
+ }
+
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/*This programme is used to swap the values of two numbers. */ 
+#include &lt;stdio.h&gt;
+
+void fun(int *x, int *y){
+
+     int temp;
+
+     temp = *x;
+
+     *x = *y;
+
+     *y = temp;
+
+ }
+
+ void main(){
+
+    int a, b;
+
+    printf("Enter the numbers thet you want to swap: ");
+
+    scanf("%d %d",&a,&b);
+
+fun(&a,&b);  //Pass address of numbers to be swapped
+
+printf("%d %d",a,b); // Swapped numbers get printed
+
+getchar();
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/*To demonstrate calling function during another function call that is function call inside another call function or passing of one call function into another.*/
+#include &lt;stdio.h&gt;
+
+void fun(int,int);  //Function prototype
+
+ int fun_two(int *);  //Returns function prototype
+
+void main(){
+
+    int a=10, b=20;
+
+    fun(fun_two(&a),b);  //One function call is passed to 2nd function
+
+    getchar();
+
+}
+
+int fun_two(int *x){
+
+    *x = *x+100;
+
+    return *x;
+
+}
+
+void fun(int m, int n){
+
+    printf("%d %d",m,n);
+
+    getchar();
+
+}
+
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/*This code is an example of recursion.*/
+#include &lt;stdio.h&gt;
+void fun();  //Function prototype
+
+void main(){
+
+    fun();  //function call
+
+    getchar();
+
+}
+
+void fun(){ 
+
+    static int a=1;
+
+while(a<=10){
+
+    printf(" %d",a);
+
+    a++;
+
+    fun();  //Result will remain same whether we use this or not
+
+}
+
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/*This code is will return address of a variable from a function if we want 
+
+another function to use it as a local variable.*/
+#include &lt;stdio.h&gt;
+
+int *fun();
+
+void main(){
+
+    int *p;
+
+    p=fun();  //return call
+
+    *p=*p+10;
+
+    printf(" %d",*p);
+
+    getchar();
+
+}
+
+int *fun(){ 
+
+    static int a=5;
+
+    return &a;
+
+}
+
+ </code>
+</pre>
+Fourth Phase
+<pre>
+    <code class="language-c">
+/* This code is an example of using 1-D array. */
+#include &lt;stdio.h&gt;
+
+void main() {
+
+int a, n, b[100];  //size of array or index number
+
+printf("Enter the size of array: ");
+
+scanf("%d",&n);
+
+printf("Enter the value of elements of array one by one: ");
+
+for(a=0; a<=n-1; a++){
+
+    scanf("%d",&b[a]);
+
+}
+
+for(a=0; a<=n-1; a++){
+
+    printf("%d ",b[a]);
+
+    getchar();
+
+}
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* Program to multiply each array element by 10 and print the result.*/
+#include &lt;stdio.h&gt;
+
+void main() {
+int a,n,b[30];
+
+printf("Enter the size of the array: ");
+
+scanf("%d",&n);
+
+printf("Enter the elements of the array one by one: ");
+
+for(a=0;a<=n-1;a++){
+
+    scanf("%d",&b[a]);
+
+    b[a]=b[a]*10;
+
+}
+
+for (a=0;a<=n-1;a++){
+
+    printf("%d ",b[a]);
+
+}
+
+getchar();
+
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+//To find biggest element in the array.
+#include &lt;stdio.h&gt;
+
+void main() { 
+
+     int a,n,big,arr[20];
+
+    printf("Enter the size of the array: ");
+
+    scanf("%d",&n);
+
+    printf("Enter the elements of the array one by one: ");
+
+    for(a=0;a<=n-1;a++){
+
+        scanf("%d",&arr[a]);
+
+    }
+
+    big =arr[0];
+
+    for(a=1;a<=n-1;a++){
+
+        if(arr[a]>big){
+
+            big=arr[a];
+
+        }
+
+    }
+
+    printf("The biggest element in the array is: %d",big);
+
+    getchar();
+    
+}
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+//This is a general programme.
+#include &lt;stdio.h&gt;
+
+void main() { 
+
+    float b[6], *p;
+
+    int a, n;
+
+    printf("Enter the size of array: ");
+
+    scanf("%d",&n);
+
+    printf("Enter the values of elements one by one: ");
+
+    for(a=0; a<=n-1; a++){
+
+      scanf("%f",&b[a]); 
+
+      p = &b[0];
+
+    }
+
+    for(a=0; a<=n-1; a++){
+
+     printf("%f ",*p); 
+
+     p++;
+
+    }
+
+     getchar();
+
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/*To pass a one dimensional array to audf and multiply
+
+each element by 10 and print the result.*/
+#include &lt;stdio.h&gt;
+
+void pass(int b[], int c);  // Function prototype
+
+int main() {
+
+    int b[20], a, n;
+
+    printf("How many numbers to enter in the array (size of array): ");
+
+    scanf("%d", &n);
+
+    printf("Enter the elements of the array one by one: ");
+
+    for (a = 0; a < n; a++) {
+
+        scanf("%d", &b[a]);
+
+    }
+
+    pass(b, n);
+
+    printf("The modified elements of the array are: ");  // Print modified array
+
+    for (a = 0; a < n; a++) {
+
+        printf("%d ", b[a]);
+
+    }
+
+    return 0;
+
+}
+
+void pass(int b[], int c) {  // Function definition
+
+    int i;
+
+    for (i = 0; i < c; i++) {
+
+        b[i] = b[i] * 10;  // Multiply each element by 10
+
+    }
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/* To demonstrate 2-D array.*/
+#include &lt;stdio.h&gt;
+
+void main() { 
+
+    int row, col, i, j, b[30][30];
+
+    printf("Enter the number of rows and columns: ");
+
+    scanf("%d%d",&row,&col);
+
+    printf("Enter the value of elements opf array one by one: ");
+
+    for(i=0; i<=row-1; i++){
+
+        for(j=0; j<=col-1; j++){
+
+        scanf("%d",&b[i][j]);
+
+        }
+
+    }
+
+printf("Values of elements of array : ");
+
+    for(i=0; i<=row-1; i++){
+
+        printf("\n");
+
+        for(j=0; j<=col-1; j++){
+
+        printf("%d ",b[i][j]);
+
+        }
+
+    }
+
+    getchar();
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/* This code is used for addition of two matrices.*/
+#include &lt;stdio.h&gt;
+
+int main() {
+
+    int row, col, i, j;
+
+    
+
+    // Input matrix dimensions
+
+    printf("Enter the number of rows and columns of the matrices: ");
+
+    scanf("%d %d", &row, &col);
+
+
+    int matrix1[row][col], matrix2[row][col], sum[row][col];
+
+
+    // Input elements of first matrix
+
+    printf("Enter elements of first matrix:\n");
+
+    for (i = 0; i < row; i++) {
+
+        for (j = 0; j < col; j++) {
+
+            scanf("%d", &matrix1[i][j]);
+
+        }
+
+    }
+
+
+    // Input elements of second matrix
+
+    printf("Enter elements of second matrix:\n");
+
+    for (i = 0; i < row; i++) {
+
+        for (j = 0; j < col; j++) {
+
+            scanf("%d", &matrix2[i][j]);
+
+        }
+
+    }
+
+
+    // Addition of matrices using for(;;) loop
+
+    i = 0;
+
+    for (;;) {
+
+        if (i >= row) break; // Exit condition
+
+        j = 0;
+
+        for (;;) {
+
+            if (j >= col) break; // Exit condition
+
+            sum[i][j] = matrix1[i][j] + matrix2[i][j]; // Add elements
+
+            j++;
+
+        }
+
+        i++;
+
+    }
+
+
+    // Displaying the result matrix
+
+    printf("Sum of matrices:\n");
+
+    for (i = 0; i < row; i++) {
+
+        for (j = 0; j < col; j++) {
+
+            printf("%d ", sum[i][j]);
+
+        }
+
+        printf("\n");
+
+    }
+
+
+    return 0;
+
+}
+
+   </code>
+  </pre>
+  <pre>
+   <code class="language-c">
+/*This code is used for multiplication of two matraice A ans B. */
+#include &lt;stdio.h&gt;
+
+void main() {
+
+   int row1, col1, row2, col2, i, j, k;
+
+    printf("Enter rows and columns of first matrix: ");
+
+    scanf("%d %d", &row1, &col1);
+
+    printf("Enter rows and columns of second matrix: ");
+
+    scanf("%d %d", &row2, &col2);
+
+    if (col1 != row2) {
+
+        printf("Matrix multiplication not possible!\n");
+
+    }
+
+    int matrix1[row1][col1], matrix2[row2][col2], result[row1][col2];
+
+    printf("Enter elements of first matrix:\n");
+
+    for (i = 0; i < row1; i++)
+
+        for (j = 0; j < col1; j++)
+
+            scanf("%d", &matrix1[i][j]);
+
+    printf("Enter elements of second matrix:\n");
+
+    for (i = 0; i < row2; i++)
+
+        for (j = 0; j < col2; j++)
+
+            scanf("%d", &matrix2[i][j]);
+
+
+    for (i = 0; i < row1; i++)
+
+        for (j = 0; j < col2; j++) {
+
+            result[i][j] = 0;
+
+            for (k = 0; k < col1; k++)
+
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+
+        }
+
+
+    printf("Resultant Matrix:\n");
+
+    for (i = 0; i < row1; i++) {
+
+        for (j = 0; j < col2; j++)
+
+            printf("%d ", result[i][j]);
+
+        printf("\n");
+
+    }
+    
+}
+ </code>
+</pre>
+<pre>
+    <code class="language-c">
+/*This code is an example of malloc(), realloc() and free().*/
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void main() { 
+    int *a;
+
+    int size = 5;
+
+ /Allocate memory for a 2D array./
+
+    a = (int *)malloc(size * sizeof(int)); 
+
+ /Reallocate memory to increase the size./
+
+    int newSize = size + 10;
+
+    a = (int *)realloc(a, newSize * sizeof(int));  
+
+    free(a);    //Free the allocated memory
+    
+}
+   </code>
+  </pre>
+ </div>
+</body>
+</html>
