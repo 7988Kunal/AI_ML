@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI/ML second Year Dashboard</title>
+  <style>
+    :root {
+      --primary: #2e86de;
+      --background: #f5f8ff;
+      --text: #222;
+      --accent: #ffcc00;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  color: white;
+  background-color: rgb(46, 188, 228);
+  padding: 15px 15px;
+  box-shadow: 1px 1px 10px 1px gray;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Add this to body to prevent overlap with fixed header */
+body {
+  padding-top: 70px;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+    
+
+    .container {
+      max-width: 1000px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .accordion {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: 15px 20px;
+      background: white;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .accordion-content {
+      padding: 15px 20px;
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .accordion-content ul {
+      list-style: disc;
+      margin-left: 20px;
+    }
+
+    .accordion-content a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .notice-card {
+      background: #fff8d6;
+      border-left: 5px solid var(--accent);
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
+    .dropdown {
+      margin-top: 10px;
+    }
+
+    .dropdown-title {
+      cursor: pointer;
+      font-weight: 600;
+      padding: 10px;
+      background: #f1f3f8;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
+
+    .dropdown-content {
+      margin-top: 5px;
+      display: none;
+      padding-left: 15px;
+    }
+
+    #important-notices .notice-card:nth-child(n+4) {
+      display: none;
+    }
+
+    #read-more-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 0.95em;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      background-color:#000;
+      /*background: var(--primary);*/
+      color: white;
+      padding: 12px;
+      margin-top: 30px;
+      font-size: 0.95em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .accordion-header {
+        font-size: 1em;
+      }
+
+      .accordion-content {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>Artificial Intelligence & Machine Learning (AIML) 2nd Year Dashboard 2025-2026 (June)</header>
+<div class="container">
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">Subjects Offered <span>+</span></div>
+    <div class="accordion-content">
+      <ul>
+        <li>Data Structures & Algorithms</li>
+        <li>Operating Systems</li>
+        <li>Database Management Systems</li>
+        <li>Computer Networks</li>
+        <li>Mathematics for AI</li>
+        <li>Python for Data Science</li>
+        <li>Mini Project</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">Study Resources & Notes <span>+</span></div>
+    <div class="accordion-content">
+
+      <div class="dropdown">
+        <div class="dropdown-title" onclick="toggleDropdown(this)">DSA Notes</div>
+        <div class="dropdown-content">
+          <ul>
+            <li><a href="#">Unit 1 - Arrays</a></li>
+            <li><a href="#">Unit 2 - Linked Lists</a></li>
+            <li><a href="#">Unit 3 - Trees</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-title" onclick="toggleDropdown(this)">Operating Systems</div>
+        <div class="dropdown-content">
+          <ul>
+            <li><a href="#">Unit 1 - Processes</a></li>
+            <li><a href="#">Unit 2 - Scheduling</a></li>
+            <li><a href="#">Unit 3 - Memory Management</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-title" onclick="toggleDropdown(this)">DBMS</div>
+        <div class="dropdown-content">
+          <ul>
+            <li><a href="#">Unit 1 - ER Diagrams</a></li>
+            <li><a href="#">Unit 2 - SQL Basics</a></li>
+            <li><a href="#">Unit 3 - Normalization</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-title" onclick="toggleDropdown(this)">Python / ML</div>
+        <div class="dropdown-content">
+          <ul>
+            <li><a href="#">Pandas Cheat Sheet</a></li>
+            <li><a href="#">Matplotlib Basics</a></li>
+            <li><a href="#">ML Project GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">Assignments & Deadlines <span>+</span></div>
+    <div class="accordion-content">
+      <ul>
+        <!--<li>DBMS ER Diagram – Due: <strong>22 May</strong></li>
+         <li>Python Data Analysis – Due: <strong>28 May</strong></li>
+        <li>Mini Project Proposal – Due: <strong>1 June</strong></li>-->
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">Important Notices <span>–</span></div>
+    <div class="accordion-content" style="display: block;">
+      <div id="important-notices">
+        <div class="notice-card">
+          <strong>Post:</strong> No post to display <strong>
+          </strong>.
+        </div>
+     <!--   <div class="notice-card">
+         <strong>Internal Viva:</strong> Starts from <strong>25 May</strong>. Contact your faculty.
+        </div>
+        <div class="notice-card">
+          <strong>Class Tests:</strong> Begin from <strong>5 June</strong>.
+        </div>
+        <div class="notice-card">
+          <strong>Summer Training:</strong> Registration opens <strong>1 June</strong>.
+        </div>
+        <div class="notice-card">
+          <strong>AI Club Hackathon:</strong> Submit by <strong>10 June</strong>.
+        </div>-->
+      </div>
+      <button id="read-more-btn" onclick="expandNotices()">Read More</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 | AI & ML Department | 2nd Year Dashboard
+</footer>
+
+<script>
+  let readMoreClicked = false;
+
+  function toggleAccordion(header) {
+    const content = header.nextElementSibling;
+    const icon = header.querySelector('span');
+    const isOpen = content.style.display === 'block';
+
+    if (!isOpen) {
+      content.style.display = 'block';
+      icon.textContent = '–';
+
+      // Restore "Read More" state if it was clicked earlier
+      if (header.textContent.includes('Important Notices') && readMoreClicked) {
+        const notices = document.querySelectorAll('#important-notices .notice-card');
+        notices.forEach(n => n.style.display = 'block');
+        document.getElementById('read-more-btn').style.display = 'none';
+      }
+    } else {
+      content.style.display = 'none';
+      icon.textContent = '+';
+    }
+  }
+
+  function toggleDropdown(title) {
+    const content = title.nextElementSibling;
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function expandNotices() {
+    const notices = document.querySelectorAll('#important-notices .notice-card');
+    notices.forEach(n => n.style.display = 'block');
+    document.getElementById('read-more-btn').style.display = 'none';
+    readMoreClicked = true;
+  }
+</script>
+</body>
+</html>
