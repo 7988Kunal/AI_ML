@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>AIML Second Year Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" crossorigin="anonymous" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f4f4f4;
+    }
+    .hbse {
+      font-size: 18px;
+      background-color: rgba(41, 88, 255, 0.981);
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+    }
+    .result {
+      text-align: center;
+      padding: 20px;
+    }
+    .result span {
+      background-color: orange;
+      padding: 10px;
+      font-weight: bold;
+    }
+    #res {
+      background-color: #ffd;
+      margin: 10px auto;
+      max-width: 500px;
+      padding: 30px 20px;
+      border: 0.2px solid #ccc;
+      border-radius: 5px;
+    }
+    .display {
+      margin: 15px 0;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .dob {
+      display: flex;
+      gap: 5px;
+    }
+    .dob select {
+      flex: 1;
+    }
+    #roy {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+    #key {
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: 3px;
+    }
+    #fa {
+      cursor: pointer;
+      margin-left: 10px;
+      color: #333;
+    }
+    .btn {
+      padding: 10px 15px;
+      background-color: orange;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: darkorange;
+    }
+    @media (max-width: 600px) {
+      .dob {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hbse">Artificial Intelligence & Machine Learning (AIML), Computer Science Engineering (CSE) Bachelor of Technology (B.Tech.) Second Year 2025–2026 (June)</div>
+  <div class="result"><span>AIML Second Year Login</span></div>
+  <form id="res" novalidate>
+    <div class="display">
+      <label>Class</label>
+      <input disabled type="text" value="B.Tech / B.E." />
+    </div>
+    <div class="display">
+      <label>Branch</label>
+      <input disabled type="text" value="AIML" />
+    </div>
+    <div class="display">
+      <label>Year</label>
+      <input disabled type="text" value="Second" />
+    </div>
+    <div class="display">
+      <label>Semester</label>
+      <input disabled type="text" value="III" />
+    </div>
+    <div class="display">
+      <label>Class Roll Number</label>
+      <input type="number" id="roll" placeholder="Enter class roll number" />
+      <div id="roll-error" class="error"></div>
+    </div>
+    <div class="display">
+      <label>DOB <span style="color:red">*</span></label>
+      <div class="dob">
+        <select id="date"><option value="">Date</option><script>for (let i=1;i<=31;i++)document.write(`<option>${i}</option>`);</script></select>
+        <select id="month">
+          <option value="">Month</option>
+          <option>January</option><option>February</option><option>March</option>
+          <option>April</option><option>May</option><option>June</option>
+          <option>July</option><option>August</option><option>September</option>
+          <option>October</option><option>November</option><option>December</option>
+        </select>
+        <select id="year"><option value="">Year</option><script>for (let y=2005;y<=2008;y++)document.write(`<option>${y}</option>`);</script></select>
+      </div>
+      <div id="dob-error" class="error"></div>
+    </div>
+    <div class="display">
+      <label>Captcha</label>
+      <div id="roy">
+        <div id="key"></div>
+        <i onclick="refresh()" id="fa" class="fas fa-sync"></i>
+      </div>
+      <input type="text" id="captcha" placeholder="Enter captcha code" />
+      <div id="captcha-error" class="error"></div>
+    </div>
+    <div>
+      <i class="far fa-save"></i>
+      <input type="submit" class="btn" value="Submit" />
+    </div>
+  </form>
+
+  <script>
+    const key = document.getElementById("key");
+    let currentCaptcha = "";
+
+    function generateCaptcha() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let captcha = "";
+      for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      currentCaptcha = captcha;
+      key.innerText = captcha;
+    }
+
+    function refresh() {
+      generateCaptcha();
+    }
+
+    document.getElementById("res").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Clear all previous errors
+      document.getElementById("roll-error").textContent = "";
+      document.getElementById("dob-error").textContent = "";
+      document.getElementById("captcha-error").textContent = "";
+
+      let valid = true;
+
+      const roll = document.getElementById("roll").value.trim();
+      const date = document.getElementById("date").value;
+      const month = document.getElementById("month").value;
+      const year = document.getElementById("year").value;
+      const captcha = document.getElementById("captcha").value.trim();
+
+      if (roll === "") {
+        document.getElementById("roll-error").textContent = "Roll number cannot be blank.";
+        valid = false;
+      } else if (!/^\d{7}$/.test(roll)) {
+        document.getElementById("roll-error").textContent = "Roll number must be exactly 7 digits.";
+        valid = false;
+      } else if (!roll.startsWith("2411")) {
+        document.getElementById("roll-error").textContent = "Enter a valid roll number";
+        valid = false;
+      } else if (+roll < 2411001 || +roll > 2411076) {
+        document.getElementById("roll-error").textContent = "Enter a valid roll number";
+        valid = false;
+      }
+
+      if (date === "" || month === "" || year === "") {
+        document.getElementById("dob-error").textContent = "Please select a complete Date of Birth.";
+        valid = false;
+      }
+
+      if (captcha === "") {
+        document.getElementById("captcha-error").textContent = "Captcha is required.";
+        valid = false;
+      } else if (captcha !== currentCaptcha) {
+        document.getElementById("captcha-error").textContent = "Incorrect captcha. Please try again.";
+        refresh();
+        valid = false;
+      }
+
+      if (valid) {
+        window.location.href = "404.html";
+      }
+    });
+
+    window.onload = generateCaptcha;
+  </script>
+</body>
+</html>
