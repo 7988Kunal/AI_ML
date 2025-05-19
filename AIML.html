@@ -812,7 +812,7 @@ img{
       resize: vertical;
       min-height: 100px;
     }
-
+    
     .contact-form button {
       background: #2da44e;
       color: white;
@@ -851,6 +851,37 @@ img{
       100% { opacity: 0; transform: translateY(-20px); }
     }
 
+    .animated-text {
+      font-weight:bold;
+      border:1px solid gray;
+      text-align:center;
+      font-size:14px;
+      padding:5px;
+      width:320px;
+      animation: fadeColor 2s infinite;
+    }
+    .a1{
+      margin:10px;
+      display:flex;
+      flex-direction:row;
+      justify-content:center;
+      align-content:center;
+      align-items:center;
+    }
+    @keyframes fadeColor {
+      0% {
+        color:rgb(208,13,5);
+        opacity: 1;
+      }
+      50% {
+        color: rgb(208,13,5);
+        opacity: 0;
+      }
+      100% {
+        color: white;
+        opacity: 1;
+      }
+    
     @media (max-width: 600px) {
       .contact-form {
         padding: 25px 15px;
@@ -977,9 +1008,23 @@ img{
   <br>
   <div class="news" style="display:flex;justify-content:center;align-items:center;">
    <font style="background-color:brown;color:#fff;padding:10px;width:130px;">Latest News</font>
-   <marquee style=" background-color:rgb(249,249,249);height:40px;display:flex;align-items:center;"behavior="left" direction="left" scrollamount="8"><strong style="color:red;font-weight:500;">AIML 2nd Semester Exam is scheduled for 2 [ Maths-II ] June, 5 [ Chemistry-I ] June,10 [ Workshop Technology ] June & 12 [ PPS ] June as dated on 19 May 2025.</strong><!--AIML Second Year details is maintained separately click on provided link for login to get more updates.Complete syllabus of Semester II is now available on site.--><!--<a href="">Note:-</a> Please be safe & secure and follow all guidelines delivered by government during tension Between India-Pakistan.<!--To access 'C' Programming Codes for PPS Assignment [<a href="Code.html"> Click Here</a> ] ॐ Jai Hind Jai Bharat
+   <marquee style=" background-color:rgb(249,249,249);height:40px;display:flex;align-items:center;"behavior="left" direction="left" scrollamount="8"><strong style="color:red;font-weight:500;">AIML Second Semester Exam is going to start from 3rd June.</strong><!--AIML Second Year details is maintained separately click on provided link for login to get more updates.Complete syllabus of Semester II is now available on site.--><!--<a href="">Note:-</a> Please be safe & secure and follow all guidelines delivered by government during tension Between India-Pakistan.<!--To access 'C' Programming Codes for PPS Assignment [<a href="Code.html"> Click Here</a> ] ॐ Jai Hind Jai Bharat
     ॐ-->
    </marquee>
+  </div>
+  <div class="a1">
+   <div class="animated-text">AIML Second Semester Exam Schedule 
+     <br>
+     3 June - Maths-II
+     <br>
+     5 June - Chemistry-I
+     <br>
+     10 June - Workshop Technology
+     <br>
+     12 June - PPS
+     <br>
+     Dated on 19 May 2025
+   </div>
   </div>
   <br>
   <div class="second">
