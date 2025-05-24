@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UIET MDU Results Rohtak</title>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+  .container {
+    padding: 15px;
+    color: #fff;
+    width: 100%;
+    max-width: 700px;
+    background-color: rgb(4,116,200);
+    box-shadow: 1px 1px 10px 1px gray;
+    border-radius: 5px;
+  }
+  input {
+    outline: none;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid rgb(226,230,231);
+    border-radius: 3px;
+    color: blue;
+  }
+  input:hover {
+    border: 1px solid rgb(16,188,184);
+    box-shadow: 1px 1px 10px 1px rgb(16,188,184);
+  }
+  .top {
+    margin: 10px;
+    text-shadow: 1px 1px red;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+  }
+  .part {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  label {
+    margin-bottom: 5px;
+  }
+  span {
+    font-weight: bold;
+    color: rgb(10,174,71);
+    margin-left: 2px;
+  }
+  #sub {
+    outline: none;
+    padding: 5px 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid rgb(41,128,159);
+    border-radius: 3px;
+    font-weight: bold;
+    background-color: rgb(103,188,218);
+    color: #fff;
+    cursor: pointer;
+  }
+  #sub:hover {
+    background-color: rgb(65,203,238);
+    border: 2px solid;
+  }
+  .part0 {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .note {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  .note span {
+    color: rgb(120,10,174);
+    text-shadow: 0.5px 0.5px 0px #fff;
+  }
+  .error {
+    color: yellow;
+    font-size: 13px;
+    margin-left: 5px;
+  }
+  .result-section, .result-details {
+    margin-top: 20px;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  th {
+    background-color: rgb(4,116,200);
+    color: #fff;
+  }
+  .view-btn {
+    background-color: rgb(103,188,218);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .release-date {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #fff;
+    font-family: cursive;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="top">UIET- MDU ,AIML Rohtak Results</div>
+    <form id="resultForm" onsubmit="return checkResult(event)">
+      <div class="part">
+        <label>Registration No.<span>*</span></label>
+        <input type="text" id="reg" maxlength="10" />
+        <div class="error" id="regError"></div>
+      </div>
+      <div class="part">
+        <label>Exam Roll No.<span>*</span></label>
+        <input type="text" id="roll" maxlength="7" />
+        <div class="error" id="rollError"></div>
+      </div>
+      <div class="part">
+        <label>Phone Number (+91)<span>*</span></label>
+        <input type="text" id="phone" maxlength="10" />
+        <div class="error" id="phoneError"></div>
+      </div>
+      <div class="part">
+        <label>Email ID<span>*</span></label>
+        <input type="email" id="email" />
+        <div class="error" id="emailError"></div>
+      </div>
+      <div class="part0">
+        <input id="sub" type="submit" value="Proceed to check result" />
+      </div>
+    </form>
+    <div class="note"><span>Note:-</span> The results displayed here are subject to correction/updation. The final result will appear on the DMC.</div>
+    <div id="resultSection" class="result-section" style="display:none;"></div>
+    <div id="resultDetails" class="result-details" style="display:none;"></div>
+    <div id="releaseDate" class="release-date" style="display:none;">Result Released on: 15 May 2025</div>
+  </div>
+
+<script>
+  const form = document.getElementById('resultForm');
+  const resultSection = document.getElementById('resultSection');
+  const resultDetails = document.getElementById('resultDetails');
+  const releaseDate = document.getElementById('releaseDate');
+
+  // Subject structure:
+  // maxTheory, maxInternal, maxExternal, maxSessional, maxTotal (sum of above)
+  // Marks: theory, internal, external, sessional
+  // Passing criteria: 
+  // - total >= 40% of maxTotal
+  // - theory + sessional >= 40% of (maxTheory + maxSessional)
+
+  const studentDB = {
+    '2418380309': {
+      roll: '8400343',
+      phone: '7988202003',
+      email: 'student@example.com',
+      name: 'Rahul Sharma',
+      branch: 'AIML',
+      sem: '2nd',
+      marks: [
+        {
+          subject: 'DBMS',
+          maxTheory: 75,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 40, internal: 20, external: 22, sessional: 18 }
+        },
+        {
+          subject: 'CN',
+          maxTheory: 60,  // example of varied max theory
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 35, internal: 24, external: 20, sessional: 23 }
+        },
+        {
+          subject: 'OS',
+          maxTheory: 75,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 25, internal: 15, external: 10, sessional: 15 }
+        }
+      ]
+    },
+    '2418380310': {
+      roll: '8400344',
+      phone: '9999999999',
+      email: 'student1@example.com',
+      name: 'Ashish',
+      branch: 'AIML',
+      sem: '2nd',
+      marks: [
+        {
+          subject: 'PPS',
+          maxTheory: 75,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 33, internal: 19, external: 21, sessional: 17 }
+        },
+        {
+          subject: 'Maths-I',
+          maxTheory:75,  // example of varied max theory
+          maxInternal: 0,
+          maxExternal: 0,
+          maxSessional: 25,
+          marks: { theory: 35, internal: 0, external: 0, sessional:10 }
+        },
+        {
+          subject: 'Chemistry-I',
+          maxTheory: 75,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 25, internal: 15, external:18, sessional: 18 }
+        },
+        {
+          subject: 'Workshop',
+          maxTheory: 75,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional: 25,
+          marks: { theory: 37, internal: 10, external:13, sessional: 18 }
+        },
+       {
+          subject: 'English lab',
+          maxTheory:0,
+          maxInternal: 25,
+          maxExternal: 25,
+          maxSessional:0,
+          marks: { theory: 0, internal:19, external:21, sessional: 0 }
+        } 
+      ]
+    }
+  };
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const reg = document.getElementById('reg').value.trim();
+    const roll = document.getElementById('roll').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    document.getElementById('regError').innerText = '';
+    document.getElementById('rollError').innerText = '';
+    document.getElementById('phoneError').innerText = '';
+    document.getElementById('emailError').innerText = '';
+
+    let isValid = true;
+
+    if (!reg || reg.length !== 10) {
+      document.getElementById('regError').innerText = 'Registration number must be 10 digits.';
+      isValid = false;
+    }
+    if (!roll || roll.length !== 7) {
+      document.getElementById('rollError').innerText = 'Exam roll number must be 7 digits.';
+      isValid = false;
+    }
+    if (!/^[0-9]{10}$/.test(phone)) {
+      document.getElementById('phoneError').innerText = 'Enter a valid 10-digit mobile number.';
+      isValid = false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('emailError').innerText = 'Enter a valid email ID.';
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
+    const student = studentDB[reg];
+    if (student && student.roll === roll && student.phone === phone && student.email === email) {
+      resultSection.innerHTML = `
+        <table>
+          <tr><th>Name</th><th>Branch</th><th>Semester</th><th>Reg No</th><th>Roll No</th><th>Action</th></tr>
+          <tr>
+            <td>${student.name}</td>
+            <td>${student.branch}</td>
+            <td>${student.sem}</td>
+            <td>${reg}</td>
+            <td>${student.roll}</td>
+            <td><button class="view-btn" onclick="showDetails('${reg}')">View</button></td>
+          </tr>
+        </table>
+      `;
+      resultSection.style.display = 'block';
+      resultDetails.style.display = 'none';
+      releaseDate.style.display = 'none';
+    } else {
+      resultSection.innerHTML = '<div style="color:red;font-weight:bold;">Result not found in the system.</div>';
+      resultSection.style.display = 'block';
+      resultDetails.style.display = 'none';
+      releaseDate.style.display = 'none';
+    }
+  });
+
+  function showDetails(reg) {
+    const student = studentDB[reg];
+    if (!student) return;
+
+    let totalMaxMarks = 0;
+    let totalObtainedMarks = 0;
+    let overallPass = true;
+
+    let rows = student.marks.map(mark => {
+      const maxTheory = mark.maxTheory;
+      const maxInternal = mark.maxInternal;
+      const maxExternal = mark.maxExternal;
+      const maxSessional = mark.maxSessional;
+      const maxTotal = maxTheory + maxInternal + maxExternal + maxSessional;
+
+      const theory = mark.marks.theory;
+      const internal = mark.marks.internal;
+      const external = mark.marks.external;
+      const sessional = mark.marks.sessional;
+
+      const total = theory + internal + external + sessional;
+
+      totalMaxMarks += maxTotal;
+      totalObtainedMarks += total;
+
+      // Pass conditions
+      const passTotal = total >= 0.4 * maxTotal;
+      const passTheorySessional = (theory + sessional) >= 0.4 * (maxTheory + maxSessional);
+      const subjectPass = passTotal && passTheorySessional;
+
+      if (!subjectPass) overallPass = false;
+
+      return `
+        <tr>
+          <td>${mark.subject}</td>
+          <td>${theory} / ${maxTheory}</td>
+          <td>${sessional} / ${maxSessional}</td>
+          <td>${internal} / ${maxInternal}</td>
+          <td>${external} / ${maxExternal}</td>
+          <td>${total} / ${maxTotal}</td>
+          <td style="color:${subjectPass ? 'green' : 'red'}">${subjectPass ? 'Pass' : 'Reappear'}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // Overall pass or reappear
+    const overallResult = overallPass ? 'Pass' : 'Reappear';
+    const resultColor = overallPass ? 'green' : 'red';
+
+    resultDetails.innerHTML = `
+      <h3>${student.name}'s Marksheet</h3>
+      <table>
+        <tr>
+          <th>Subject</th>
+          <th>Theory</th>
+          <th>Sessional</th>
+          <th>Internal Practical</th>
+          <th>External Practical</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+        ${rows}
+      </table>
+      <table style="margin-top: 15px; width: 100%; border-collapse: collapse;">
+        <tr>
+          <th style="background-color: ${resultColor}; color: white; padding: 10px; font-size: 18px;">
+            Overall Result: ${overallResult} (Total: ${totalObtainedMarks} / ${totalMaxMarks})
+          </th>
+        </tr>
+      </table>
+    `;
+
+    resultDetails.style.display = 'block';
+    releaseDate.style.display = 'block';
+  }
+
+  function checkResult(event) {
+    event.preventDefault();
+  }
+</script>
+</body>
+</html>
