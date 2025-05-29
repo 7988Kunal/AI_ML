@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Student Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      display:flex;
+      flex-direction:column;
+      background: white;
+      padding:30px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+    #indexInput{
+      ;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>Login by Special code</h2>
+  <input type="text" id="indexInput" placeholder="Enter Special code" />
+  <button onclick="login()">Login</button>
+  <p class="error" id="errorMsg"></p>
+</div>
+
+<script>
+  const allowedIndexes = ["50062kv", "90052am", "30043dv", "60056kn", "7005--", "1006--", "1007--"];
+
+  function login() {
+    const index = document.getElementById("indexInput").value.trim();
+    const error = document.getElementById("errorMsg");
+
+    if (!allowedIndexes.includes(index)) {
+      error.textContent = "You are not authorized.";
+      return;
+    }
+
+    sessionStorage.setItem("currentIndex", index);
+
+    if (localStorage.getItem(index)) {
+      window.location.href = "dashboard.html";
+    } else {
+      window.location.href = "register.html";
+    }
+  }
+</script>
+
+</body>
+</html>
