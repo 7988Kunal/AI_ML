@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 20px;
+    }
+    .dashboard {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    .info {
+      text-align: left;
+      margin-top: 20px;
+    }
+    .section {
+      background: #eef;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      text-align: left;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 20px;
+    }
+    .preview-img, iframe {
+      max-width: 100%;
+      border: 1px solid #ccc;
+      margin-top: 8px;
+      border-radius: 8px;
+    }
+    .action-btn {
+      margin-right: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard">
+  <h2>Welcome</h2>
+  <img id="userImg" src="" alt="Student Photo">
+  <div class="info">
+    <p><strong>Name:</strong> <span id="userName"></span></p>
+    <p><strong>Class:</strong> B.Tech. / B.E.</p>
+    <p><strong>Branch:</strong> CSE - Artificial Intelligence and Machine Learning</p>
+  </div>
+
+  <div class="section">
+    <h3>🔗 Common Instructions</h3>
+    <ul>
+      <li>1. <b>Hello, welcome to dashboard</b>.</li>
+      <li>2. For any updates contact us.</li>
+      <li>3. Each group must maintain a logbook of daily progress.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>🧠 Your Specific Work</h3>
+    <p id="personalWork"></p>
+  </div>
+
+  <div class="section">
+    <h3>📤 Upload Your Work</h3>
+    <input type="text" id="workInput" placeholder="Enter your work summary...">
+    <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="previewFile()">
+    <div id="previewArea"></div>
+    <button onclick="uploadWork()">Upload</button>
+  </div>
+
+  <div class="section">
+    <h3>📚 All Uploaded Works</h3>
+    <div style="display:flex; gap:10px; margin-bottom:10px;">
+      <select id="filterSelect" onchange="displayAllWorks()">
+        <option value="all">Show All Uploads</option>
+        <option value="mine">Show Only My Uploads</option>
+      </select>
+      <select id="sortSelect" onchange="displayAllWorks()">
+        <option value="newest">Sort: Newest First</option>
+        <option value="oldest">Sort: Oldest First</option>
+      </select>
+      <button onclick="exportAll()">📁 Export</button>
+    </div>
+    <ul id="workList"></ul>
+  </div>
+
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script>
+  const personalInstructions = {
+    "50062kv": "Not available",
+    "90052am": "Not available",
+    "30043dv": "Not available",
+    "6056kn": "Not available",
+    "7005--": "Not available",
+    "1006--": "Not available",
+    "1007--": "Not available"
+  };
+
+  let currentUser = "";
+
+  function loadDashboard() {
+    const index = sessionStorage.getItem("currentIndex");
+    const data = localStorage.getItem(index);
+
+    if (!index || !data || !personalInstructions[index]) {
+      window.location.href = "official.html";
+      return;
+    }
+
+    currentUser = index;
+    const student = JSON.parse(data);
+    document.getElementById("userName").textContent = student.name;
+    document.getElementById("userImg").src = student.photo;
+    document.getElementById("personalWork").textContent = personalInstructions[index];
+
+    displayAllWorks();
+  }
+
+  function previewFile() {
+    const file = document.getElementById("fileInput").files[0];
+    const previewArea = document.getElementById("previewArea");
+    previewArea.innerHTML = "";
+
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const fileURL = e.target.result;
+      const fileType = file.type;
+
+      if (fileType.startsWith("image/")) {
+        const img = document.createElement("img");
+        img.src = fileURL;
+        img.className = "preview-img";
+        previewArea.appendChild(img);
+      } else if (fileType === "application/pdf") {
+        const iframe = document.createElement("iframe");
+        iframe.src = fileURL;
+        iframe.className = "preview-img";
+        iframe.style.height = "300px";
+        previewArea.appendChild(iframe);
+      } else {
+        previewArea.innerHTML = `<p>📎 File selected: ${file.name}</p>`;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function uploadWork() {
+    const text = document.getElementById("workInput").value.trim();
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+    const timestamp = new Date().toLocaleString();
+    const student = JSON.parse(localStorage.getItem(currentUser));
+
+    if (!text && !file) {
+      alert("Please enter summary or select file.");
+      return;
+    }
+
+    const reader = new FileReader();
+    if (file) {
+      reader.onload = function(e) {
+        const work = {
+          id: Date.now(),
+          name: student.name,
+          index: currentUser,
+          time: timestamp,
+          text: text,
+          fileName: file.name,
+          fileType: file.type,
+          fileData: e.target.result
+        };
+        saveWork(work);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      const work = {
+        id: Date.now(),
+        name: student.name,
+        index: currentUser,
+        time: timestamp,
+        text: text
+      };
+      saveWork(work);
+    }
+
+    document.getElementById("workInput").value = "";
+    document.getElementById("fileInput").value = "";
+    document.getElementById("previewArea").innerHTML = "";
+  }
+
+  function saveWork(work) {
+    const works = JSON.parse(localStorage.getItem("uploadedWorks")) || [];
+    works.push(work);
+    localStorage.setItem("uploadedWorks", JSON.stringify(works));
+    displayAllWorks();
+  }
+
+  function displayAllWorks() {
+    const workList = document.getElementById("workList");
+    const filter = document.getElementById("filterSelect").value;
+    const sortOrder = document.getElementById("sortSelect").value;
+    workList.innerHTML = "";
+
+    let works = JSON.parse(localStorage.getItem("uploadedWorks")) || [];
+
+    if (filter === "mine") {
+      works = works.filter(w => w.index === currentUser);
+    }
+
+    works.sort((a, b) => sortOrder === "newest" ? b.id - a.id : a.id - b.id);
+
+    works.forEach(w => {
+      const li = document.createElement("li");
+      li.innerHTML = `<b>${w.name}</b> (${w.index}) <i>${w.time}</i><br>
+        <p contenteditable="true" onblur="editText(${w.id}, this.innerText)">${w.text || ""}</p>`;
+
+      if (w.fileData) {
+        if (w.fileType.startsWith("image/")) {
+          li.innerHTML += `<img src="${w.fileData}" class="preview-img">`;
+        } else if (w.fileType === "application/pdf") {
+          li.innerHTML += `<iframe src="${w.fileData}" class="preview-img" style="height:300px;"></iframe>`;
+        } else {
+          li.innerHTML += `<p><a href="${w.fileData}" download="${w.fileName}">📎 ${w.fileName}</a></p>`;
+        }
+      }
+
+      li.innerHTML += `
+        <button class="action-btn" onclick="deleteWork(${w.id})">🗑 Delete</button>
+      `;
+
+      workList.appendChild(li);
+    });
+  }
+
+  function deleteWork(id) {
+    let works = JSON.parse(localStorage.getItem("uploadedWorks")) || [];
+    works = works.filter(w => w.id !== id);
+    localStorage.setItem("uploadedWorks", JSON.stringify(works));
+    displayAllWorks();
+  }
+
+  function editText(id, newText) {
+    let works = JSON.parse(localStorage.getItem("uploadedWorks")) || [];
+    const index = works.findIndex(w => w.id === id);
+    if (index !== -1) {
+      works[index].text = newText.trim();
+      localStorage.setItem("uploadedWorks", JSON.stringify(works));
+    }
+  }
+
+  function exportAll() {
+    const data = localStorage.getItem("uploadedWorks") || "[]";
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "uploaded_works.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function logout() {
+    sessionStorage.removeItem("currentIndex");
+    window.location.href = "official.html";
+  }
+
+  window.onload = loadDashboard;
+</script>
+
+</body>
+</html>
