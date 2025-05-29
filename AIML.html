@@ -13,6 +13,12 @@
       margin:0;
       padding:0;
     } 
+   #last-updated {
+      text-align:center;
+      color: #555;
+      font-size: 16px;
+      margin-top: 20px;
+    }
   .second{
       background-color:rgba(8,218,236,0.981);
       padding:10px;
@@ -1694,6 +1700,13 @@ Structures, File Handling.
     <br>
     <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak © 2025</main>
   </footer>
+  <div id="last-updated"></div>
+  <script>
+    const lastUpdated = new Date(document.lastModified);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("last-updated").textContent =
+      "Last Updated: " + lastUpdated.toLocaleDateString("en-IN", options);
+  </script>
   <!--<div class="foot"></div>-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
