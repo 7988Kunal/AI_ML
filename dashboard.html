@@ -179,6 +179,12 @@
         iframe.className = "preview-img";
         iframe.style.height = "300px";
         previewArea.appendChild(iframe);
+
+        // Also add download link
+        const link = document.createElement("p");
+        link.innerHTML = `<a href="${fileURL}" download="${file.name}">📄 Download PDF: ${file.name}</a> | 
+                          <a href="${fileURL}" target="_blank">🧾 Open in New Tab</a>`;
+        previewArea.appendChild(link);
       } else {
         previewArea.innerHTML = `<p>📎 File selected: ${file.name}</p>`;
       }
@@ -260,7 +266,10 @@
         if (w.fileType.startsWith("image/")) {
           li.innerHTML += `<img src="${w.fileData}" class="preview-img">`;
         } else if (w.fileType === "application/pdf") {
-          li.innerHTML += `<iframe src="${w.fileData}" class="preview-img" style="height:300px;"></iframe>`;
+          li.innerHTML += `
+            <iframe src="${w.fileData}" class="preview-img" style="height:300px;"></iframe>
+            <p><a href="${w.fileData}" download="${w.fileName}">📄 Download PDF: ${w.fileName}</a> | 
+            <a href="${w.fileData}" target="_blank">🧾 Open in New Tab</a></p>`;
         } else {
           li.innerHTML += `<p><a href="${w.fileData}" download="${w.fileName}">📎 ${w.fileName}</a></p>`;
         }
