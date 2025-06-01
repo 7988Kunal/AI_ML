@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Student Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,10 +15,10 @@
       margin: 0;
     }
     .box {
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
       background: white;
-      padding:30px;
+      padding: 30px;
       border-radius: 8px;
       width: 100%;
       max-width: 400px;
@@ -38,31 +38,35 @@
       color: white;
       border: none;
       border-radius: 5px;
+      cursor: pointer;
     }
     .error {
       color: red;
       margin-top: 10px;
-    }
-    #indexInput:hover{
-      border:1px solid black;
     }
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h2>Login by Special code</h2>
-  <input type="password" id="indexInput" placeholder="Enter Special code" />
+  <h2>Login by Special Code</h2>
+  <input type="text" id="indexInput" placeholder="Enter Special Code" />
   <button onclick="login()">Login</button>
   <p class="error" id="errorMsg"></p>
 </div>
 
 <script>
-  const allowedIndexes = ["50062kv", "90052am", "30043dv", "60056kn", "7005--", "1006--", "1007--"];
+  const allowedIndexes = ["40062kv", "90052am", "30043dv", "60056kn"];
+  const cutoff = new Date("2025-06-30T23:59:59");
+
+  window.onload = function() {
+    alert("Reminder: Registration is open until 30 June 2025, 11:59 PM. Please complete your registration before the deadline.");
+  };
 
   function login() {
-    const index = document.getElementById("indexInput").value.trim();
+    const index = document.getElementById("indexInput").value.trim().toLowerCase();
     const error = document.getElementById("errorMsg");
+    error.textContent = "";
 
     if (!allowedIndexes.includes(index)) {
       error.textContent = "You are not authorized.";
@@ -71,10 +75,17 @@
 
     sessionStorage.setItem("currentIndex", index);
 
-    if (localStorage.getItem(index)) {
+    const existingData = localStorage.getItem(index);
+
+    if (existingData) {
       window.location.href = "dashboard.html";
     } else {
-      window.location.href = "register.html";
+      const now = new Date();
+      if (now <= cutoff) {
+        window.location.href = "register.html";
+      } else {
+        error.textContent = "Your time of registration has expired. You cannot login.";
+      }
     }
   }
 </script>
