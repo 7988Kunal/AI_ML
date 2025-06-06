@@ -56,7 +56,7 @@
 </div>
 
 <script>
-  const allowedIndexes = ["40062kv", "90052am", "30043dv", "60056kn"];
+  //const allowedIndexes = ["40062kv", "90052am", "30043dv", "60056kn"];
   const cutoff = new Date("2025-06-05T23:59:59");
 
   window.onload = function() {
@@ -69,10 +69,10 @@
     const error = document.getElementById("errorMsg");
     error.textContent = "";
 
-    if (!allowedIndexes.includes(index)) {
+    /*if (!allowedIndexes.includes(index)) {
       error.textContent = "You are not authorized.";
       return;
-    }
+    }*/
 
     sessionStorage.setItem("currentIndex", index);
 
