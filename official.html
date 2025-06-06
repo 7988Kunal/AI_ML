@@ -57,10 +57,11 @@
 
 <script>
   const allowedIndexes = ["40062kv", "90052am", "30043dv", "60056kn"];
-  const cutoff = new Date("2025-06-30T23:59:59");
+  const cutoff = new Date("2025-06-05T23:59:59");
 
   window.onload = function() {
-    alert("Reminder: Registration is open until 30 June 2025, 11:59 PM. Please complete your registration before the deadline.");
+    //alert("Reminder: Registration is open until 30 June 2025, 11:59 PM. Please complete your registration before the deadline.");
+    alert("Their is a technical problem data is not saving at Globally.Stay tunned.");
   };
 
   function login() {
@@ -84,7 +85,7 @@
       if (now <= cutoff) {
         window.location.href = "register.html";
       } else {
-        error.textContent = "Your time of registration has expired. You cannot login.";
+        error.textContent = "There is some technical glitches.Stay tunned for correction after 19 June 2025";
       }
     }
   }
