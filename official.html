@@ -1,95 +1,472 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Student Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Login & Admin Panel</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: #f0f4f8;
       margin: 0;
-    }
-    .box {
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      align-items: center;
+      gap: 20px;
     }
-    input {
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 16px;
+    @media (min-width: 768px) {
+      body {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+      }
+    }
+    .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 350px;
+    }
+    h2 {
+      margin: 0 0 15px;
+      font-size: 1.4rem;
+      color: #222;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #555;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
     }
     button {
+      margin-top: 15px;
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 16px;
-      background-color: #007bff;
+      padding: 10px;
+      background: #0a74da;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
+      font-size: 1rem;
       cursor: pointer;
     }
-    .error {
-      color: red;
+    button:hover {
+      background: #065aab;
+    }
+    .list {
+      margin-top: 15px;
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 8px;
+      background: #fafafa;
+    }
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .list-item:last-child {
+      border-bottom: none;
+    }
+    .remove-btn {
+      background: #dc3545;
+      border: none;
+      color: white;
+      border-radius: 3px;
+      padding: 2px 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .error, .success {
       margin-top: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .error {
+      background: #f8d7da;
+      color: #842029;
+    }
+    .success {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+    /* Popup overlay */
+    #registrationPopup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    #registrationPopup .popup-content {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    #registrationPopup h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #222;
+    }
+    #registrationPopup label {
+      margin-top: 15px;
+      font-weight: 600;
+      color: #555;
+    }
+    #registrationPopup input[type="text"],
+    #registrationPopup select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    #registrationPopup button[type="submit"] {
+      margin-top: 20px;
+      background: #198754;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+    }
+    #registrationPopup button[type="submit"]:hover {
+      background: #145c32;
+    }
+    #registrationPopup #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
     }
   </style>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
 </head>
 <body>
 
-<div class="box">
-  <h2>Login by Special Code</h2>
-  <input type="password" id="indexInput" placeholder="Enter Special Code" />
-  <button onclick="login()">Login</button>
-  <p class="error" id="errorMsg"></p>
-</div>
+  <!-- Admin Panel -->
+  <div class="panel" id="adminPanel">
+    <h2>Admin Panel</h2>
+    <label for="adminIndex">Admin Index Number</label>
+    <input type="text" id="adminIndex" placeholder="Enter admin index" />
+    <button id="adminLoginBtn">Login as Admin</button>
 
-<script>
-  //const allowedIndexes = ["40062kv", "90052am", "30043dv", "60056kn"];
-  const cutoff = new Date("2025-06-05T23:59:59");
+    <div id="adminActions" style="display:none;">
+      <label for="newIndex">Add New Index Number</label>
+      <input type="text" id="newIndex" placeholder="Enter new index number" />
+      <button id="addIndexBtn">Add Index</button>
+      <div class="list" id="indexList"></div>
+    </div>
 
-  window.onload = function() {
-    //alert("Reminder: Registration is open until 30 June 2025, 11:59 PM. Please complete your registration before the deadline.");
-    alert("Their is a technical problem data is not saving at Globally.Stay tunned.");
-  };
+    <div id="adminMessage"></div>
+  </div>
 
-  function login() {
-    const index = document.getElementById("indexInput").value.trim().toLowerCase();
-    const error = document.getElementById("errorMsg");
-    error.textContent = "";
+  <!-- User Panel -->
+  <div class="panel" id="userPanel">
+    <h2>User Login</h2>
+    <label for="userIndex">Index Number</label>
+    <input type="text" id="userIndex" placeholder="Enter your index number" />
+    <button id="userLoginBtn">Login</button>
+    <div id="userMessage"></div>
+  </div>
 
-    /*if (!allowedIndexes.includes(index)) {
-      error.textContent = "You are not authorized.";
-      return;
-    }*/
+  <!-- Registration Popup -->
+  <div id="registrationPopup">
+    <div class="popup-content">
+      <button id="closePopup" title="Close">&times;</button>
+      <h3>Complete Your Registration</h3>
+      <form id="registrationForm">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required />
 
-    sessionStorage.setItem("currentIndex", index);
+        <label for="classSelect">Class</label>
+        <select id="classSelect" name="classSelect" required>
+          <option value="">Select Class</option>
+          <option value="B.Tech">B.Tech</option>
+          <option value="B.E.">B.Arch.</option>
+        </select>
 
-    const existingData = localStorage.getItem(index);
+        <label for="branchSelect">Branch</label>
+        <select id="branchSelect" name="branchSelect" required>
+          <option value="">Select Branch</option>
+          <option value="CSE Artificial Intelligence and Machine Learning">CSE Artificial Intelligence and Machine Learning</option>
+          <option value="CSE Computer Science and Engineering">CSE Computer Science and Engineering</option>
+          <option value="ECE Electronics and Communication Engineering">ECE Electronics and Communication Engineering</option>
+          <option value="ME Mechanical Engineering">ME Mechanical Engineering</option>
+          <!-- add more branches as needed -->
+        </select>
 
-    if (existingData) {
-      window.location.href = "official.html";
-    } else {
-      const now = new Date();
-      if (now <= cutoff) {
-        window.location.href = "register.html";
-      } else {
-        error.textContent = "There is some technical glitches.Stay tunned for correction after 19 June 2025";
+        <button type="submit">Submit Registration</button>
+        <div id="registrationMessage"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Firebase config & init
+    const firebaseConfig = {
+      apiKey: "AIzaSyD4Lk0EjPJAYPPKdzTBb-IOMP7kpzEmrFA",
+      authDomain: "studentdashboard-final.firebaseapp.com",
+      projectId: "studentdashboard-final",
+      storageBucket: "studentdashboard-final.appspot.com",
+      messagingSenderId: "576065271267",
+      appId: "1:576065271267:web:05636f4ae4236f3298dcd6",
+      measurementId: "G-PQXQE19D1F"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const ADMIN_INDEX = '40062kv';
+
+    // Admin panel elements
+    const adminIndexInput = document.getElementById('adminIndex');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const adminActions = document.getElementById('adminActions');
+    const newIndexInput = document.getElementById('newIndex');
+    const addIndexBtn = document.getElementById('addIndexBtn');
+    const indexList = document.getElementById('indexList');
+    const adminMessage = document.getElementById('adminMessage');
+
+    // User panel elements
+    const userIndexInput = document.getElementById('userIndex');
+    const userLoginBtn = document.getElementById('userLoginBtn');
+    const userMessage = document.getElementById('userMessage');
+
+    // Registration popup elements
+    const registrationPopup = document.getElementById('registrationPopup');
+    const closePopupBtn = document.getElementById('closePopup');
+    const registrationForm = document.getElementById('registrationForm');
+    const fullNameInput = document.getElementById('fullName');
+    const classSelect = document.getElementById('classSelect');
+    const branchSelect = document.getElementById('branchSelect');
+    const registrationMessage = document.getElementById('registrationMessage');
+
+    let currentUserIndex = '';
+
+    // Admin login
+    adminLoginBtn.onclick = async () => {
+      const adminIndex = adminIndexInput.value.trim().toLowerCase();
+      if (adminIndex !== ADMIN_INDEX) {
+        adminMessage.textContent = 'Invalid admin index number';
+        adminMessage.className = 'error';
+        return;
       }
-    }
-  }
-</script>
+      adminMessage.textContent = 'Logged in as Admin';
+      adminMessage.className = 'success';
+      adminActions.style.display = 'block';
+      adminIndexInput.style.display = 'none';
+      adminLoginBtn.style.display = 'none';
+      await loadIndexNumbers();
+    };
 
+    async function loadIndexNumbers() {
+      indexList.innerHTML = 'Loading...';
+      const snapshot = await db.collection('allowedIndexes').orderBy('index').get();
+      indexList.innerHTML = '';
+      snapshot.forEach(doc => {
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `
+          <span>${doc.data().index}</span>
+          <button class="remove-btn" onclick="removeIndex('${doc.id}')">Remove</button>
+        `;
+        indexList.appendChild(div);
+      });
+    }
+
+    window.removeIndex = async (id) => {
+      await db.collection('allowedIndexes').doc(id).delete();
+      adminMessage.textContent = 'Index removed.';
+      adminMessage.className = 'success';
+      loadIndexNumbers();
+    };
+
+    addIndexBtn.onclick = async () => {
+      const index = newIndexInput.value.trim().toLowerCase();
+      if (!index) {
+        adminMessage.textContent = 'Please enter an index number.';
+        adminMessage.className = 'error';
+        return;
+      }
+      // Check if already exists
+      const existing = await db.collection('allowedIndexes').where('index', '==', index).get();
+      if (!existing.empty) {
+        adminMessage.textContent = 'Index already exists.';
+        adminMessage.className = 'error';
+        return;
+      }
+      await db.collection('allowedIndexes').add({ index });
+      adminMessage.textContent = 'Index added.';
+      adminMessage.className = 'success';
+      newIndexInput.value = '';
+      loadIndexNumbers();
+    };
+
+    // User login
+    userLoginBtn.onclick = async () => {
+      const userIndex = userIndexInput.value.trim().toLowerCase();
+      if (!userIndex) {
+        userMessage.textContent = 'Please enter your index number.';
+        userMessage.className = 'error';
+        return;
+      }
+      if (userIndex === ADMIN_INDEX) {
+        userMessage.textContent = 'Use Admin Panel to login.';
+        userMessage.className = 'error';
+        return;
+      }
+      userMessage.textContent = 'Checking index...';
+      userMessage.className = '';
+
+      // Check if index is allowed
+      const allowedSnap = await db.collection('allowedIndexes').where('index', '==', userIndex).get();
+      if (allowedSnap.empty) {
+        userMessage.textContent = 'Index not allowed. Contact Admin.';
+        userMessage.className = 'error';
+        return;
+      }
+
+      // Check if user already registered
+      const regSnap = await db.collection('registeredUsers').where('index', '==', userIndex).get();
+      if (!regSnap.empty) {
+        // Already registered - redirect to dashboard
+        userMessage.textContent = 'Login successful! Redirecting...';
+        userMessage.className = 'success';
+        setTimeout(() => {
+          window.location.href = `dashboard.html?index=${encodeURIComponent(userIndex)}`;
+        }, 1500);
+        return;
+      }
+
+      // Not registered yet, show popup form
+      currentUserIndex = userIndex;
+      userMessage.textContent = '';
+      showRegistrationPopup();
+    };
+
+    function showRegistrationPopup() {
+      registrationPopup.style.display = 'flex';
+      // Reset form fields and messages
+      registrationForm.reset();
+      registrationMessage.textContent = '';
+    }
+
+    closePopupBtn.onclick = () => {
+      registrationPopup.style.display = 'none';
+      userMessage.textContent = 'Registration cancelled.';
+      userMessage.className = 'error';
+    };
+
+    // Capitalize first letter of each word in Full Name input on input
+    fullNameInput.addEventListener('input', () => {
+      let words = fullNameInput.value.trim().split(/\s+/);
+      if (words.length > 3) {
+        words = words.slice(0, 3); // max 3 words
+      }
+      words = words.map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase().replace(/[^a-z]/g, '');
+      });
+      fullNameInput.value = words.join(' ');
+    });
+
+    // Registration form submit with validation
+    registrationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullName = fullNameInput.value.trim();
+      const classVal = classSelect.value;
+      const branchVal = branchSelect.value;
+
+      // Validate full name
+      if (!fullName) {
+        registrationMessage.textContent = 'Full Name is required.';
+        registrationMessage.className = 'error';
+        return;
+      }
+      const nameWords = fullName.split(' ');
+      if (nameWords.length > 3) {
+        registrationMessage.textContent = 'Full Name cannot exceed 3 words.';
+        registrationMessage.className = 'error';
+        return;
+      }
+      // Check all letters only and no empty words
+      for (const word of nameWords) {
+        if (!/^[A-Za-z]+$/.test(word)) {
+          registrationMessage.textContent = 'Full Name must contain only letters.';
+          registrationMessage.className = 'error';
+          return;
+        }
+      }
+
+      // Validate class and branch selection
+      if (!classVal) {
+        registrationMessage.textContent = 'Please select a Class.';
+        registrationMessage.className = 'error';
+        return;
+      }
+      if (!branchVal) {
+        registrationMessage.textContent = 'Please select a Branch.';
+        registrationMessage.className = 'error';
+        return;
+      }
+
+      // Save registration data in Firestore
+      try {
+        await db.collection('registeredUsers').add({
+          index: currentUserIndex,
+          fullName,
+          class: classVal,
+          branch: branchVal,
+          registeredAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        registrationMessage.textContent = 'Registration successful! Redirecting...';
+        registrationMessage.className = 'success';
+
+        setTimeout(() => {
+          registrationPopup.style.display = 'none';
+          window.location.href = `dashboard.html?index=${encodeURIComponent(currentUserIndex)}`;
+        }, 1500);
+      } catch (error) {
+        console.error(error);
+        registrationMessage.textContent = 'Registration failed, please try again.';
+        registrationMessage.className = 'error';
+      }
+    });
+  </script>
 </body>
 </html>
