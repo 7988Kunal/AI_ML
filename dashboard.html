@@ -1,14 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Student dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <style>
+    body {
+      background-color: #f5f8fc;
+    }
+
+    .navbar {
+      background-color: #004080;
+    }
+
+    .navbar-brand,
+    .nav-link,
+    .navbar-text {
+      color: white !important;
+    }
+
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid #004080;
+    }
+
+    .aiml-logo {
+      width: 80px;
+    }
+
+    .upload-preview {
+      max-height: 100px;
+    }
+
+    .work-item {
+      margin-bottom: 1rem;
+    }
+
+    .spinner-border {
+      width: 1.5rem;
+      height: 1.5rem;
+      vertical-align: text-bottom;
+      margin-left: 5px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .edit-btn {
+      color: #ffcc00;
+    }
+
+    .delete-btn {
+      color: #ff0000;
+    }
+  </style>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init("rai8QxGoPo_kArORG");
+  </script>
 </head>
+
 <body>
-  <h1>
-    Some technical issues might causing.Stay tunned for further correction till 20 June 2025 !!!
-  </h1>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        AIML Student Dashboard
+      </a>
+      <div class="ms-auto d-flex align-items-center">
+        <span class="navbar-text me-3" id="userWelcome"></span>
+        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="row">
+      <!-- Left Panel: Profile & Upload -->
+      <div class="col-md-4">
+        <div class="card p-3 text-center">
+          <img src="" alt="Profile Picture" class="profile-img mx-auto" id="profilePic" title="Click to change profile photo" />
+          <input type="file" id="profileUploader" class="form-control mt-2" accept="image/*" style="display:none" />
+          <h5 class="mt-3" id="profileName"></h5>
+          <p class="text-muted" id="profileDetails"></p>
+        </div>
+
+        <div class="card mt-4 p-3" id="uploadPanel">
+          <h6>Upload Work</h6>
+          <input type="text" class="form-control mb-2" placeholder="Title" id="workTitle" />
+          <textarea class="form-control mb-2" placeholder="Description" id="workDesc"></textarea>
+          <input type="file" id="workFile" class="form-control mb-2" />
+          <button class="btn btn-primary w-100" id="uploadBtn" onclick="uploadWork()">Upload</button>
+        </div>
+
+        <div class="card mt-4 p-3" id="sendWorkPanel" style="display:none;">
+          <h6>Send Work to Student</h6>
+          <input type="text" class="form-control mb-2" placeholder="Recipient Index" id="recipientIndex" />
+          <input type="text" class="form-control mb-2" placeholder="Title" id="sendTitle" />
+          <textarea class="form-control mb-2" placeholder="Description" id="sendDesc"></textarea>
+          <input type="file" id="sendFile" class="form-control mb-2" />
+          <button class="btn btn-success w-100" id="sendBtn" onclick="sendWorkToOther()">Send</button>
+        </div>
+      </div>
+
+      <!-- Right Panel: Work List -->
+      <div class="col-md-8">
+        <div class="card p-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">All Work Uploaded</h6>
+            <select class="form-select w-auto" id="sortOption" onchange="renderWorkList()">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+            </select>
+          </div>
+          <div id="workList">Loading work...</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<script>
+  // Firebase Config
+  const firebaseConfig = {
+  apiKey: "AIzaSyCA4RvvJUiXq06T09jLjS7CAmD0qRDVXvQ",
+  authDomain: "officialai.firebaseapp.com",
+  projectId: "officialai",
+  storageBucket: "officialai.firebasestorage.app",
+  messagingSenderId: "400573495983",
+  appId: "1:400573495983:web:5419661a0bb5c85daa725a",
+  measurementId: "G-LQ5M47MQH1"
+};
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const UPLOADTHING_TOKEN = 'eyJhcGlLZXkiOi...'; // (keep as-is)
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const index = urlParams.get('index') || '';
+  const isAdmin = index.toLowerCase() === '50062kv';
+
+  if (!index) {
+    alert("No index number provided. Redirecting to login.");
+    window.location.href = "official.html";
+  }
+
+  document.getElementById('userWelcome').innerText = `Welcome: ${index}`;
+  const profileName = document.getElementById('profileName');
+  const profileDetails = document.getElementById('profileDetails');
+  const profilePic = document.getElementById('profilePic');
+  const profileUploader = document.getElementById('profileUploader');
+
+  const DEFAULT_PROFILE_PIC = "https://i.ibb.co/ZYW3VTp/brown-brim.png";
+  const sendWorkPanel = document.getElementById('sendWorkPanel');
+  if (isAdmin) sendWorkPanel.style.display = 'block';
+
+  profilePic.addEventListener('click', () => profileUploader.click());
+
+  profileUploader.addEventListener('change', async () => {
+    const file = profileUploader.files[0];
+    if (!file) return;
+    profileUploader.disabled = true;
+    profilePic.style.opacity = '0.6';
+
+    try {
+      const fileUrl = await uploadFileToUploadThing(file);
+      await db.collection('students').doc(index).set({ photoUrl: fileUrl }, { merge: true });
+      profilePic.src = fileUrl;
+      alert("Profile photo updated!");
+    } catch (err) {
+      console.error("Profile upload error:", err);
+      alert("Failed to upload profile photo.");
+    } finally {
+      profileUploader.disabled = false;
+      profilePic.style.opacity = '1';
+    }
+  });
+
+  async function uploadFileToUploadThing(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch('https://uploadthing.com/api/upload', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${UPLOADTHING_TOKEN}` },
+      body: formData
+    });
+    const data = await res.json();
+    if (!data.fileUrl) throw new Error("UploadThing: No fileUrl in response");
+    return data.fileUrl;
+  }
+
+  async function loadUserProfile() {
+    try {
+      const doc = await db.collection('students').doc(index).get();
+      const data = doc.exists ? doc.data() : {};
+      profileName.innerText = data.name || index;
+      profileDetails.innerText = `Branch: ${data.branch || 'AIML'}`;
+      profilePic.src = data.photoUrl || DEFAULT_PROFILE_PIC;
+    } catch (err) {
+      console.error("Error loading profile:", err);
+      profileName.innerText = index;
+      profileDetails.innerText = 'Branch: AIML';
+      profilePic.src = DEFAULT_PROFILE_PIC;
+    }
+  }
+
+  async function loadUploads() {
+    try {
+      let uploads = [];
+
+      const snapshotPublic = await db.collection('uploads').where('recipients', '==', []).get();
+      const snapshotPrivate = await db.collection('uploads').where('recipients', 'array-contains', index).get();
+
+      snapshotPublic.forEach(doc => uploads.push({ id: doc.id, ...doc.data() }));
+      snapshotPrivate.forEach(doc => uploads.push({ id: doc.id, ...doc.data() }));
+
+      if (isAdmin) {
+        const allSnap = await db.collection('uploads').get();
+        allSnap.forEach(doc => {
+          if (!uploads.find(u => u.id === doc.id)) uploads.push({ id: doc.id, ...doc.data() });
+        });
+      }
+
+      uploads.sort((a, b) => b.timestamp - a.timestamp);
+      renderWorkList(uploads);
+    } catch (err) {
+      console.error(err);
+      document.getElementById('workList').innerText = 'Error loading uploads';
+    }
+  }
+
+  function renderWorkList(uploads) {
+    const workList = document.getElementById('workList');
+    workList.innerHTML = uploads.length === 0
+      ? '<p class="text-muted">No work uploaded yet.</p>'
+      : '';
+
+    uploads.forEach(item => {
+      const isUploader = item.sender === index;
+      const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
+      const isRecipient = item.recipients?.includes(index);
+      const canView = !isPrivate || isUploader || isRecipient || isAdmin;
+      const canEditDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
+
+      if (!canView) return;
+
+      const fromTo = isPrivate
+        ? `From: ${item.sender} → To: ${item.recipients.join(', ')}`
+        : `From: ${item.sender} | To: All`;
+
+      const fileLink = item.fileUrl ? `<br><a href="${item.fileUrl}" target="_blank">Download File</a>` : '';
+
+      const buttons = canEditDelete
+        ? `<br><button class="edit-btn" onclick="editWork('${item.id}')">Edit</button>
+           <button class="delete-btn" onclick="deleteWork('${item.id}')">Delete</button>` : '';
+
+      const card = document.createElement('div');
+      card.className = 'work-item';
+      card.innerHTML = `
+        <div class="card p-3">
+          <h6>${item.title}</h6>
+          <p>${item.description}</p>
+          <small>${fromTo} | Date: ${new Date(item.timestamp).toLocaleString()}</small>
+          ${fileLink}
+          ${buttons}
+        </div>`;
+      workList.appendChild(card);
+    });
+  }
+
+  async function deleteWork(workId) {
+    const doc = await db.collection('uploads').doc(workId).get();
+    const item = doc.data();
+    const isUploader = item.sender === index;
+    const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
+    const canDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
+
+    if (!canDelete) {
+      alert("You don't have permission to delete this entry.");
+      return;
+    }
+
+    if (confirm('Are you sure you want to delete this work?')) {
+      await db.collection('uploads').doc(workId).delete();
+      alert('Work deleted');
+      loadUploads();
+    }
+  }
+
+  async function uploadWork() {
+    const title = document.getElementById('workTitle').value.trim();
+    const desc = document.getElementById('workDesc').value.trim();
+    const file = document.getElementById('workFile').files[0];
+
+    if (!title || !desc) {
+      alert("Please enter title and description.");
+      return;
+    }
+
+    document.getElementById('uploadBtn').disabled = true;
+    document.getElementById('uploadBtn').innerText = 'Uploading...';
+
+    try {
+      let fileUrl = '';
+      if (file) fileUrl = await uploadFileToUploadThing(file);
+
+      await db.collection('uploads').add({
+        title,
+        description: desc,
+        fileUrl,
+        sender: index,
+        recipients: [],
+        timestamp: Date.now()
+      });
+
+      document.getElementById('workTitle').value = '';
+      document.getElementById('workDesc').value = '';
+      document.getElementById('workFile').value = '';
+      alert("Work uploaded successfully!");
+      sendEmailNotification(title, false);
+      loadUploads();
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert("Upload failed");
+    } finally {
+      document.getElementById('uploadBtn').disabled = false;
+      document.getElementById('uploadBtn').innerText = 'Upload';
+    }
+  }
+
+  async function sendWorkToOther() {
+    if (!isAdmin) return;
+    const toIndexRaw = document.getElementById('recipientIndex').value.trim().toLowerCase();
+    const title = document.getElementById('sendTitle').value.trim();
+    const desc = document.getElementById('sendDesc').value.trim();
+    const file = document.getElementById('sendFile').files[0];
+
+    if (!toIndexRaw || !title || !desc) {
+      alert("Please enter recipient index, title and description.");
+      return;
+    }
+
+    document.getElementById('sendBtn').disabled = true;
+    document.getElementById('sendBtn').innerText = 'Sending...';
+
+    try {
+      let fileUrl = '';
+      if (file) fileUrl = await uploadFileToUploadThing(file);
+
+      await db.collection('uploads').add({
+        title,
+        description: desc,
+        fileUrl,
+        sender: index,
+        recipients: [toIndexRaw],
+        timestamp: Date.now()
+      });
+
+      document.getElementById('recipientIndex').value = '';
+      document.getElementById('sendTitle').value = '';
+      document.getElementById('sendDesc').value = '';
+      document.getElementById('sendFile').value = '';
+      alert(`Work sent to ${toIndexRaw} successfully!`);
+      sendEmailNotification(title, true, toIndexRaw);
+      loadUploads();
+    } catch (err) {
+      console.error("Send work error:", err);
+      alert("Failed to send work.");
+    } finally {
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('sendBtn').innerText = 'Send';
+    }
+  }
+
+  function sendEmailNotification(title, isSend = false, recipient = '') {
+    const subject = isSend ? `[SENT TO ${recipient}] ${title}` : title;
+    emailjs.send("service_m6b648v", "template_iahgvur", {
+      to_email: "kunalvats7988@gmail.com",
+      message: `New Work ${isSend ? 'Sent' : 'Uploaded'} by ${index}\nTitle: ${subject}\nTime: ${new Date().toLocaleString()}`
+    }).then(() => {
+      console.log('Email sent');
+    }).catch(err => {
+      console.error('EmailJS error:', err);
+    });
+  }
+
+  function logout() {
+    window.location.href = 'index.html';
+  }
+
+  (async function init() {
+    await loadUserProfile();
+    await loadUploads();
+  })();
+</script>
+
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
