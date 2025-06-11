@@ -83,12 +83,12 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <div style="color:red;font-weight:bold;padding:10px;border:1px solid gray;box-shadow:1px 1px 10px 1px rgba(227,233,232,0.843);">Registered yourself using special code as index number in User login pannel before 30 June 2025 11:59:59.Any index who already Registered kindly do their Registration again due to technical gliches all data is loss.kindly ignore for re-registered candidates. </div>
+  <div style="color:red;font-weight:bold;padding:10px;border:1px solid gray;box-shadow:1px 1px 10px 1px rgba(227,233,232,0.843);border-radius:5px;">Registered yourself using special code as index number in User login pannel before 30 June 2025 11:59:59.Any index who already Registered kindly do their Registration again due to technical gliches all data is loss.kindly ignore for re-registered candidates. </div>
   <!-- Admin Panel -->
   <div class="panel" id="adminPanel">
     <h2>Admin Panel</h2>
     <label for="adminIndex">Admin Index Number</label>
-    <input type="password" id="adminIndex" placeholder="Enter admin index" />
+    <input type="text" id="adminIndex" placeholder="Enter admin index" />
     <button id="adminLoginBtn">Login as Admin</button>
 
     <div id="adminActions" style="display:none;">
@@ -105,7 +105,7 @@
   <div class="panel" id="userPanel">
     <h2>User Login</h2>
     <label for="userIndex">Index Number</label>
-    <input type="password" id="userIndex" placeholder="Enter your index number" />
+    <input type="text" id="userIndex" placeholder="Enter your index number" />
     <button id="userLoginBtn">Login</button>
     <div id="userMessage"></div>
   </div>
