@@ -130,7 +130,7 @@
         <div class="card p-3">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <h6 class="mb-0">All Work Uploaded</h6>
-            <select class="form-select w-auto" id="sortOption" onchange="renderWorkList()">
+            <select class="form-select w-auto" id="sortOption" onchange="renderWorkList(allUploads)">
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
             </select>
@@ -141,273 +141,302 @@
 
     </div>
   </div>
-  <script>
-  // Firebase Config (unchanged)
-  const firebaseConfig = {
-    apiKey: "AIzaSyCA4RvvJUiXq06T09jLjS7CAmD0qRDVXvQ",
-    authDomain: "officialai.firebaseapp.com",
-    projectId: "officialai",
-    storageBucket: "officialai.firebasestorage.app",
-    messagingSenderId: "400573495983",
-    appId: "1:400573495983:web:5419661a0bb5c85daa725a",
-    measurementId: "G-LQ5M47MQH1"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+<script>
+let allUploads = [];
+const firebaseConfig = {
+  apiKey: "AIzaSyCA4RvvJUiXq06T09jLjS7CAmD0qRDVXvQ",
+  authDomain: "officialai.firebaseapp.com",
+  projectId: "officialai",
+  storageBucket: "officialai.firebasestorage.app",
+  messagingSenderId: "400573495983",
+  appId: "1:400573495983:web:5419661a0bb5c85daa725a",
+  measurementId: "G-LQ5M47MQH1"
+};
 
-  // Cloudinary config
-  const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/ddi4esj3t/auto/upload';
-  const CLOUDINARY_UPLOAD_PRESET = 'unsigned_upload'; // Use your actual unsigned preset name
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const index = urlParams.get('index') || '';
-  const isAdmin = index.toLowerCase() === '50062kv';
+const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/ddi4esj3t/auto/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'unsigned_upload';
+const urlParams = new URLSearchParams(window.location.search);
+const index = urlParams.get('index') || '';
+const isAdmin = index.toLowerCase() === '50062kv';
 
-  if (!index) {
-    alert("No index number provided. Redirecting to login.");
-    window.location.href = "official.html";
+if (!index) {
+  alert("No index number provided. Redirecting to login.");
+  window.location.href = "official.html";
+}
+
+document.getElementById('userWelcome').innerText = `Welcome: ${index}`;
+
+const profileName = document.getElementById('profileName');
+const profileDetails = document.getElementById('profileDetails');
+const profilePic = document.getElementById('profilePic');
+const profileUploader = document.getElementById('profileUploader');
+const sendWorkPanel = document.getElementById('sendWorkPanel');
+if (isAdmin) sendWorkPanel.style.display = 'block';
+
+const DEFAULT_PROFILE_PIC = "https://i.ibb.co/ZYW3VTp/brown-brim.png";
+
+// Profile
+profilePic.addEventListener('click', () => profileUploader.click());
+profileUploader.addEventListener('change', async () => {
+  const file = profileUploader.files[0];
+  if (!file) return;
+  profileUploader.disabled = true;
+  profilePic.style.opacity = '0.6';
+  try {
+    const fileUrl = await uploadFileToCloudinary(file);
+    await db.collection('students').doc(index).set({ photoUrl: fileUrl }, { merge: true });
+    profilePic.src = fileUrl;
+    alert("Profile photo updated!");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to upload profile photo.");
+  } finally {
+    profileUploader.disabled = false;
+    profilePic.style.opacity = '1';
   }
+});
 
-  document.getElementById('userWelcome').innerText = `Welcome: ${index}`;
+async function uploadFileToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  const res = await fetch(CLOUDINARY_UPLOAD_URL, { method: 'POST', body: formData });
+  const data = await res.json();
+  if (!data.secure_url) throw new Error("No secure_url in Cloudinary response");
+  return data.secure_url;
+}
 
-  // Elements
-  const profileName = document.getElementById('profileName');
-  const profileDetails = document.getElementById('profileDetails');
-  const profilePic = document.getElementById('profilePic');
-  const profileUploader = document.getElementById('profileUploader');
-  const sendWorkPanel = document.getElementById('sendWorkPanel');
-  if (isAdmin) sendWorkPanel.style.display = 'block';
-  
-  const DEFAULT_PROFILE_PIC = "https://i.ibb.co/ZYW3VTp/brown-brim.png";
+async function loadUserProfile() {
+  try {
+    const doc = await db.collection('students').doc(index).get();
+    const data = doc.exists ? doc.data() : {};
+    profileName.innerText = data.name || index;
+    profileDetails.innerText = `Branch: ${data.branch || 'AIML'}`;
+    profilePic.src = data.photoUrl || DEFAULT_PROFILE_PIC;
+  } catch (err) {
+    console.error(err);
+    profileName.innerText = index;
+    profileDetails.innerText = 'Branch: AIML';
+    profilePic.src = DEFAULT_PROFILE_PIC;
+  }
+}
 
-  // Profile image upload handler
-  profilePic.addEventListener('click', () => profileUploader.click());
-  profileUploader.addEventListener('change', async () => {
-    const file = profileUploader.files[0];
-    if (!file) return;
-    profileUploader.disabled = true;
-    profilePic.style.opacity = '0.6';
-    try {
-      const fileUrl = await uploadFileToCloudinary(file);
-      await db.collection('students').doc(index).set({ photoUrl: fileUrl }, { merge: true });
-      profilePic.src = fileUrl;
-      alert("Profile photo updated!");
-    } catch (err) {
-      console.error("Profile upload error:", err);
-      alert("Failed to upload profile photo.");
-    } finally {
-      profileUploader.disabled = false;
-      profilePic.style.opacity = '1';
+async function loadUploads() {
+  try {
+    let uploads = [];
+    const pubSnap = await db.collection('uploads').where('recipients', '==', []).get();
+    const privSnap = await db.collection('uploads').where('recipients', 'array-contains', index).get();
+
+    pubSnap.forEach(doc => uploads.push({ id: doc.id, ...doc.data() }));
+    privSnap.forEach(doc => uploads.push({ id: doc.id, ...doc.data() }));
+
+    if (isAdmin) {
+      const allSnap = await db.collection('uploads').get();
+      allSnap.forEach(doc => {
+        if (!uploads.find(u => u.id === doc.id)) uploads.push({ id: doc.id, ...doc.data() });
+      });
     }
-  });
 
-  // Cloudinary upload function
-  async function uploadFileToCloudinary(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-    const res = await fetch(CLOUDINARY_UPLOAD_URL, { method: 'POST', body: formData });
-    const data = await res.json();
-    if (!data.secure_url) throw new Error("Cloudinary: No secure_url in response");
-    return data.secure_url;
+    allUploads = uploads;
+    renderWorkList(allUploads);
+  } catch (err) {
+    console.error(err);
+    document.getElementById('workList').innerText = 'Error loading uploads.';
   }
+}
 
-  // Load user profile
-  async function loadUserProfile() {
-    try {
-      const doc = await db.collection('students').doc(index).get();
-      const data = doc.exists ? doc.data() : {};
-      profileName.innerText = data.name || index;
-      profileDetails.innerText = `Branch: ${data.branch || 'AIML'}`;
-      profilePic.src = data.photoUrl || DEFAULT_PROFILE_PIC;
-    } catch (err) {
-      console.error("Error loading profile:", err);
-      profileName.innerText = index;
-      profileDetails.innerText = 'Branch: AIML';
-      profilePic.src = DEFAULT_PROFILE_PIC;
-    }
-  }
+function renderWorkList(uploads) {
+  const sortOption = document.getElementById('sortOption').value;
+  uploads.sort((a, b) => sortOption === 'newest' ? b.timestamp - a.timestamp : a.timestamp - b.timestamp);
 
-  // Load uploads list
-  async function loadUploads() {
-    try {
-      let uploads = [];
-      const pubSnap = await db.collection('uploads').where('recipients', '==', []).get();
-      const privSnap = await db.collection('uploads').where('recipients', 'array-contains', index).get();
-      pubSnap.forEach(d => uploads.push({ id: d.id, ...d.data() }));
-      privSnap.forEach(d => uploads.push({ id: d.id, ...d.data() }));
-      if (isAdmin) {
-        const allSnap = await db.collection('uploads').get();
-        allSnap.forEach(d => {
-          if (!uploads.find(u => u.id === d.id)) uploads.push({ id: d.id, ...d.data() });
-        });
-      }
-      uploads.sort((a, b) => b.timestamp - a.timestamp);
-      renderWorkList(uploads);
-    } catch (err) {
-      console.error(err);
-      document.getElementById('workList').innerText = 'Error loading uploads';
-    }
-  }
+  const workList = document.getElementById('workList');
+  workList.innerHTML = uploads.length === 0 ? '<p class="text-muted">No work uploaded yet.</p>' : '';
 
-  // Render uploads
-  function renderWorkList(uploads) {
-    const workList = document.getElementById('workList');
-    workList.innerHTML = uploads.length === 0 ? '<p class="text-muted">No work uploaded yet.</p>' : '';
-    uploads.forEach(item => {
-      const isUploader = item.sender === index;
-      const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
-      const isRecipient = item.recipients?.includes(index);
-      const canView = !isPrivate || isUploader || isRecipient || isAdmin;
-      const canEditDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
-      if (!canView) return;
-
-      const fromTo = isPrivate
-        ? `From: ${item.sender} → To: ${item.recipients.join(', ')}`
-        : `From: ${item.sender} | To: All`;
-      const fileLink = item.fileUrl ? `<br><a href="${item.fileUrl}" target="_blank">Download File</a>` : '';
-      const extraLink = item.link ? `<br><a href="${item.link}" target="_blank">Open Link</a>` : '';
-      const buttons = canEditDelete
-        ? `<br><button class="edit-btn" onclick="editWork('${item.id}')">Edit</button>
-           <button class="delete-btn" onclick="deleteWork('${item.id}')">Delete</button>`
-        : '';
-
-      const card = document.createElement('div');
-      card.className = 'work-item';
-      card.innerHTML = `
-        <div class="card p-3">
-          <h6>${item.title}</h6>
-          <p>${item.description}</p>
-          <small>${fromTo} | Date: ${new Date(item.timestamp).toLocaleString()}</small>
-          ${fileLink} ${extraLink}
-          ${buttons}
-        </div>`;
-      workList.appendChild(card);
-    });
-  }
-
-  // Delete work
-  async function deleteWork(workId) {
-    const doc = await db.collection('uploads').doc(workId).get();
-    const item = doc.data();
+  uploads.forEach(item => {
     const isUploader = item.sender === index;
     const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
-    const canDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
-    if (!canDelete) {
-      alert("You don't have permission to delete this entry.");
-      return;
-    }
-    if (confirm('Are you sure you want to delete this work?')) {
-      await db.collection('uploads').doc(workId).delete();
-      alert('Work deleted');
-      loadUploads();
-    }
+    const isRecipient = item.recipients?.includes(index);
+    const canView = !isPrivate || isUploader || isRecipient || isAdmin;
+    const canEditDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
+
+    if (!canView) return;
+
+    const fromTo = isPrivate
+      ? `From: ${item.sender} → To: ${item.recipients.join(', ')}`
+      : `From: ${item.sender} | To: All`;
+
+    const fileLink = item.fileUrl ? `<br><a href="${item.fileUrl}" target="_blank">Download File</a>` : '';
+    const extraLink = item.link ? `<br><a href="${item.link}" target="_blank">Open Link</a>` : '';
+    const buttons = canEditDelete
+      ? `<br><button class="edit-btn" onclick="editWork('${item.id}')">Edit</button>
+         <button class="delete-btn" onclick="deleteWork('${item.id}')">Delete</button>`
+      : '';
+
+    const card = document.createElement('div');
+    card.className = 'work-item';
+    card.innerHTML = `
+      <div class="card p-3">
+        <h6>${item.title}</h6>
+        <p>${item.description}</p>
+        <small>${fromTo} | Date: ${new Date(item.timestamp).toLocaleString()}</small>
+        ${fileLink} ${extraLink}
+        ${buttons}
+      </div>`;
+    workList.appendChild(card);
+  });
+}
+
+async function deleteWork(workId) {
+  const doc = await db.collection('uploads').doc(workId).get();
+  const item = doc.data();
+  const isUploader = item.sender === index;
+  const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
+  const canDelete = isUploader || (isAdmin && isPrivate && item.sender === index);
+
+  if (!canDelete) {
+    alert("You don't have permission to delete this entry.");
+    return;
   }
 
-  // Replace uploadWork to use Cloudinary
-  async function uploadWork() {
-    const title = document.getElementById('workTitle').value.trim();
-    const desc = document.getElementById('workDesc').value.trim();
-    const link = document.getElementById('workLink').value.trim();
-    const file = document.getElementById('workFile').files[0];
-    if (!title || !desc) return alert("Please enter title and description.");
-    document.getElementById('uploadBtn').disabled = true;
-    document.getElementById('uploadBtn').innerText = 'Uploading...';
-    try {
-      let fileUrl = '';
-      if (file) fileUrl = await uploadFileToCloudinary(file);
-      await db.collection('uploads').add({
-        title,
-        description: desc,
-        fileUrl,
-        link,
-        sender: index,
-        recipients: [],
-        timestamp: Date.now()
-      });
-      document.getElementById('workTitle').value = '';
-      document.getElementById('workDesc').value = '';
-      document.getElementById('workFile').value = '';
-      document.getElementById('workLink').value = '';
-      alert("Work uploaded successfully!");
-      sendEmailNotification(title, false);
-      loadUploads();
-    } catch (err) {
-      console.error("Upload error:", err);
-      alert("Upload failed");
-    } finally {
-      document.getElementById('uploadBtn').disabled = false;
-      document.getElementById('uploadBtn').innerText = 'Upload';
-    }
+  if (confirm('Are you sure you want to delete this work?')) {
+    await db.collection('uploads').doc(workId).delete();
+    alert('Work deleted');
+    loadUploads();
   }
+}
 
-  // Send work to other student
-  async function sendWorkToOther() {
-    if (!isAdmin) return;
-    const toIndexRaw = document.getElementById('recipientIndex').value.trim().toLowerCase();
-    const title = document.getElementById('sendTitle').value.trim();
-    const desc = document.getElementById('sendDesc').value.trim();
-    const link = document.getElementById('sendLink').value.trim();
-    const file = document.getElementById('sendFile').files[0];
-    if (!toIndexRaw || !title || !desc) return alert("Please enter recipient index, title and description.");
-    document.getElementById('sendBtn').disabled = true;
-    document.getElementById('sendBtn').innerText = 'Sending...';
-    try {
-      let fileUrl = '';
-      if (file) fileUrl = await uploadFileToCloudinary(file);
-      await db.collection('uploads').add({
-        title,
-        description: desc,
-        fileUrl,
-        link,
-        sender: index,
-        recipients: [toIndexRaw],
-        timestamp: Date.now()
-      });
-      alert(`Work sent to ${toIndexRaw} successfully!`);
-      document.getElementById('recipientIndex').value = '';
-      document.getElementById('sendTitle').value = '';
-      document.getElementById('sendDesc').value = '';
-      document.getElementById('sendFile').value = '';
-      document.getElementById('sendLink').value = '';
-      sendEmailNotification(title, true, toIndexRaw);
-      loadUploads();
-    } catch (err) {
-      console.error("Send work error:", err);
-      alert("Failed to send work.");
-    } finally {
-      document.getElementById('sendBtn').disabled = false;
-      document.getElementById('sendBtn').innerText = 'Send';
-    }
+async function editWork(workId) {
+  const doc = await db.collection('uploads').doc(workId).get();
+  if (!doc.exists) return alert("Work not found.");
+  const item = doc.data();
+  const isUploader = item.sender === index;
+  const isPrivate = Array.isArray(item.recipients) && item.recipients.length > 0;
+  const canEdit = isUploader || (isAdmin && isPrivate && item.sender === index);
+  if (!canEdit) return alert("You cannot edit this.");
+
+  const newTitle = prompt("Edit Title", item.title);
+  if (newTitle === null) return;
+
+  const newDesc = prompt("Edit Description", item.description);
+  if (newDesc === null) return;
+
+  const newLink = prompt("Edit Optional Link", item.link || '');
+  if (newLink === null) return;
+
+  await db.collection('uploads').doc(workId).update({
+    title: newTitle,
+    description: newDesc,
+    link: newLink
+  });
+
+  alert("Work updated.");
+  loadUploads();
+}
+
+async function uploadWork() {
+  const title = document.getElementById('workTitle').value.trim();
+  const desc = document.getElementById('workDesc').value.trim();
+  const link = document.getElementById('workLink').value.trim();
+  const file = document.getElementById('workFile').files[0];
+  if (!title || !desc) return alert("Please enter title and description.");
+  document.getElementById('uploadBtn').disabled = true;
+  document.getElementById('uploadBtn').innerText = 'Uploading...';
+
+  try {
+    let fileUrl = '';
+    if (file) fileUrl = await uploadFileToCloudinary(file);
+    await db.collection('uploads').add({
+      title,
+      description: desc,
+      fileUrl,
+      link,
+      sender: index,
+      recipients: [],
+      timestamp: Date.now()
+    });
+    document.getElementById('workTitle').value = '';
+    document.getElementById('workDesc').value = '';
+    document.getElementById('workFile').value = '';
+    document.getElementById('workLink').value = '';
+    alert("Work uploaded successfully!");
+    sendEmailNotification(title, false);
+    loadUploads();
+  } catch (err) {
+    console.error("Upload error:", err);
+    alert("Upload failed");
+  } finally {
+    document.getElementById('uploadBtn').disabled = false;
+    document.getElementById('uploadBtn').innerText = 'Upload';
   }
+}
 
-  // EmailJS notification (unchanged)
-  function sendEmailNotification(title, isSend = false, recipient = '') {
-    const subject = isSend ? `[SENT TO ${recipient}] ${title}` : title;
-    emailjs.send("service_m6b648v", "template_iahgvur", {
-      to_email: "kunalvats7988@gmail.com",
-      message: `New Work ${isSend ? 'Sent' : 'Uploaded'} by ${index}\nTitle: ${subject}\nTime: ${new Date().toLocaleString()}`
-    }).catch(console.error);
+async function sendWorkToOther() {
+  if (!isAdmin) return;
+  const toIndex = document.getElementById('recipientIndex').value.trim().toLowerCase();
+  const title = document.getElementById('sendTitle').value.trim();
+  const desc = document.getElementById('sendDesc').value.trim();
+  const link = document.getElementById('sendLink').value.trim();
+  const file = document.getElementById('sendFile').files[0];
+  if (!toIndex || !title || !desc) return alert("Fill all required fields.");
+  document.getElementById('sendBtn').disabled = true;
+  document.getElementById('sendBtn').innerText = 'Sending...';
+
+  try {
+    let fileUrl = '';
+    if (file) fileUrl = await uploadFileToCloudinary(file);
+    await db.collection('uploads').add({
+      title,
+      description: desc,
+      fileUrl,
+      link,
+      sender: index,
+      recipients: [toIndex],
+      timestamp: Date.now()
+    });
+
+    document.getElementById('recipientIndex').value = '';
+    document.getElementById('sendTitle').value = '';
+    document.getElementById('sendDesc').value = '';
+    document.getElementById('sendFile').value = '';
+    document.getElementById('sendLink').value = '';
+    alert(`Work sent to ${toIndex}`);
+    sendEmailNotification(title, true, toIndex);
+    loadUploads();
+  } catch (err) {
+    console.error("Send error:", err);
+    alert("Failed to send.");
+  } finally {
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('sendBtn').innerText = 'Send';
   }
+}
 
-  function logout() {
-    window.location.href = 'official.html';
-  }
+function sendEmailNotification(title, isSend = false, recipient = '') {
+  const subject = isSend ? `[SENT TO ${recipient}] ${title}` : title;
+  emailjs.send("service_m6b648v", "template_iahgvur", {
+    to_email: "kunalvats7988@gmail.com",
+    message: `New Work ${isSend ? 'Sent' : 'Uploaded'} by ${index}\nTitle: ${subject}\nTime: ${new Date().toLocaleString()}`
+  }).catch(console.error);
+}
 
-  // Override old handlers
-  document.getElementById('uploadBtn').onclick = uploadWork;
-  document.getElementById('sendBtn').onclick = sendWorkToOther;
+function logout() {
+  window.location.href = 'official.html';
+}
 
-  (async function init() {
-    await loadUserProfile();
-    await loadUploads();
-  })();
+document.getElementById('uploadBtn').onclick = uploadWork;
+document.getElementById('sendBtn').onclick = sendWorkToOther;
+
+(async function init() {
+  await loadUserProfile();
+  await loadUploads();
+})();
 </script>
 
+  
 
-
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
