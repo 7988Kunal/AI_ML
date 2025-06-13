@@ -109,7 +109,8 @@
           <h6>Upload Work</h6>
           <input type="text" class="form-control mb-2" placeholder="Title" id="workTitle" />
           <textarea class="form-control mb-2" placeholder="Description" id="workDesc"></textarea>
-          <input type="file" id="workFile" class="form-control mb-2" />
+          <input type="url" class="form-control mb-2" placeholder="Optional Link (e.g., YouTube, Drive)" id="workLink" />
+         <input type="file" id="workFile" class="form-control mb-2" />
           <button class="btn btn-primary w-100" id="uploadBtn" onclick="uploadWork()">Upload</button>
         </div>
 
@@ -118,6 +119,7 @@
           <input type="text" class="form-control mb-2" placeholder="Recipient Index" id="recipientIndex" />
           <input type="text" class="form-control mb-2" placeholder="Title" id="sendTitle" />
           <textarea class="form-control mb-2" placeholder="Description" id="sendDesc"></textarea>
+          <input type="url" class="form-control mb-2" placeholder="Optional Link (e.g., YouTube, Drive)" id="sendLink" />
           <input type="file" id="sendFile" class="form-control mb-2" />
           <button class="btn btn-success w-100" id="sendBtn" onclick="sendWorkToOther()">Send</button>
         </div>
@@ -264,6 +266,7 @@
         ? `From: ${item.sender} → To: ${item.recipients.join(', ')}`
         : `From: ${item.sender} | To: All`;
       const fileLink = item.fileUrl ? `<br><a href="${item.fileUrl}" target="_blank">Download File</a>` : '';
+      const extraLink = item.link ? `<br><a href="${item.link}" target="_blank">Open Link</a>` : '';
       const buttons = canEditDelete
         ? `<br><button class="edit-btn" onclick="editWork('${item.id}')">Edit</button>
            <button class="delete-btn" onclick="deleteWork('${item.id}')">Delete</button>`
@@ -276,7 +279,7 @@
           <h6>${item.title}</h6>
           <p>${item.description}</p>
           <small>${fromTo} | Date: ${new Date(item.timestamp).toLocaleString()}</small>
-          ${fileLink}
+          ${fileLink} ${extraLink}
           ${buttons}
         </div>`;
       workList.appendChild(card);
@@ -305,6 +308,7 @@
   async function uploadWork() {
     const title = document.getElementById('workTitle').value.trim();
     const desc = document.getElementById('workDesc').value.trim();
+    const link = document.getElementById('workLink').value.trim();
     const file = document.getElementById('workFile').files[0];
     if (!title || !desc) return alert("Please enter title and description.");
     document.getElementById('uploadBtn').disabled = true;
@@ -316,6 +320,7 @@
         title,
         description: desc,
         fileUrl,
+        link,
         sender: index,
         recipients: [],
         timestamp: Date.now()
@@ -323,6 +328,7 @@
       document.getElementById('workTitle').value = '';
       document.getElementById('workDesc').value = '';
       document.getElementById('workFile').value = '';
+      document.getElementById('workLink').value = '';
       alert("Work uploaded successfully!");
       sendEmailNotification(title, false);
       loadUploads();
@@ -341,6 +347,7 @@
     const toIndexRaw = document.getElementById('recipientIndex').value.trim().toLowerCase();
     const title = document.getElementById('sendTitle').value.trim();
     const desc = document.getElementById('sendDesc').value.trim();
+    const link = document.getElementById('sendLink').value.trim();
     const file = document.getElementById('sendFile').files[0];
     if (!toIndexRaw || !title || !desc) return alert("Please enter recipient index, title and description.");
     document.getElementById('sendBtn').disabled = true;
@@ -352,6 +359,7 @@
         title,
         description: desc,
         fileUrl,
+        link,
         sender: index,
         recipients: [toIndexRaw],
         timestamp: Date.now()
@@ -361,6 +369,7 @@
       document.getElementById('sendTitle').value = '';
       document.getElementById('sendDesc').value = '';
       document.getElementById('sendFile').value = '';
+      document.getElementById('sendLink').value = '';
       sendEmailNotification(title, true, toIndexRaw);
       loadUploads();
     } catch (err) {
