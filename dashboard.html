@@ -89,7 +89,6 @@
       </a>
       <div class="ms-auto d-flex align-items-center">
         <span class="navbar-text me-3" id="userWelcome"></span>
-        <span class="navbar-text me-3" id="welcomeText"></span>
         <button class="btn btn-outline-light" onclick="logout()">Logout</button>
       </div>
     </div>
@@ -435,33 +434,7 @@ document.getElementById('sendBtn').onclick = sendWorkToOther;
   await loadUploads();
 })();
 </script>
-<script>
-  async function updateWelcomeText() {
-    try {
-      const studentDoc = await db.collection('students').doc(index).get();
-      if (studentDoc.exists) {
-        const name = studentDoc.data().name;
-        document.getElementById("welcomeText").innerText = `Welcome: ${name}`;
-        return;
-      }
 
-      const snapshot = await db.collection("registeredUsers").where("index", "==", index).get();
-      if (!snapshot.empty) {
-        const name = snapshot.docs[0].data().fullName || index;
-        document.getElementById("welcomeText").innerText = `Welcome: ${name}`;
-        return;
-      }
-
-      document.getElementById("welcomeText").innerText = `Welcome: ${index}`;
-    } catch (err) {
-      console.error("Error fetching welcome text:", err);
-      document.getElementById("welcomeText").innerText = `Welcome: ${index}`;
-    }
-  }
-
-  // Call this function during page load
-  updateWelcomeText();
- </script>
   
 
 </body>
