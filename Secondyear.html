@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI/ML second Year Dashboard</title>
+  <title>AIML 2nd Year Dashboard</title>
   <style>
     :root {
       --primary: #2e86de;
-      --background: #f5f8ff;
-      --text: #222;
+      --background: #eef3f8;
+      --glass: rgba(255, 255, 255, 0.25);
       --accent: #ffcc00;
+      --text: #111;
     }
 
     * {
@@ -17,53 +18,99 @@
       padding: 0;
       box-sizing: border-box;
     }
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  color: white;
-  background-color: rgb(46, 188, 228);
-  padding: 15px 15px;
-  box-shadow: 1px 1px 10px 1px gray;
-  text-align: center;
-  font-weight: bold;
-}
 
-/* Add this to body to prevent overlap with fixed header */
-body {
-  padding-top: 70px;
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--background);
-  color: var(--text);
-}
-    
-
-    .container {
-      max-width: 1000px;
-      margin: 10px auto;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #f1f8ff);
+      color: var(--text);
       padding: 20px;
     }
 
-    .accordion {
-      background: white;
+    header {
+      background: rgba(46, 188, 228, 0.85);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.4em;
       border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+    }
+
+    .scroll-banner {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px auto 20px auto;
+      font-weight: bold;
+      font-size: 1em;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: scrollText 12s linear infinite;
+      text-align: center;
+      color: crimson;
+      backdrop-filter: blur(5px);
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateX(100%) }
+      100% { transform: translateX(-100%) }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .back {
+      background-color: #2ecc71;
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      margin-bottom: 25px;
+      transition: 0.3s;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .back:hover {
+      transform: scale(1.05);
+      background-color: #27ae60;
+    }
+
+    .accordion {
+      background: var(--glass);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      padding: 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.2);
       overflow: hidden;
     }
 
     .accordion-header {
       padding: 15px 20px;
-      background: white;
       cursor: pointer;
       font-size: 1.2em;
       font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #eee;
+      background: rgba(255, 255, 255, 0.35);
+      transition: background 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
 
     .accordion-content {
@@ -82,14 +129,6 @@ body {
       text-decoration: none;
     }
 
-    .notice-card {
-      background: #fff8d6;
-      border-left: 5px solid var(--accent);
-      padding: 15px 20px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-    }
-
     .dropdown {
       margin-top: 10px;
     }
@@ -98,8 +137,8 @@ body {
       cursor: pointer;
       font-weight: 600;
       padding: 10px;
-      background: #f1f3f8;
-      border-radius: 6px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 8px;
       margin-bottom: 5px;
     }
 
@@ -107,6 +146,15 @@ body {
       margin-top: 5px;
       display: none;
       padding-left: 15px;
+    }
+
+    .notice-card {
+      background: rgba(255, 255, 200, 0.7);
+      border-left: 5px solid var(--accent);
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
     }
 
     #important-notices .notice-card:nth-child(n+4) {
@@ -126,26 +174,14 @@ body {
 
     footer {
       text-align: center;
-      background-color:#000;
-      /*background: var(--primary);*/
+      background: #222;
       color: white;
       padding: 12px;
       margin-top: 30px;
       font-size: 0.95em;
+      border-radius: 12px;
     }
-   .back{
-     background-color:rgb(46,228,121);
-     padding:12px;
-     width:180px;
-     box-shadow:1px 1px 10px 1px gray;
-     margin-bottom:20px;
-     margin-top:5px;
-    }
-    .back a{
-      text-decoration:none;
-      color:#000;
-      font-weight:bold;
-    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -155,7 +191,6 @@ body {
       .accordion-header {
         font-size: 1em;
       }
-
       .accordion-content {
         font-size: 0.95em;
       }
@@ -164,12 +199,15 @@ body {
 </head>
 <body>
 
-<header>Artificial Intelligence & Machine Learning (AIML) 2nd Year Dashboard 2025-2026 (June)</header>
+<header>Artificial Intelligence & Machine Learning (AIML) 2nd Year Dashboard 2025-2026</header>
+
 <div class="container">
-  <marquee behavior="scroll" direction="left" onmouseout="start()"onmouseover="stop()"scrollamount="" style="color:red;font-weight:500;">Welcome User in AIML Second Year Education Platform </marquee>
-  <div class="back"><a href="AIML.html">Back to Main Website</a></div>
+  <marquee style="color:red;font-weight:bold;margin-bottom:10px;" behavior="scroll" direction="left">✨ Welcome to the AIML 2nd Year Education Platform ✨</marquee>
+ <div class="back"><a href="AIML.html">⬅ Back to Main Website</a></div>
+
+  <!-- Subjects -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Subjects Offered <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📘 Subjects Offered <span>+</span></div>
     <div class="accordion-content">
       <ul>
         <li>Database Management Systems</li>
@@ -178,97 +216,128 @@ body {
         <li>Python Programming</li>
         <li>Mathematics for AI</li>
         <li>Object Oriented Programming</li>
-        <li>Database Management Systems LAB</li>
-        <li>Artificial Intelligence Lab using Python</li>
-        <li>Data Structures & Algorithms LAB Using C</li>
-        <li>Python Programming LAB</li>
-        <li>Object Oriented Programming LAB Using C++</li>
+        <li>DBMS Lab</li>
+        <li>AI Lab using Python</li>
+        <li>DSA Lab Using C</li>
+        <li>Python Lab</li>
+        <li>OOP Lab Using C++</li>
       </ul>
     </div>
   </div>
 
+  <!-- Resources -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Study Resources & Notes <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📂 Study Resources & Notes <span>+</span></div><div class="accordion-content"><!-- DBMS -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">DBMS Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: Data Abstraction, DDL/DML, Data Models, ER</a></li>
+      <li><a href="#">Unit 2: SQL3, Normalization, Query Optimization</a></li>
+      <li><a href="#">Unit 3: Indexing, Transactions, Concurrency</a></li>
+      <li><a href="#">Unit 4: Security, SQL Injection, Data Mining</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- DSA -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">DSA Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: Searching, Complexity, Basic Structures</a></li>
+      <li><a href="#">Unit 2: Stack, Queue, Expression Evaluation</a></li>
+      <li><a href="#">Unit 3: Linked Lists, Trees, AVL, B+</a></li>
+      <li><a href="#">Unit 4: Sorting, Graphs, MST</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- AI -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">AI Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: Search Techniques, Game Playing</a></li>
+      <li><a href="#">Unit 2: Knowledge Representation, Logic, Frames</a></li>
+      <li><a href="#">Unit 3: Probability, Bayesian, Planning</a></li>
+      <li><a href="#">Unit 4: Learning Types, Neural Networks</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Python -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">Python / ML Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: Syntax, Loops, File I/O</a></li>
+      <li><a href="#">Unit 2: Lists, Dictionaries, Functions</a></li>
+      <li><a href="#">Unit 3: Graphics, Image Processing, GUI</a></li>
+      <li><a href="#">Unit 4: OOP, Exception, Multithreading</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Math -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">Mathematics Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: Multivariable Calculus, Maxima-Minima</a></li>
+      <li><a href="#">Unit 2: Double/Triple Integrals, Area, Volume</a></li>
+      <li><a href="#">Unit 3: Differential Equations, Applications</a></li>
+      <li><a href="#">Unit 4: Vector Calculus, Green/Stokes/Gauss</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- OOP -->
+<div class="dropdown">
+  <div class="dropdown-title" onclick="toggleDropdown(this)">OOP in C++ Notes</div>
+  <div class="dropdown-content">
+    <ul>
+      <li><a href="#">Unit 1: OOP Basics, Classes & Objects</a></li>
+      <li><a href="#">Unit 2: Inheritance, Pointers, Memory</a></li>
+      <li><a href="#">Unit 3: Constructors, Overloading, Polymorphism</a></li>
+      <li><a href="#">Unit 4: Exception Handling, Templates</a></li>
+    </ul>
+  </div>
+ </div>
+</div>
+ </div>
+
+  <!-- Syllabus Section -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">📄 Syllabus Details <span>+</span></div>
     <div class="accordion-content">
-
-      <div class="dropdown">
-        <div class="dropdown-title" onclick="toggleDropdown(this)">DSA Notes</div>
-        <div class="dropdown-content">
-          <ul>
-            <li><a href="#">Unit 1 - Arrays</a></li>
-            <li><a href="#">Unit 2 - Linked Lists</a></li>
-            <li><a href="#">Unit 3 - Trees</a></li>
-          </ul>
-        </div>
+      <div class="notice-card">
+        <strong>📎 Click here:</strong>
+        <a href="https://jmp.sh/eFJlBK0e" target="_blank">AIML 2nd Year Official Syllabus PDF</a>
       </div>
-
-      <div class="dropdown">
-        <div class="dropdown-title" onclick="toggleDropdown(this)">Operating Systems</div>
-        <div class="dropdown-content">
-          <ul>
-            <li><a href="#">Unit 1 - Processes</a></li>
-            <li><a href="#">Unit 2 - Scheduling</a></li>
-            <li><a href="#">Unit 3 - Memory Management</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <div class="dropdown-title" onclick="toggleDropdown(this)">DBMS</div>
-        <div class="dropdown-content">
-          <ul>
-            <li><a href="#">Unit 1 - ER Diagrams</a></li>
-            <li><a href="#">Unit 2 - SQL Basics</a></li>
-            <li><a href="#">Unit 3 - Normalization</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <div class="dropdown-title" onclick="toggleDropdown(this)">Python / ML</div>
-        <div class="dropdown-content">
-          <ul>
-            <li><a href="#">Pandas Cheat Sheet</a></li>
-            <li><a href="#">Matplotlib Basics</a></li>
-            <li><a href="#">ML Project GitHub</a></li>
-          </ul>
-        </div>
-      </div>
-
     </div>
   </div>
 
+  <!-- Assignments -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Assignments & Deadlines <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📝 Assignments & Deadlines <span>+</span></div>
     <div class="accordion-content">
       <ul>
-        <!--<li>DBMS ER Diagram – Due: <strong>22 May</strong></li>
-         <li>Python Data Analysis – Due: <strong>28 May</strong></li>
-        <li>Mini Project Proposal – Due: <strong>1 June</strong></li>-->
+        <!--<li>DBMS ER Diagram – Due: <strong>22 June</strong></li>
+        <li>Python Data Analysis – Due: <strong>28 June</strong></li>
+        <li>Mini Project Proposal – Due: <strong>5 July</strong></li>-->
       </ul>
     </div>
   </div>
 
+  <!-- Notices -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Important Notices <span>–</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📢 Important Notices <span>–</span></div>
     <div class="accordion-content" style="display: block;">
       <div id="important-notices">
         <div class="notice-card">
-          <strong>Syllabus PDF:  </strong><a style="text-decoration:none;" href="https://jmp.sh/eFJlBK0e">Syllabus of Second Year AIML</a> <strong>
-          </strong>
+          <strong>📌 Syllabus PDF:</strong> <a href="https://jmp.sh/eFJlBK0e" target="_blank">View Syllabus</a>
         </div>
-     <!--   <div class="notice-card">
-         <strong>Internal Viva:</strong> Starts from <strong>25 May</strong>. Contact your faculty.
-        </div>
-        <div class="notice-card">
-          <strong>Class Tests:</strong> Begin from <strong>5 June</strong>.
-        </div>
-        <div class="notice-card">
-          <strong>Summer Training:</strong> Registration opens <strong>1 June</strong>.
-        </div>
-        <div class="notice-card">
-          <strong>AI Club Hackathon:</strong> Submit by <strong>10 June</strong>.
-        </div>-->
       </div>
       <button id="read-more-btn" onclick="expandNotices()">Read More</button>
     </div>
@@ -277,7 +346,7 @@ body {
 </div>
 
 <footer>
-  &copy; 2025 | AI & ML Department | 2nd Year Dashboard
+  &copy; 2025 | AIML Department | 2nd Year Dashboard
 </footer>
 
 <script>
@@ -287,20 +356,12 @@ body {
     const content = header.nextElementSibling;
     const icon = header.querySelector('span');
     const isOpen = content.style.display === 'block';
+    content.style.display = isOpen ? 'none' : 'block';
+    icon.textContent = isOpen ? '+' : '–';
 
-    if (!isOpen) {
-      content.style.display = 'block';
-      icon.textContent = '–';
-
-      // Restore "Read More" state if it was clicked earlier
-      if (header.textContent.includes('Important Notices') && readMoreClicked) {
-        const notices = document.querySelectorAll('#important-notices .notice-card');
-        notices.forEach(n => n.style.display = 'block');
-        document.getElementById('read-more-btn').style.display = 'none';
-      }
-    } else {
-      content.style.display = 'none';
-      icon.textContent = '+';
+    if (header.textContent.includes('Important Notices') && readMoreClicked) {
+      document.querySelectorAll('#important-notices .notice-card').forEach(n => n.style.display = 'block');
+      document.getElementById('read-more-btn').style.display = 'none';
     }
   }
 
@@ -310,11 +371,11 @@ body {
   }
 
   function expandNotices() {
-    const notices = document.querySelectorAll('#important-notices .notice-card');
-    notices.forEach(n => n.style.display = 'block');
+    document.querySelectorAll('#important-notices .notice-card').forEach(n => n.style.display = 'block');
     document.getElementById('read-more-btn').style.display = 'none';
     readMoreClicked = true;
   }
 </script>
+
 </body>
 </html>
