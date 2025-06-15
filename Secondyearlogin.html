@@ -148,21 +148,21 @@
     </div>
     <div class="display">
       <label>Class Roll Number <span style="color:red">*</span></label>
-      <input disabled type="number" id="roll" placeholder="Enter class roll number" />
+      <input type="number" id="roll" placeholder="Enter class roll number" />
       <div id="roll-error" class="error"></div>
     </div>
     <div class="display">
       <label>DOB <span style="color:red">*</span></label>
       <div class="dob">
-        <select disabled id="date"><option value="">Date</option><script>for (let i=1;i<=31;i++)document.write(`<option>${i}</option>`);</script></select>
-        <select disabled id="month">
+        <select id="date"><option value="">Date</option><script>for (let i=1;i<=31;i++)document.write(`<option>${i}</option>`);</script></select>
+        <select id="month">
           <option value="">Month</option>
           <option>January</option><option>February</option><option>March</option>
           <option>April</option><option>May</option><option>June</option>
           <option>July</option><option>August</option><option>September</option>
           <option>October</option><option>November</option><option>December</option>
         </select>
-        <select disabled id="year"><option value="">Year</option><script>for (let y=2005;y<=2008;y++)document.write(`<option>${y}</option>`);</script></select>
+        <select id="year"><option value="">Year</option><script>for (let y=2005;y<=2008;y++)document.write(`<option>${y}</option>`);</script></select>
       </div>
       <div id="dob-error" class="error"></div>
     </div>
@@ -172,12 +172,12 @@
         <div id="key"></div>
         <i onclick="refresh()" id="fa" class="fas fa-sync"></i>
       </div>
-      <input disabled type="text" autocomplete="off"id="captcha" placeholder="Enter captcha code" />
+      <input  type="text" autocomplete="off"id="captcha" placeholder="Enter captcha code" />
       <div id="captcha-error" class="error"></div>
     </div>
     <div>
       <!--<i class="far fa-save"></i>-->
-      <input disabled type="submit" class="btn" value="Login" />
+      <input  type="submit" class="btn" value="Login" />
     </div>
   </form>
 
