@@ -854,7 +854,13 @@ img{
       font-size: 10px;
       color: #0969da;
     }
-
+    .input-group textarea:focus + label,
+    .input-group textarea:not(:placeholder-shown) + label {
+      top: -14.2px;
+      left: 10px;
+      font-size: 10px;
+      color: #0969da;
+    }
     .contact-form textarea {
       resize:none;
       overflow:hidden;
