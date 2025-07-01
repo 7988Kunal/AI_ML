@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Second Year Login </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #6b6bff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin: 0;
+        }
+        .login-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+           /* text-align: center;*/
+            font-size: 16px;
+        }
+        input:hover{
+          border:2px solid orange;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="login-container">
+        <h2>AI & ML Second Year Login</h2>
+        <input type="text" id="username" placeholder="Username / Registration No. / Roll No.">
+        <button onclick="validateLogin()">Login</button>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <script>
+        const users = {
+            "2418380249": "DEVESH CHAK", "2411001": "DEVESH CHAK",
+            "2418380250": "PRIYANSHU", "2411002": "PRIYANSHU",
+            "2418380246": "AKSHAT", "2411003": "AKSHAT",
+            "2418380251": "PIYUSH BHARDWAJ", "2411004": "PIYUSH BHARDWAJ",
+            "2418380252": "AMAN KUMAR", "2411005": "AMAN KUMAR",
+            "2418380253": "AASHISH AYAN", "2411006": "AASHISH AYAN",
+            "2418380254": "MUSKAN", "2411007": "MUSKAN",
+            "2418380255": "KHUSHI NEHRA", "2411008": "KHUSHI NEHRA",
+            "2418380256": "JATIN KUMAR", "2411009": "JATIN KUMAR",
+            "2418380257": "YASH DUTT SATI", "2411010": "YASH DUTT SATI",
+            "2418380258": "PRIYANSHU", "2411011": "PRIYANSHU",
+            "2418380259": "SIMON", "2411012": "SIMON",
+            "2418380260": "KARTIK YADAV", "2411013": "KARTIK YADAV",
+            "2418380261": "PAVITRA", "2411014": "PAVITRA",
+            "2418380262": "VANSH", "2411015": "VANSH",
+            "2418380263": "SHRUTI DHARIWAL", "2411016": "SHRUTI DHARIWAL",
+            "2418380264": "YASH", "2411017": "YASH",
+            "2418380265": "RICHARD JOSHUA", "2411018": "RICHARD JOSHUA",
+            "2418380266": "TEENA PARMAR", "2411019": "TEENA PARMAR",
+            "2418380267": "MUKUL", "2411020": "MUKUL",
+            "2418380268": "PREETI KUMARI", "2411021": "PREETI KUMARI",
+            "2418380269": "SHIVAM", "2411022": "SHIVAM",
+            "2418380270": "HIMANSHU YADAV", "2411023": "HIMANSHU YADAV",
+            "2418380271": "KARTIKAY", "2411024": "KARTIKAY",
+            "2418380272": "RITU YADAV", "2411025": "RITU YADAV",
+            "2418380273": "SUNIL KUMAR", "2411026": "SUNIL KUMAR",
+            "2418380274": "JATIN", "2411027": "JATIN",
+            "2418380275": "SUMIT", "2411028": "SUMIT",
+            "2418380276": "DIPONWALI", "2411029": "DIPONWALI",
+            "2418380277": "DIVYA RAJ", "2411030": "DIVYA RAJ",
+            "2418380278": "VIPUL KUMAR", "2411031": "VIPUL KUMAR",
+            "2418380279": "RAVI KUMAR", "2411032": "RAVI KUMAR",
+            "2418380280": "SAUMYA ASHUTOSH KUMAR", "2411033": "SAUMYA ASHUTOSH KUMAR",
+            "2418380281": "BARU", "2411034": "BARU",
+            "2418380282": "ISHDEEP VERMA", "2411035": "ISHDEEP VERMA",
+            "2418380283": "SAHIL BHAYRE", "2411036": "SAHIL BHAYRE",
+            "2418380284": "PANKAJ KUMAR", "2411037": "PANKAJ KUMAR",
+            "2418380285": "MADHAV CHAWLA", "2411038": "MADHAV CHAWLA",
+            "2418380286": "NISHA RANI", "2411039": "NISHA RANI",
+            "2418380287": "HANSHU MOHMED", "2411040": "HANSHU MOHMED",
+            "2418380288": "ARYAN JANGRA", "2411041": "ARYAN JANGRA",
+            "2418380289": "PARINEETA SAINI", "2411042": "PARINEETA SAINI",
+            "2418380290": "DIVYANSH", "2411043": "DIVYANSH",
+            "2418380291": "DUSHYANT KASHYAP", "2411044": "DUSHYANT KASHYAP",
+            "2418380293": "SONAL POONIA", "2411046": "SONAL POONIA",
+            "2418380294": "HRITIK RATHEE", "2411047": "HRITIK RATHEE",
+            "2418380295": "NITIN", "2411048": "NITIN",
+            "2418380297": "AARADHYA", "2411050": "AARADHYA",
+            "2418380298": "VINEET", "2411051": "VINEET",
+            "2418380299": "AASHISH", "2411052": "AASHISH",
+            "2418380300": "MEHAK GUPTA", "2411053": "MEHAK GUPTA",
+            "2418380301": "VISHAL RUHIL", "2411054": "VISHAL RUHIL",
+            "2418380302": "PRATIK", "2411055": "PRATIK",
+            "2418380303": "KANISHK", "2411056": "KANISHK",
+            "2418380304": "PRANJAL", "2411057": "PRANJAL",
+            "2418380305": "GAGANDEEP CHAUDHARY", "2411058": "GAGANDEEP CHAUDHARY",
+            "2418380306": "HARIKESH SINGH", "2411059": "HARIKESH SINGH",
+            "2418380307": "MD SHAHID", "2411060": "MD SHAHID",
+            "2418380308": "PRINCE MANGLA", "2411061": "PRINCE MANGLA",
+            "2418380309": "KUNAL VATS", "2411062": "KUNAL VATS",
+            "2418380310": "VINAY KUMAR", "2411063": "VINAY KUMAR",
+            "2418380311": "DHRUV", "2411064": "DHRUV",
+            "2418380312": "LAKSH MUNJAL", "2411065": "LAKSH MUNJAL",
+            "2418380313": "UDAY AGGARWAL", "2411066": "UDAY AGGARWAL",
+            "2418380314": "PRINCE PAREEK", "2411067": "PRINCE PAREEK",
+            "2418380315": "SUHAIL KHAN", "2411068": "SUHAIL KHAN",
+            "2418380316": "ASHISH HOODA", "2411069": "ASHISH HOODA",
+            "2418380317": "PRANEEL KOUL", "2411070": "PRANEEL KOUL",
+            "2418380318": "SUNAKSHI PIKHEN", "2411073": "SUNAKSHI PIKHEN",
+            "2418380319": "KUNAL PANOTRA", "2411074": "KUNAL PANOTRA",
+            "2418380320": "ANMOL VERMA", "2411075": "ANMOL VERMA",
+            "2418380321": "SUMIT KUMAR", "2411076": "SUMIT KUMAR"
+        };
+
+        function validateLogin() {
+            const username = document.getElementById("username").value.trim().toLowerCase();
+            const errorMessage = document.getElementById("error-message");
+
+            errorMessage.textContent = "";
+
+            if (username.length < 1) {
+                errorMessage.textContent = "Username / Registration no./Roll no. cannot be blank";
+                return;
+            }
+
+            for (const [key, value] of Object.entries(users)) {
+                if (key === username || value.toLowerCase() === username) {
+                    window.location.href = "Secondyear.html";
+                    return;
+                }
+            }
+
+            errorMessage.textContent = "Invalid credentials. Please try again.";
+        }
+    </script>
+
+</body>
+</html>
