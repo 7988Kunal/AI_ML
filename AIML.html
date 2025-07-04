@@ -1979,18 +1979,12 @@ Structures, File Handling.
     <main>This Site is developed & maintained by : 💻  AI & ML branch  💻 | MDU,Rohtak © 2025</main>
   </footer>
   <div id="last-updated"></div>
-  <script>
-    const lastUpdated = new Date(document.lastModified);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById("last-updated").textContent =
-      "Last Updated: " + lastUpdated.toLocaleDateString("en-IN", options);
-  </script>
-  <!--<div class="foot"></div>-->
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
+<script>
+  // Firebase config
   const firebaseConfig = {
     apiKey: "AIzaSyAm1BRpaH0B4TaZHz0QGXgTWKG9sl7-2PU",
     authDomain: "authentication-de8fc.firebaseapp.com",
@@ -1998,23 +1992,31 @@ Structures, File Handling.
     appId: "1:1009300860290:web:8231edd3fbe03ed7d0339b"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
 
-  onAuthStateChanged(auth, (user) => {
+  // Protect AIML.html
+  auth.onAuthStateChanged(user => {
     if (!user) {
-      // Redirect if not logged in
-      window.location.href = "index.html";
+      // If not logged in, redirect to login page
+      window.location.href = "index.html"; // or your login page
+    } else {
+      // If logged in, allow page to continue rendering
+      document.body.style.display = 'block';
     }
   });
 
-  // Logout function
-  window.logout = () => {
-    signOut(auth).then(() => {
+  // Initially hide the body
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.display = 'none';
+  });
+  function logout() {
+    firebase.auth().signOut().then(() => {
       window.location.href = "index.html";
     });
-  };
-  </script>
+  }
+</script>
+
   <script>
    document.querySelectorAll(".news-title").forEach(item => {
             item.addEventListener("click", function() {
