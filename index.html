@@ -1,188 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Welcome to AI & ML Platform</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIML Portal - Login / Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-  *{
-    padding: 0px;
-    margin: 0px;
-  }
-    header{
-      font-family:cursive;
-      background-color:rgb(0,148,154);
-      height:50px;
-      display:flex;
-      align-content:center;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-weight:bold;
-      font-size:29px;
-      border:2px solid rgb(52,245,253);
-      margin-bottom:10px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .d1{
-      /*box-shadow:1px 1px 10px 1px rgb(253,199,179);*/
-      display:flex;
-      align-content:center;
-      align-items:center;
-      justify-content:center;
-      width:60%;
-      padding:40px;
-      border:2px solid rgb(52,245,253);
-      background-color:rgb(0,124,154);
-    }
-    .d2{
-      display:flex;
-      align-content:center;
-      align-items:center;
-      justify-content:center;
-      width:50%;
-      padding:40px;
-      border:2px solid rgb(52,245,253);
-      background-color:rgb(0,78,154);
-    }
-    .container{
-      padding:20px;
-      padding-top:80px;
-      margin:15px;
-      background-color:rgb(164,251,241);
-      box-shadow:1px 1px 10px 1px gray;
-    }
-    #mains{
-      margin-top:20px;
-      display:flex;
-      flex-direction:column;
-      align-content:center;
-      align-items:center;
-      justify-content:center;
-    }
-    a{
-      text-align:center;
-      width:100px;
-      text-decoration:none;
-      background-color:rgb(179,196,253);
-      padding:10px;
-      border:1px solid gray;
-      border-radius:10px;
-    }
-    .container0{
-      display:flex;
-      justify-content:center;
-      align-content: center;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #0078d4, #005fa3);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      margin: auto;
-      /*margin-top:165px;*/
-      margin-top:70px;
-      width:16rem;
-      height:16rem;
-      background-color:rgba(0,255,255,1);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
     }
-    .box{
-      transform: rotate(45deg);
-      display:flex;
-      justify-content:center;
-      align-content: center;
-      align-items: center;
-      width:15rem;
-      height:15rem;
-      background-color:rgba(0,255,2,0.5);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
+    .container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.5s ease-in-out;
     }
-    .box-child{
-      transform: rotate(45deg);
-      display:flex;
-      justify-content:center;
-      align-content: center;
-      align-items: center;
-      width:11rem;
-      height:11rem;
-      background-color:rgb(41,60,236);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .box-son{
-      transform: rotate(45deg);
-      display:flex;
-      justify-content:center;
-      align-content: center;
-      align-items: center;
-      width:6rem;
-      height:6rem;
-      background-color:rgba(255,255,0,1);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
     }
-   .box-daughter{
-     transform: rotate(45deg);
-     display:flex;
-      justify-content:center;
-      align-content: center;
-      align-items: center;
-     width:4rem;
-      height:4rem;
-      background-color:rgba(230,55,55,0.959);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
-   } 
-   .circle{
-     transform: rotate(45deg);
-     /* border-radius: 50%; */
-     width:2rem;
-      height:2rem;
-      background-color:rgba(230,255,255,1);
-      box-shadow:1px 1px 5px 1px rgba(0,0,0,0.5);
-   }
-   footer{
-     margin-top:100px;
-     text-align:center;
-     padding:20px;
-     background-color:#000;
-     color:#fff;
-   }
-    @media (min-width: 1251px){
-      marquee{
-        font-size:18px;
-        scrollamount:0;
-      }
+    .tabs button {
+      flex: 1;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding-bottom: 8px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: 0.3s;
+    }
+    .tabs button.active {
+      color: #0078d4;
+      border-color: #0078d4;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: block;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      transition: border-color 0.2s;
+      font-size: 15px;
+    }
+    input:focus {
+      border-color: #0078d4;
+      outline: none;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #0078d4;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #005fa3;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .forgot {
+      display: block;
+      text-align: right;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #0078d4;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="d1">
-      <div class="d2">
-        AI & ML 
-      </div>
-    </div>
-  </header>
   <div class="container">
-    <marquee behavior="scroll" direction="left"style="color:red;font-weight:bold;">Welcome to Education Platform of AIML
-    </marquee>
-    <div id="mains">
-     <label>Enter to Main Site by clicking below button</label>
-     <br>
-     <a onclick="Alert()"href="AIML.html">Proceed</a>
-  </div>
-  </div>
-  <div class="container0">
-    <div class="box">
-      <div class="box-child">
-        <div class="box-son">
-          <div class="box-daughter">
-            <div class="circle"></div>
-          </div>
-        </div>
+    <div class="header"style="display:flex;justify-content:center;">
+      <img style="border-radius:50%;"height="100px" width="100px"src="https://i.ibb.co/v4HcTn0P/file-00000000c35861f8b1c096973dbe682e.png" alt="AIML Logo">
+      <!--<span>Login</span>-->
+    </div>
+    <br>
+    <div class="tabs">
+      <button id="loginTab" class="active" onclick="switchTab('login')">Login</button>
+      <button id="signupTab" onclick="switchTab('signup')">Signup</button>
+    </div>
+
+    <div id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" />
+        <div id="loginEmailError" class="error"></div>
       </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" />
+        <div id="loginPasswordError" class="error"></div>
+      </div>
+      <button class="btn" onclick="login()">Login</button>
+      <a class="forgot" onclick="forgotPassword()">Forgot password?</a>
+    </div>
+
+    <div id="signupForm" style="display:none;">
+      <div class="form-group">
+        <label for="signupUsername">Username</label>
+        <input type="text" id="signupUsername" />
+        <div id="usernameError" class="error"></div>
+      </div>
+      <div class="form-group">
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" />
+        <div id="emailError" class="error"></div>
+      </div>
+      <div class="form-group">
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" />
+        <div id="passwordError" class="error"></div>
+      </div>
+      <button class="btn" onclick="signup()">Signup</button>
     </div>
   </div>
-  <footer>
-    AIML , MDU &copy 2025 All Right Reserved.
-  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
   <script>
-    function Alert(){
-      alert("You are redirected to main site of AIML Portal.");
+    const firebaseConfig = {
+      apiKey: "AIzaSyAm1BRpaH0B4TaZHz0QGXgTWKG9sl7-2PU",
+      authDomain: "authentication-de8fc.firebaseapp.com",
+      projectId: "authentication-de8fc",
+      appId: "1:1009300860290:web:8231edd3fbe03ed7d0339b"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function switchTab(tab) {
+      document.getElementById("loginTab").classList.remove("active");
+      document.getElementById("signupTab").classList.remove("active");
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("signupForm").style.display = "none";
+      if (tab === "login") {
+        document.getElementById("loginTab").classList.add("active");
+        document.getElementById("loginForm").style.display = "block";
+      } else {
+        document.getElementById("signupTab").classList.add("active");
+        document.getElementById("signupForm").style.display = "block";
+      }
+    }
+
+    function showError(id, msg) {
+      document.getElementById(id).innerText = msg;
+    }
+
+    function clearErrors() {
+      ["loginEmailError", "loginPasswordError", "usernameError", "emailError", "passwordError"].forEach(id => document.getElementById(id).innerText = "");
+    }
+
+    function validatePassword(pw) {
+      return pw.length >= 6 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /\d/.test(pw) && /[^a-zA-Z0-9]/.test(pw);
+    }
+
+    async function login() {
+      clearErrors();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      let valid = true;
+      if (!email.includes("@")) { showError("loginEmailError", "Valid email required"); valid = false; }
+      if (!password) { showError("loginPasswordError", "Password is required"); valid = false; }
+      if (!valid) return;
+      try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = "AIML.html";
+      } catch (err) {
+        alert("Login failed: " + err.message);
+      }
+    }
+
+    async function signup() {
+      clearErrors();
+      const username = document.getElementById("signupUsername").value.trim();
+      const email = document.getElementById("signupEmail").value.trim();
+      const password = document.getElementById("signupPassword").value.trim();
+      let valid = true;
+      if (username.length < 3) { showError("usernameError", "Username must be at least 3 characters"); valid = false; }
+      if (!email.includes("@")) { showError("emailError", "Valid email required"); valid = false; }
+      if (!validatePassword(password)) {
+        showError("passwordError", "Password must have upper, lower, digit, special char and 6+ chars");
+        valid = false;
+      }
+      if (!valid) return;
+      try {
+        await auth.createUserWithEmailAndPassword(email, password);
+        alert("Signup successful. You can now log in.");
+        switchTab("login");
+      } catch (err) {
+        alert("Signup failed: " + err.message);
+      }
+    }
+
+    async function forgotPassword() {
+      const email = prompt("Enter your email to receive reset link:");
+      if (!email) return;
+      try {
+        await auth.sendPasswordResetEmail(email);
+        alert("Password reset email sent.");
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
     }
   </script>
 </body>
