@@ -2002,14 +2002,14 @@ Structures, File Handling.
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       // Redirect if not logged in
-      window.location.href = "auth.html";
+      window.location.href = "index.html";
     }
   });
 
   // Logout function
   window.logout = () => {
     signOut(auth).then(() => {
-      window.location.href = "auth.html";
+      window.location.href = "index.html";
     });
   };
   </script>
