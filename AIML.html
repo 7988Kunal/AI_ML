@@ -1255,6 +1255,20 @@ img{
        <img src="https://i.ibb.co/q3dWwJT7/file-TVSjqso-Q1-Scyi-Hs-DY5yvi7.webp" alt="ai & ml logo personal user" border="0">
     </div>
 </header>
+<button onclick="logout()" style="
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+">
+  Logout
+</button>
   <!-- Search Bar -->
 <!--<div style="text-align:center; margin: 15px;">
     <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="🔍 Search here..." 
@@ -1971,6 +1985,34 @@ Structures, File Handling.
   </script>
   <!--<div class="foot"></div>-->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAm1BRpaH0B4TaZHz0QGXgTWKG9sl7-2PU",
+    authDomain: "authentication-de8fc.firebaseapp.com",
+    projectId: "authentication-de8fc",
+    appId: "1:1009300860290:web:8231edd3fbe03ed7d0339b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Redirect if not logged in
+      window.location.href = "auth.html";
+    }
+  });
+
+  // Logout function
+  window.logout = () => {
+    signOut(auth).then(() => {
+      window.location.href = "auth.html";
+    });
+  };
+  </script>
   <script>
    document.querySelectorAll(".news-title").forEach(item => {
             item.addEventListener("click", function() {
