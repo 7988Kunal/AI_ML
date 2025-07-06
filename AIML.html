@@ -2248,19 +2248,13 @@ Structures, File Handling.
     });
   }
 </script>
-<script>
-  // Function to format the date
-  function formatDate(date) {
-    const options = { day: '2-digit', month: 'long', year: 'numeric' };
-    return date.toLocaleDateString('en-GB', options); // e.g., "04 July 2025"
-  }
+  <script>
+  const lastModified = new Date(document.lastModified);
+  const options = { day: '2-digit', month: 'long', year: 'numeric' };
+  const formattedDate = lastModified.toLocaleDateString('en-GB', options);
 
-  // Get today's date
-  const today = new Date();
-
-  // Set the formatted date in the div
-  document.getElementById('last-updated').textContent = "Last Updated: " + formatDate(today);
-</script>
+  document.getElementById('last-updated').textContent = "Last Updated: " + formattedDate;
+  </script>
   <script>
    document.querySelectorAll(".news-title").forEach(item => {
             item.addEventListener("click", function() {
