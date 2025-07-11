@@ -381,6 +381,33 @@
     readMoreClicked = true;
   }
 </script>
+<script>
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAm1BRpaH0B4TaZHz0QGXgTWKG9sl7-2PU",
+    authDomain: "authentication-de8fc.firebaseapp.com",
+    projectId: "authentication-de8fc",
+    appId: "1:1009300860290:web:8231edd3fbe03ed7d0339b"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Protect AIML.html
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      // If not logged in, redirect to login page
+      window.location.href = "Secondyearlogin.html"; // or your login page
+    } else {
+      // If logged in, allow page to continue rendering
+      document.body.style.display = 'block';
+    }
+  });
+
+  // Initially hide the body
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.display = 'none';
+  });
+</script>
 </body>
 </html>
