@@ -135,6 +135,134 @@
         opacity: 1;
       }
       }
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .header {
+      background: #2b6cb0;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .search-bar {
+     /* padding: 10px;*/
+      text-align: center;
+      background: #edf2f7;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      outline: none;
+    }
+
+    marquee {
+      height: 300px;
+      direction: down;
+      scrollamount="2";
+    }
+
+    .news-item {
+      padding: 10px 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .news-item a {
+      text-decoration: none;
+      color: #2b6cb0;
+      font-weight: bold;
+    }
+
+    .news-date {
+      display: inline-block;
+      font-size: 0.9em;
+      color: #555;
+      margin-left: 10px;
+    }
+
+    .label-new {
+      color: white;
+      background: #38a169;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      margin-left: 10px;
+    }
+
+    .label-old {
+      color: white;
+      background: #718096;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      margin-left: 10px;
+    }
+
+    #viewAllBtn {
+      /*position:relative;*/
+      /*right: 10px;
+      top: 50%;*/
+      transform: translateY(-50%);
+      background: white;
+      color: #2b6cb0;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+
+    @media(max-width: 600px) {
+      .container {
+        margin: 15px;
+      }
+      .search-bar input {
+        width: 100%;
+      }
+      }
   </style>
 
   <!-- Firebase -->
@@ -207,7 +335,114 @@
       </form>
     </div>
   </div>
+  <div class="container">
+    <div class="header">
+      📢 Latest News & Announcements
+    </div>
 
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search news...">
+    </div>
+
+    <marquee behavior="scroll" direction="down" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();" id="newsMarquee">
+      <div id="newsContainer">
+        <!-- News Items -->
+        <div class="news-item" data-date="2025-07-18">
+          <a href="#" target="_blank">Phase 3 : Machine Learning (ML)</a>
+          <span class="label">New</span>
+          <span class="news-date">18 July 2025</span>
+        </div>
+
+    <div class="news-item" data-date="2025-07-03">
+          <a href="#" target="_blank">Phase 2: Data Handling & Visualisation</a>
+          <span class="label">New</span>
+          <span class="news-date">3 July 2025</span>
+        </div>
+
+       <div class="news-item" data-date="2025-06-13">
+          <a href="#" target="_blank">Phase 1: Python Language & basic maths</a>
+          <span class="label">New</span>
+          <span class="news-date">06 Jun 2025</span>
+        </div>
+
+      <!--  <div class="news-item" data-date="2025-07-15">
+           <a href="https://example.com/workshop-ai" target="_blank">AI Workshop on ML Tools - Register Now</a>
+          <span class="label">New</span>
+          <span class="news-date">15 July 2025</span>
+        </div>
+
+        <div class="news-item" data-date="2025-07-16">
+          <a href="pdfs/bus-booking.pdf" target="_blank">CET Haryana Bus Booking Form</a>
+          <span class="label">New</span>
+          <span class="news-date">16 July 2025</span>
+        </div>-->
+      </div>
+    </marquee>
+    <button id="viewAllBtn">View All</button>
+  </div>
+  <!-- Modal for View All -->
+  <div id="newsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('newsModal').style.display='none'">&times;</span>
+      <h2>📜 All News</h2>
+      <div id="modalNewsContainer">
+        <!-- Will be cloned from marquee -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const newsItems = document.querySelectorAll('.news-item');
+
+    searchInput.addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      newsItems.forEach(item => {
+        const content = item.innerText.toLowerCase();
+        item.style.display = content.includes(query) ? 'block' : 'none';
+      });
+    });
+
+    // Auto-label New/Old
+    newsItems.forEach(item => {
+      const label = item.querySelector('.label');
+      const dateStr = item.getAttribute('data-date');
+      const newsDate = new Date(dateStr);
+      const today = new Date();
+      const diffDays = (today - newsDate) / (1000 * 60 * 60 * 24);
+      if (diffDays <= 7) {
+        label.className = 'label-new label';
+        label.textContent = 'New';
+      } else {
+        label.className = 'label-old label';
+        label.textContent = 'Old';
+      }
+    });
+
+    // View All Modal Logic
+    document.getElementById('viewAllBtn').addEventListener('click', () => {
+      const modal = document.getElementById('newsModal');
+      const modalContent = document.getElementById('modalNewsContainer');
+      modalContent.innerHTML = ''; // Clear previous
+
+      // Clone news items
+      newsItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        modalContent.appendChild(clone);
+      });
+
+      modal.style.display = 'block';
+    });
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('newsModal');
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCA4RvvJUiXq06T09jLjS7CAmD0qRDVXvQ",
