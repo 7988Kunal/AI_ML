@@ -27,13 +27,18 @@
       const errorDiv = document.getElementById("error");
       const studentDiv = document.getElementById("studentDetails");
       const resultDiv = document.getElementById("resultDetails");
+      const loadingDiv = document.getElementById("loading");
 
       studentDiv.innerHTML = '';
       resultDiv.innerHTML = '';
       errorDiv.innerText = '';
+      studentDiv.classList.add("hidden");
+      resultDiv.classList.add("hidden");
+      loadingDiv.classList.remove("hidden");
 
       if (!roll) {
         errorDiv.innerText = "Please enter a roll number.";
+        loadingDiv.classList.add("hidden");
         return;
       }
 
@@ -43,6 +48,7 @@
 
         if (!studentSnap.exists()) {
           errorDiv.innerText = "No student found with this roll number.";
+          loadingDiv.classList.add("hidden");
           return;
         }
 
@@ -55,12 +61,15 @@
           <p><strong>Roll No:</strong> ${roll}</p>
           <p><strong>Registration No:</strong> ${reg}</p>
         `;
+        studentDiv.classList.remove("hidden");
 
         const examRef = doc(db, "examResponses", reg);
         const examSnap = await getDoc(examRef);
 
         if (!examSnap.exists()) {
           resultDiv.innerHTML = "<p>No exam response found for this student.</p>";
+          resultDiv.classList.remove("hidden");
+          loadingDiv.classList.add("hidden");
           return;
         }
 
@@ -119,17 +128,27 @@
             </table>
           </div>
         `;
+        resultDiv.classList.remove("hidden");
       } catch (err) {
         console.error(err);
         errorDiv.innerText = "Something went wrong. Please try again.";
+      } finally {
+        loadingDiv.classList.add("hidden");
       }
     };
   </script>
 
   <style>
+    html, body {
+      height: 100%;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
       margin: 0;
       padding: 20px;
       text-align: center;
@@ -153,17 +172,18 @@
       padding: 12px;
       width: 280px;
       font-size: 16px;
-      outline:none;
+      outline: none;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-   input:hover{
-     border: 1px solid #2adaf4dd;
-   }
+
+    input:hover {
+      border: 1px solid #2adaf4dd;
+    }
+
     button {
       padding: 12px 25px;
       font-size: 16px;
-      background: #4b6cb7;
       background: linear-gradient(to right, #182848, #4b6cb7);
       color: white;
       border: none;
@@ -180,6 +200,29 @@
       color: red;
       font-weight: bold;
       margin: 15px;
+    }
+
+    #loading {
+      margin: 20px auto;
+    }
+
+    .spinner {
+      display: inline-block;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #4b6cb7;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none;
     }
 
     #studentDetails, #resultDetails {
@@ -249,9 +292,10 @@
   </div>
 
   <div id="error"></div>
+  <div id="loading" class="spinner hidden"></div>
 
-  <div id="studentDetails"></div>
-  <div id="resultDetails"></div>
+  <div id="studentDetails" class="hidden"></div>
+  <div id="resultDetails" class="hidden"></div>
 
 </body>
 </html>
