@@ -5,201 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Student Login & Admin Panel</title>
   <style>
-    * { 
-  box-sizing: border-box; 
+    /* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #0a74da, #38a169);
-  margin: 0; padding: 20px;
-  display: flex; flex-direction: column;
-  align-items: center; gap: 25px;
   min-height: 100vh;
-  animation: fadeIn 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-/* Panels */
+/* Main container for login + news */
+.main-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: center;
+}
+
+/* Panels (Admin/User Login) */
 .panel {
-  background: white; 
-  padding: 25px; 
+  flex: 1 1 300px;
+  background: white;
+  padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  width: 100%; 
-  max-width: 370px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  max-width: 400px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: slideUp 0.8s ease;
 }
 
 .panel:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
 }
 
-h2 { 
-  margin: 0 0 15px; 
-  font-size: 1.5rem; 
-  color: #2b6cb0; 
+h2 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #2b6cb0;
   text-align: center;
 }
 
-label { 
-  display: block; 
-  margin-top: 12px; 
-  font-weight: 600; 
-  color: #444; 
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #444;
 }
 
 input[type="text"], select {
-  width: 100%; 
-  padding: 10px; 
-  margin-top: 6px; 
-  outline: none;
-  border: 1px solid #ccc; 
-  border-radius: 6px; 
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
   transition: border 0.3s, box-shadow 0.3s;
 }
 
 input[type="text"]:focus, select:focus {
   border: 1px solid #0a74da;
-  box-shadow: 0 0 6px rgba(10,116,218,0.4);
+  box-shadow: 0 0 6px rgba(10, 116, 218, 0.4);
+  outline: none;
 }
 
 button {
-  margin-top: 18px; 
-  width: 100%; 
+  margin-top: 20px;
+  width: 100%;
   padding: 12px;
   background: linear-gradient(135deg, #0a74da, #065aab);
   color: white;
-  border: none; 
-  border-radius: 6px; 
-  font-size: 1rem; 
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
 }
 
-button:hover { 
+button:hover {
   background: linear-gradient(135deg, #065aab, #043c73);
   transform: scale(1.02);
 }
 
-.list { 
-  margin-top: 15px; 
-  max-height: 200px; 
-  overflow-y: auto; 
-  border: 1px solid #ddd; 
-  border-radius: 6px; 
-  padding: 8px; 
-  background: #fafafa;
-}
-
-.list-item {
-  display: flex; 
-  justify-content: space-between;
-  padding: 8px; 
-  border-bottom: 1px solid #e0e0e0; 
-  font-size: 0.95rem; 
-  color: #333;
-}
-
-.list-item:last-child { border-bottom: none; }
-
-.remove-btn {
-  background: #e63946; 
-  border: none; 
-  color: white;
-  border-radius: 4px; 
-  padding: 4px 8px;
-  cursor: pointer; 
-  font-size: 0.8rem;
-  transition: background 0.3s;
-}
-
-.remove-btn:hover {
-  background: #b71c1c;
-}
-
-/* Alerts */
-.error, .success {
-  margin-top: 12px; 
-  padding: 10px; 
-  border-radius: 6px;
-  font-weight: 600; 
-  font-size: 0.9rem;
-  animation: fadeIn 0.5s ease;
-}
-
-.error { background: #f8d7da; color: #842029; }
-.success { background: #d1e7dd; color: #0f5132; }
-
-/* Registration Popup */
-#registrationPopup {
-  display: none; 
-  position: fixed; 
-  inset: 0;
-  background: rgba(0,0,0,0.6); 
-  z-index: 1000;
-  justify-content: center; 
-  align-items: center;
-  animation: fadeIn 0.4s ease;
-}
-
-#registrationPopup .popup-content {
-  background: white; 
-  padding: 25px 30px;
-  border-radius: 12px; 
-  width: 90%; 
-  max-width: 420px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
-  position: relative;
-  animation: slideDown 0.5s ease;
-}
-
-#registrationPopup h3 {
-  margin-top: 0; 
-  font-size: 1.6rem; 
-  color: #2b6cb0;
-  text-align: center;
-}
-
-#closePopup {
-  position: absolute; 
-  top: 10px; 
-  right: 15px;
-  background: transparent; 
-  border: none; 
-  font-size: 1.8rem;
-  cursor: pointer; 
-  color: #888;
-  transition: color 0.3s;
-}
-#closePopup:hover { color: #222; }
-
-/* Container for News */
-.container {
-  max-width: 650px;
-  margin: 20px auto;
+/* News Sidebar */
+.news-panel {
+  flex: 1 1 250px;
   background: white;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  padding: 20px;
   border-radius: 12px;
-  overflow: hidden;
-  animation: fadeIn 0.8s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  max-width: 300px;
+  animation: slideUp 0.8s ease;
 }
 
-.header {
-  background: linear-gradient(135deg,#2b6cb0,#0a74da);
-  color: white;
-  padding: 15px;
+.news-panel h3 {
   text-align: center;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-.search-bar {
-  padding: 10px;
-  text-align: center;
-  background: #f7fafc;
+  font-size: 1.3rem;
+  color: #2b6cb0;
+  margin-bottom: 10px;
 }
 
 .search-bar input {
@@ -207,125 +121,44 @@ button:hover {
   padding: 10px;
   border: 1px solid #bbb;
   border-radius: 6px;
-  font-size: 1em;
-  outline: none;
-  transition: border 0.3s;
-}
-.search-bar input:focus {
-  border: 1px solid #2b6cb0;
-}
-
-.news-item {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e2e8f0;
-  transition: background 0.3s;
-}
-.news-item:hover {
-  background: #f1faff;
-}
-
-.news-item a {
-  text-decoration: none;
-  color: #2b6cb0;
-  font-weight: bold;
-}
-
-.label-new {
-  color: white;
-  background: #38a169;
-  padding: 3px 7px;
-  border-radius: 4px;
-  font-size: 0.75em;
-  margin-left: 10px;
-}
-
-.label-old {
-  color: white;
-  background: #718096;
-  padding: 3px 7px;
-  border-radius: 4px;
-  font-size: 0.75em;
-  margin-left: 10px;
+  font-size: 0.95rem;
 }
 
 #viewAllBtn {
+  margin-top: 15px;
   display: block;
-  margin: 10px auto 15px;
-  background: white;
-  color: #2b6cb0;
-  border: 2px solid #2b6cb0;
-  padding: 8px 14px;
+  width: 100%;
+  padding: 10px;
   border-radius: 6px;
-  cursor: pointer;
+  border: 2px solid #2b6cb0;
+  color: #2b6cb0;
   font-weight: bold;
-  transition: all 0.3s ease;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
 }
+
 #viewAllBtn:hover {
   background: #2b6cb0;
   color: white;
 }
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.6);
-  animation: fadeIn 0.4s ease;
-}
-
-.modal-content {
-  background-color: white;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 650px;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  animation: slideUp 0.5s ease;
-}
-
-.close {
-  position: absolute;
-  top: 10px; right: 15px;
-  font-size: 26px;
-  font-weight: bold;
-  color: #444;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-.close:hover { color: #000; }
-
 /* Animations */
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
 @keyframes slideUp {
-  from {transform: translateY(30px); opacity:0;}
-  to {transform: translateY(0); opacity:1;}
-}
-@keyframes slideDown {
-  from {transform: translateY(-30px); opacity:0;}
-  to {transform: translateY(0); opacity:1;}
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-/* Responsiveness */
-@media (min-width: 768px) {
-  body { 
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: flex-start; 
+/* Responsive */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: stretch;
   }
-  .panel { margin: 0 15px; }
-}
-@media(max-width: 500px) {
-  h2 { font-size: 1.3rem; }
-  .header { font-size: 1.2rem; }
-  button { font-size: 0.9rem; padding: 10px; }
+
+  .panel, .news-panel {
+    max-width: 100%;
+  }
 }
   </style>
   <!--<style>
