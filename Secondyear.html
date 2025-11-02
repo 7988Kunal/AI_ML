@@ -137,6 +137,195 @@
 
 <div class="container">
   <marquee behavior="scroll" direction="left">✨ Welcome to the AIML Second Year Education Platform ✨</marquee>
+  
+
+  <!-- Examination Schedule -->
+<div class="accordion">
+  <div class="accordion-header" onclick="toggleAccordion(this)">📅 Examination Schedule <span>–</span></div>
+  <div class="accordion-content" style="display:block;">
+    <div class="exam-table-container">
+      <table id="examTable">
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>Course Code</th>
+            <th>Date of Examination</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-date="2025-12-01">
+            <td>Database Management Systems</td>
+            <td>PCC-CSE-201G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-03">
+            <td>Data Structures & Algorithms</td>
+            <td>PCC-CSE-203G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-05">
+            <td>Artificial Intelligence</td>
+            <td>PCC-CSE-304G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-07">
+            <td>Python Programming</td>
+            <td>PCC-CSE-207G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-01">
+            <td>Mathematics for AI</td>
+            <td>BSC-MATH-271G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-03">
+            <td>Object Oriented Programming</td>
+            <td>PCC-CSE-208G</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-05">
+            <td>Database Management Systems LAB</td>
+            <td>LC-CSE-209G (Practical)</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-07">
+            <td>Artificial Intelligence Lab using Python</td>
+            <td>LC-CSE-326G (Practical)</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-10">
+            <td>Data Structures & Algorithms LAB using C</td>
+            <td>LC-CSE-213G (Practical)</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-12">
+            <td>Python Programming LAB</td>
+            <td>LC-CSE-215G (Practical)</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+          <tr data-date="2025-12-12">
+            <td>Object Oriented Programming LAB using C++</td>
+            <td>LC-CSE-214G (Practical)</td>
+            <!-- <td class="date-cell"></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 📅 Examination Table Styling */
+  .exam-table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+  }
+
+  #examTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 600px;
+  }
+
+  #examTable th {
+    background: linear-gradient(135deg, #2e86de, #54a0ff);
+    color: white;
+    padding: 12px;
+    font-size: 1.05em;
+    text-align: center;
+  }
+
+  #examTable td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    text-align: center;
+    font-weight: 500;
+  }
+
+  #examTable tr:hover {
+    background: rgba(46, 134, 222, 0.1);
+    transition: background 0.3s ease;
+  }
+
+  /* 🕓 Date Cell Colors */
+  .date-cell {
+    font-weight: bold;
+    border-radius: 8px;
+    color: white;
+    padding: 6px 10px;
+    display: inline-block;
+    min-width: 100px;
+  }
+
+  .today {
+    background-color: #28a745;
+  }
+  .tomorrow {
+    background-color: #17a2b8;
+  }
+  .yesterday {
+    background-color: #ffc107;
+    color: #111;
+  }
+  .upcoming {
+    background-color: #007bff;
+  }
+  .past {
+    background-color: #dc3545;
+  }
+
+  /* 📱 Responsive Design */
+  @media (max-width: 768px) {
+    #examTable th, #examTable td {
+      font-size: 0.9em;
+      padding: 10px 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #examTable {
+      min-width: 100%;
+      font-size: 0.85em;
+    }
+    .date-cell {
+      min-width: 80px;
+      font-size: 0.8em;
+    }
+  }
+</style>
+
+<script>
+  // 🕓 WhatsApp-style date formatting
+  function formatDateRelative(dateString) {
+    const inputDate = new Date(dateString);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const diff = Math.floor((inputDate - today) / (1000 * 60 * 60 * 24));
+
+    if (diff === 0) return {text: "Today", cls: "today"};
+    else if (diff === 1) return {text: "Tomorrow", cls: "tomorrow"};
+    else if (diff === -1) return {text: "Yesterday", cls: "yesterday"};
+    else if (diff > 1) return {text: inputDate.toLocaleDateString(), cls: "upcoming"};
+    else return {text: inputDate.toLocaleDateString(), cls: "past"};
+  }
+
+  // 💡 Apply dynamic dates
+  document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll("#examTable tbody tr");
+    rows.forEach(row => {
+      const date = row.getAttribute("data-date");
+      const cell = row.querySelector(".date-cell");
+      const formatted = formatDateRelative(date);
+      cell.textContent = formatted.text;
+      cell.classList.add(formatted.cls);
+    });
+  });
+</script>
 
   <!-- Subjects -->
   <div class="accordion">
@@ -168,6 +357,154 @@
       </div>
     </div>
   </div>
+
+
+  <section class="practical-section">
+  <h2>🧾 Practical File & Due Section</h2>
+  <div class="table-container">
+    <table class="practical-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Course Code</th>
+          <th>Due Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-date="2025-11-07">
+          <td>Database Management Systems Lab</td>
+          <td>LC-CSE-209G</td>
+          <td class="due-cell"></td>
+          <td class="status-cell"></td>
+        </tr>
+        <tr data-date="">
+          <td>Artificial Intelligence Lab using Python</td>
+          <td>LC-CSE-326G</td>
+          <td class="due-cell"></td>
+          <td class="status-cell"></td>
+        </tr>
+        <tr data-date="">
+          <td>Data Structures & Algorithms Lab using C</td>
+          <td>LC-CSE-213G</td>
+          <td class="due-cell"></td>
+          <td class="status-cell"></td>
+        </tr>
+        <tr data-date="2025-11-6">
+          <td>Python Programming Lab</td>
+          <td>LC-CSE-215G</td>
+          <td class="due-cell"></td>
+          <td class="status-cell"></td>
+        </tr>
+        <tr data-date="">
+          <td>Object Oriented Programming Lab using C++</td>
+          <td>LC-CSE-214G</td>
+          <td class="due-cell"></td>
+          <td class="status-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+.practical-section {
+  margin: 40px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #2e026d, #3a0ca3, #4361ee);
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 95%;
+}
+
+.practical-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #ffea00;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.practical-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.practical-table th, .practical-table td {
+  padding: 12px;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.practical-table th {
+  background: rgba(0,0,0,0.3);
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.status-cell {
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.status-today { background-color: #ffb703; color: #000; }
+.status-tomorrow { background-color: #00ffb3; color: #000; }
+.status-overdue { background-color: #ff4b5c; color: #fff; }
+.status-upcoming { background-color: #3a86ff; color: #fff; }
+
+@media (max-width: 768px) {
+  .practical-section h2 { font-size: 1.4rem; }
+  .practical-table th, .practical-table td { padding: 8px; font-size: 0.9rem; }
+}
+</style>
+
+<script>
+function formatDateDisplay(date) {
+  const today = new Date();
+  const target = new Date(date);
+  const diff = Math.floor((target - today) / (1000 * 60 * 60 * 24));
+
+  if (diff === 0) return "Today";
+  else if (diff === 1) return "Tomorrow";
+  else if (diff === -1) return "Yesterday";
+  else return target.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+document.querySelectorAll(".practical-table tbody tr").forEach(row => {
+  const date = row.getAttribute("data-date");
+  const dueCell = row.querySelector(".due-cell");
+  const statusCell = row.querySelector(".status-cell");
+  const today = new Date();
+  const target = new Date(date);
+  const diff = Math.floor((target - today) / (1000 * 60 * 60 * 24));
+
+  dueCell.textContent = formatDateDisplay(date);
+
+  if (diff === 0) {
+    statusCell.textContent = "Due Today";
+    statusCell.classList.add("status-today");
+  } else if (diff === 1) {
+    statusCell.textContent = "Tomorrow";
+    statusCell.classList.add("status-tomorrow");
+  } else if (diff < 0) {
+    statusCell.textContent = "Overdue";
+    statusCell.classList.add("status-overdue");
+  } else {
+    statusCell.textContent = "Upcoming";
+    statusCell.classList.add("status-upcoming");
+  }
+});
+</script>
 
   <!-- Assignments -->
   <div class="accordion">
