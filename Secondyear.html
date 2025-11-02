@@ -39,58 +39,21 @@
       margin-bottom: 20px;
     }
 
-    .scroll-banner {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 10px;
-      padding: 10px;
-      margin: 10px auto 20px auto;
-      font-weight: bold;
-      font-size: 1em;
-      overflow: hidden;
-      white-space: nowrap;
-      animation: scrollText 12s linear infinite;
-      text-align: center;
-      color: crimson;
-      backdrop-filter: blur(5px);
-    }
-
-    @keyframes scrollText {
-      0% { transform: translateX(100%) }
-      100% { transform: translateX(-100%) }
-    }
-
     .container {
       max-width: 1000px;
       margin: 0 auto;
     }
 
-    .back {
-      background-color: #2ecc71;
-      padding: 10px 20px;
-      display: inline-block;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      margin-bottom: 25px;
-      transition: 0.3s;
-    }
-
-    .back a {
-      text-decoration: none;
-      color: white;
+    marquee {
+      color: red;
       font-weight: bold;
-    }
-
-    .back:hover {
-      transform: scale(1.05);
-      background-color: #27ae60;
+      margin-bottom: 10px;
     }
 
     .accordion {
       background: var(--glass);
       border-radius: 16px;
       margin-bottom: 20px;
-      padding: 0;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(15px);
       border: 1px solid rgba(255,255,255,0.2);
@@ -115,7 +78,7 @@
 
     .accordion-content {
       padding: 15px 20px;
-      display: none;
+      display: block;
       animation: fadeIn 0.3s ease-in-out;
     }
 
@@ -129,25 +92,6 @@
       text-decoration: none;
     }
 
-    .dropdown {
-      margin-top: 10px;
-    }
-
-    .dropdown-title {
-      cursor: pointer;
-      font-weight: 600;
-      padding: 10px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 8px;
-      margin-bottom: 5px;
-    }
-
-    .dropdown-content {
-      margin-top: 5px;
-      display: none;
-      padding-left: 15px;
-    }
-
     .notice-card {
       background: rgba(255, 255, 200, 0.7);
       border-left: 5px solid var(--accent);
@@ -155,21 +99,6 @@
       margin-bottom: 12px;
       border-radius: 8px;
       box-shadow: 0 0 6px rgba(0,0,0,0.1);
-    }
-
-    #important-notices .notice-card:nth-child(n+4) {
-      display: none;
-    }
-
-    #read-more-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      font-size: 0.95em;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
     }
 
     footer {
@@ -196,8 +125,8 @@
       }
     }
     @media (min-width: 1251px){
-      marquee{
-        font-size:21px;
+      marquee {
+        font-size: 21px;
       }
     }
   </style>
@@ -207,12 +136,11 @@
 <header>Artificial Intelligence & Machine Learning (AIML) Second Year Dashboard 2025-2026</header>
 
 <div class="container">
-  <marquee style="color:red;font-weight:bold;margin-bottom:10px;" behavior="scroll" direction="left">✨ Welcome to the AIML Second Year Education Platform ✨</marquee>
- <!--<div class="back"><a href="AIML.html">⬅ Back to Main Website</a></div>-->
+  <marquee behavior="scroll" direction="left">✨ Welcome to the AIML Second Year Education Platform ✨</marquee>
 
   <!-- Subjects -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">📘 Subjects Offered <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📘 Subjects Offered <span>–</span></div>
     <div class="accordion-content">
       <ul>
         <li>Database Management Systems</li>
@@ -230,91 +158,9 @@
     </div>
   </div>
 
-  <!-- Resources -->
-<!--  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">📂 Study Resources & Notes <span>+</span></div><div class="accordion-content"><!-- DBMS -->
- <!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">DBMS Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: Data Abstraction, DDL/DML, Data Models, ER</a></li>
-      <li><a href="#">Unit 2: SQL3, Normalization, Query Optimization</a></li>
-      <li><a href="#">Unit 3: Indexing, Transactions, Concurrency</a></li>
-      <li><a href="#">Unit 4: Security, SQL Injection, Data Mining</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- DSA -->
-<!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">DSA Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: Searching, Complexity, Basic Structures</a></li>
-      <li><a href="#">Unit 2: Stack, Queue, Expression Evaluation</a></li>
-      <li><a href="#">Unit 3: Linked Lists, Trees, AVL, B+</a></li>
-      <li><a href="#">Unit 4: Sorting, Graphs, MST</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- AI -->
-<!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">AI Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: Search Techniques, Game Playing</a></li>
-      <li><a href="#">Unit 2: Knowledge Representation, Logic, Frames</a></li>
-      <li><a href="#">Unit 3: Probability, Bayesian, Planning</a></li>
-      <li><a href="#">Unit 4: Learning Types, Neural Networks</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- Python -->
-<!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">Python / ML Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: Syntax, Loops, File I/O</a></li>
-      <li><a href="#">Unit 2: Lists, Dictionaries, Functions</a></li>
-      <li><a href="#">Unit 3: Graphics, Image Processing, GUI</a></li>
-      <li><a href="#">Unit 4: OOP, Exception, Multithreading</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- Math -->
-<!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">Mathematics Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: Multivariable Calculus, Maxima-Minima</a></li>
-      <li><a href="#">Unit 2: Double/Triple Integrals, Area, Volume</a></li>
-      <li><a href="#">Unit 3: Differential Equations, Applications</a></li>
-      <li><a href="#">Unit 4: Vector Calculus, Green/Stokes/Gauss</a></li>
-    </ul>
-  </div>
-</div>
-
-<!-- OOP -->
-<!--<div class="dropdown">
-  <div class="dropdown-title" onclick="toggleDropdown(this)">OOP in C++ Notes</div>
-  <div class="dropdown-content">
-    <ul>
-      <li><a href="#">Unit 1: OOP Basics, Classes & Objects</a></li>
-      <li><a href="#">Unit 2: Inheritance, Pointers, Memory</a></li>
-      <li><a href="#">Unit 3: Constructors, Overloading, Polymorphism</a></li>
-      <li><a href="#">Unit 4: Exception Handling, Templates</a></li>
-    </ul>
-  </div>
- </div>
-</div>
- </div>
-
-  <!-- Syllabus Section -->
+  <!-- Syllabus -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">📄 Syllabus Details <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📄 Syllabus Details <span>–</span></div>
     <div class="accordion-content">
       <div class="notice-card">
         <strong>📎 Click here:</strong>
@@ -325,15 +171,15 @@
 
   <!-- Assignments -->
   <div class="accordion">
-    <div class="accordion-header" onclick="toggleAccordion(this)">📝 Assignments & Deadlines <span>+</span></div>
+    <div class="accordion-header" onclick="toggleAccordion(this)">📝 Assignments & Deadlines <span>–</span></div>
     <div class="accordion-content">
       <ul>
         <li>DBMS Assignment No. 01 - Due: <strong>24 September 2025</strong></li>
         <li>Python programming Assignment 01 - Due: <strong>18 September 2025</strong></li>
-        <li>DSA Assignment 01– Due: <strong> October 2025</strong></li>
-        <li>OOPs Assignment 01– Due: <strong>27 October 2025</strong></li>
+        <li>DSA Assignment 01 – Due: <strong>October 2025</strong></li>
+        <li>OOPs Assignment 01 – Due: <strong>27 October 2025</strong></li>
         <li>AI Assignment 01 & 02 – Due: <strong>31 October 2025</strong></li>
-        <li>Python programming Assignment 02– Due: <strong>13 November 2025</strong></li>
+        <li>Python programming Assignment 02 – Due: <strong>13 November 2025</strong></li>
         <li>DBMS Assignment 02 – Due: <strong>Not issued</strong></li>
       </ul>
     </div>
@@ -342,7 +188,7 @@
   <!-- Notices -->
   <div class="accordion">
     <div class="accordion-header" onclick="toggleAccordion(this)">📢 Important Notices <span>–</span></div>
-    <div class="accordion-content" style="display: block;">
+    <div class="accordion-content" style="display:block;">
       <div id="important-notices">
         <div class="notice-card">
           <strong>First Seasonal Exam 3 Semester 2025 From 24 September to 26 September 2025</strong> 
@@ -351,16 +197,14 @@
           <strong>Second Seasonal Exam 3 Semester 2025 From 26 November to 28 November 2025 (Tentative)</strong> 
         </div>
         <div class="notice-card">
-          <strong>AIML 3rd Semester Examination is going to start from 1 week of December onwards (Tentative)</strong> 
+          <strong>AIML 3rd Semester Examination is going to start from 1st week of December onwards (Tentative)</strong> 
         </div>
         <div class="notice-card">
           <strong>📌 Syllabus PDF:</strong> <a href="https://jmp.sh/eFJlBK0e" target="_blank">View Syllabus</a>
         </div>
       </div>
-      <button id="read-more-btn" onclick="expandNotices()">Read More</button>
     </div>
   </div>
-
 </div>
 
 <footer>
@@ -368,34 +212,17 @@
 </footer>
 
 <script>
-  let readMoreClicked = false;
-
   function toggleAccordion(header) {
     const content = header.nextElementSibling;
     const icon = header.querySelector('span');
     const isOpen = content.style.display === 'block';
     content.style.display = isOpen ? 'none' : 'block';
     icon.textContent = isOpen ? '+' : '–';
-
-    if (header.textContent.includes('Important Notices') && readMoreClicked) {
-      document.querySelectorAll('#important-notices .notice-card').forEach(n => n.style.display = 'block');
-      document.getElementById('read-more-btn').style.display = 'none';
-    }
-  }
-
-  function toggleDropdown(title) {
-    const content = title.nextElementSibling;
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
-  }
-
-  function expandNotices() {
-    document.querySelectorAll('#important-notices .notice-card').forEach(n => n.style.display = 'block');
-    document.getElementById('read-more-btn').style.display = 'none';
-    readMoreClicked = true;
   }
 </script>
+
 <script>
-  // Firebase config
+  // Firebase protection
   const firebaseConfig = {
     apiKey: "AIzaSyAm1BRpaH0B4TaZHz0QGXgTWKG9sl7-2PU",
     authDomain: "authentication-de8fc.firebaseapp.com",
@@ -406,18 +233,11 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  // Protect AIML.html
   auth.onAuthStateChanged(user => {
-    if (!user) {
-      // If not logged in, redirect to login page
-      window.location.href = "LoginSYS.html"; // or your login page
-    } else {
-      // If logged in, allow page to continue rendering
-      document.body.style.display = 'block';
-    }
+    if (!user) window.location.href = "LoginSYS.html";
+    else document.body.style.display = 'block';
   });
 
-  // Initially hide the body
   document.addEventListener("DOMContentLoaded", () => {
     document.body.style.display = 'none';
   });
