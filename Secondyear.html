@@ -554,7 +554,7 @@
 </style>
 
 <script>
-function formatDateDisplay(date) {
+  /*function formatDateDisplay(date) {
   const today = new Date();
   const target = new Date(date);
   const diff = Math.floor((target - today) / (1000 * 60 * 60 * 24));
@@ -573,6 +573,47 @@ document.querySelectorAll(".practical-table tbody tr").forEach(row => {
   const target = new Date(date);
   const diff = Math.floor((target - today) / (1000 * 60 * 60 * 24));
 
+  dueCell.textContent = formatDateDisplay(date);
+
+  if (diff === 0) {
+    statusCell.textContent = "Due Today";
+    statusCell.classList.add("status-today");
+  } else if (diff === 1) {
+    statusCell.textContent = "Tomorrow";
+    statusCell.classList.add("status-tomorrow");
+  } else if (diff < 0) {
+    statusCell.textContent = "Overdue";
+    statusCell.classList.add("status-overdue");
+  } else {
+    statusCell.textContent = "Upcoming";
+    statusCell.classList.add("status-upcoming");
+  }
+});*/
+  function daysBetween(date1, date2) {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  d1.setHours(0, 0, 0, 0);
+  d2.setHours(0, 0, 0, 0);
+  return Math.floor((d1 - d2) / (1000 * 60 * 60 * 24));
+}
+
+function formatDateDisplay(date) {
+  const today = new Date();
+  const diff = daysBetween(date, today);
+  const target = new Date(date);
+
+  if (diff === 0) return "Today";
+  else if (diff === 1) return "Tomorrow";
+  else if (diff === -1) return "Yesterday";
+  else return target.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+document.querySelectorAll(".practical-table tbody tr").forEach(row => {
+  const date = row.getAttribute("data-date");
+  const dueCell = row.querySelector(".due-cell");
+  const statusCell = row.querySelector(".status-cell");
+
+  const diff = daysBetween(date, new Date());
   dueCell.textContent = formatDateDisplay(date);
 
   if (diff === 0) {
