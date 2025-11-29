@@ -5,6 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIML Second Year Dashboard</title>
 <style>
+    body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+/* Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+    z-index: 999;
+}
+
+/* Popup box */
+.popup-box {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 15px;
+    position: relative;
+    animation: popupScale 0.4s ease;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #444;
+}
+
+.popup-title {
+    font-size: 22px;
+    color: crimson;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.popup-message {
+    font-size: 16px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* OK button */
+.ok-btn {
+    width: 100%;
+    padding: 12px;
+    background: crimson;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.ok-btn:hover {
+    background: #b30000;
+}
+
+/* Animations */
+
     /* ==== Variables & Theme ==== */
 :root {
   --primary: #2e86de;
@@ -425,10 +501,42 @@ footer {
   th:first-child, td:first-child { border-top-left-radius: var(--radius); border-bottom-left-radius: var(--radius); }
   th:last-child, td:last-child { border-top-right-radius: var(--radius); border-bottom-right-radius: var(--radius); }
 }  
+@keyframes popupScale {
+    0% {transform: scale(0.7); opacity: 0;}
+    100% {transform: scale(1); opacity: 1;}
+}
 
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .popup-box {
+        padding: 15px;
+    }
+    .popup-title {
+        font-size: 20px;
+    }
+    .popup-message {
+        font-size: 14px;
+    }
+                     }
 </style>
 </head>
 <body>
+ <!-- Popup -->
+<div id="popup" class="popup-overlay">
+    <div class="popup-box">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2 class="popup-title">⚠ Important Update!</h2>
+        <p class="popup-message">
+            Previous Year Question Papers of AIML 3 Semester of ALL Subjects Available on Site .
+        </p>
+        <button class="ok-btn" onclick="closePopup()">OK</button>
+    </div>
+</div>
 <div class="site" style="margin-top:10px;">
   <header>
     <div class="brand">
@@ -823,6 +931,15 @@ footer {
   const options = { day: '2-digit', month: 'short', year: 'numeric' };
   document.getElementById('updatedDate').textContent = 'Updated: ' + today.toLocaleDateString('en-GB', options);
 </script>
+<script>
+  // Show popup when page loads
+window.onload = function() {
+    document.getElementById("popup").style.display = "flex";
+};
 
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+</script>
 </body>
 </html>
