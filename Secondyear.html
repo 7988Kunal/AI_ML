@@ -5,6 +5,155 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIML Second Year Dashboard</title>
 <style>
+    #ai-chatbot {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 99999;
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Floating Chat Icon */
+    #chat-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1e3a8a);
+      color: #fff;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.3);
+      transition: 0.3s ease;
+    }
+    #chat-icon:hover { transform: scale(1.1); }
+
+    /* Chat Window */
+    #chat-window {
+      width: 330px;
+      max-width: 90vw;
+      height: 470px;
+      background: #ffffff;
+      display: none;
+      flex-direction: column;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      overflow: hidden;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    #chat-header {
+      background: linear-gradient(135deg, #1e40af, #1e3a8a);
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* Chat Area */
+    #chat-messages {
+      height: 350px;
+      padding: 12px;
+      background: #f2f5ff;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg-user {
+      background: #dbeafe;
+      padding: 10px 15px;
+      border-radius: 12px;
+      align-self: flex-end;
+      max-width: 75%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .msg-bot {
+      background: #e0e7ff;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 75%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      animation: botAnim 0.3s ease;
+    }
+
+    @keyframes botAnim {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Input Section */
+    #chat-input-box {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+    }
+
+    #user-input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    #user-input:hover {
+      border:1px solid #081e48f5;
+      outline:none;
+    }
+    #send-btn {
+      margin-left: 8px;
+      padding: 10px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    #send-btn:hover { background: #1e3a8a; }
+
+    /* Welcome Bubble */
+    #welcome-bubble {
+      position: absolute;
+      right: 75px;
+      bottom: 70px;
+      background: #1e40af;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+      animation: fadeBubble 1s ease;
+    }
+
+    @keyframes fadeBubble {
+      0% { opacity: 0; transform: translateY(5px); }
+      100% { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      #chat-window {
+        width: 90vw;
+        height: 80vh;
+      }
+      #chat-messages {
+        height: calc(80vh - 120px);
+      }
+    }
 /* Overlay */
 .popup-overlay {
     position: fixed;
@@ -520,6 +669,25 @@ footer {
 </style>
 </head>
 <body>
+    <div id="ai-chatbot">
+
+  <div id="welcome-bubble">Welcome to AI & ML Portal! 👋</div>
+
+  <div id="chat-window">
+    <div id="chat-header">🤖 AI & ML Portal Chatbot</div>
+
+    <div id="chat-messages">
+      <div class="msg-bot">Hello! I am your AI assistant. How can I help you today?</div>
+    </div>
+
+    <div id="chat-input-box">
+      <input id="user-input" type="text" placeholder="Ask something..." />
+      <button id="send-btn">➤</button>
+    </div>
+  </div>
+
+  <button id="chat-icon">💬</button>
+    </div>
  <!-- Popup -->
 <!--<div id="popup" class="popup-overlay">
     <div class="popup-box">
@@ -940,5 +1108,69 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 </script>
+ <script>
+const chatIcon = document.getElementById("chat-icon");
+const chatWindow = document.getElementById("chat-window");
+const sendBtn = document.getElementById("send-btn");
+const userInput = document.getElementById("user-input");
+const chatMessages = document.getElementById("chat-messages");
+const welcomeBubble = document.getElementById("welcome-bubble");
+
+// Hide welcome bubble after 4 seconds
+setTimeout(() => welcomeBubble.style.display = "none", 4000);
+
+// Toggle chatbot
+chatIcon.onclick = () => {
+  chatWindow.style.display = chatWindow.style.display === "flex" ? "none" : "flex";
+};
+
+// Add message to UI
+function addMessage(text, sender) {
+  const msg = document.createElement("div");
+  msg.className = sender === "user" ? "msg-user" : "msg-bot";
+  msg.innerText = text;
+  chatMessages.appendChild(msg);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send to API
+async function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  userInput.value = "";
+  addMessage("Typing...", "bot");
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer Api key",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are an AI assistant for Kunal's MDU AI & ML Portal." },
+          { role: "user", content: text }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    document.querySelector(".msg-bot:last-child").innerText =
+      data.choices?.[0]?.message?.content || "Error: Empty response";
+
+  } catch (err) {
+    document.querySelector(".msg-bot:last-child").innerText = "Error: " + err;
+  }
+}
+
+sendBtn.onclick = sendMessage;
+userInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
+ </script>
 </body>
 </html>
