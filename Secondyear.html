@@ -1108,7 +1108,7 @@ function closePopup() {
     document.getElementById("popup").style.display = "none";
 }
 </script>
-<!-- <script>
+<script>
 const chatIcon = document.getElementById("chat-icon");
 const chatWindow = document.getElementById("chat-window");
 const sendBtn = document.getElementById("send-btn");
@@ -1146,7 +1146,7 @@ async function sendMessage() {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer Api key",
+        "Authorization": "Bearer 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",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -1171,84 +1171,6 @@ sendBtn.onclick = sendMessage;
 userInput.addEventListener("keypress", e => {
   if (e.key === "Enter") sendMessage();
 });
- </script>-->
-
-<!--<script>
-// ---------- ELEMENTS ----------
-const chatIcon = document.getElementById("chat-icon");
-const chatWindow = document.getElementById("chat-window");
-const sendBtn = document.getElementById("send-btn");
-const userInput = document.getElementById("user-input");
-const chatMessages = document.getElementById("chat-messages");
-const welcomeBubble = document.getElementById("welcome-bubble");
-
-// Hide welcome bubble after 4 seconds
-setTimeout(() => welcomeBubble.style.display = "none", 4000);
-
-// Toggle chatbot window
-chatIcon.onclick = () => {
-  chatWindow.style.display = 
-    chatWindow.style.display === "flex" ? "none" : "flex";
-};
-
-// Add chat message
-function addMessage(text, sender) {
-  const msg = document.createElement("div");
-  msg.className = sender === "user" ? "msg-user" : "msg-bot";
-  msg.innerText = text;
-  chatMessages.appendChild(msg);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-// ---------- MAIN MESSAGE SENDER ----------
-async function sendMessage() {
-  const text = userInput.value.trim();
-  if (!text) return;
-
-  // Add user message to UI
-  addMessage(text, "user");
-  userInput.value = "";
-
-  // Add temporary "Typing..." message
-  addMessage("Typing...", "bot");
-
-  try {
-    // 🔥 Call your Cloudflare Worker (safe backend)
-    const response = await fetch(
-      "https://purple-sky-f098.kunalvats7988.workers.dev",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: "You are an AI assistant for Kunal's MDU AI & ML Portal." },
-            { role: "user", content: text }
-          ]
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    // Replace "Typing..." with real response
-    document.querySelector(".msg-bot:last-child").innerText =
-      data.choices?.[0]?.message?.content || "Error: No response";
-
-  } catch (err) {
-    document.querySelector(".msg-bot:last-child").innerText =
-      "Error: " + err;
-  }
-}
-
-// Send on button click
-sendBtn.onclick = sendMessage;
-
-// Send on Enter key
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
-</script>-->
-
+ </script>
 </body>
 </html>
