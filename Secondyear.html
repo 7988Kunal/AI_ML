@@ -5,6 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIML Second Year Dashboard</title>
 <style>
+    /* container (no body/* selectors used) */
+    .exam-wish {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1.25rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px);
+    }
+
+    .wish-text {
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-size: clamp(18px, 3.4vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: .25rem .5rem;
+      border-radius: 8px;
+      text-align: center;
+      /* make text appear vivid using text-shadow glow */
+      text-shadow:
+        0 1px 0 rgba(0,0,0,0.15),
+        0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    /* colorful cycling + blink */
+    .wish-animate {
+      display: inline-block;
+      animation: colorCycle 4s linear infinite, blinkOpacity 1.2s steps(2, end) infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      /* fallback color */
+      color: #ff4da6;
+    }
+
+    /* Cycle through several bright colors */
+    @keyframes colorCycle {
+      0%   { color: #ff4da6; text-shadow: 0 6px 18px rgba(255,77,166,0.18); }
+      20%  { color: #ffb84d; text-shadow: 0 6px 18px rgba(255,184,77,0.18); }
+      40%  { color: #ffd04d; text-shadow: 0 6px 18px rgba(255,208,77,0.18); }
+      60%  { color: #6dff7b; text-shadow: 0 6px 18px rgba(109,255,123,0.18); }
+      80%  { color: #5ec0ff; text-shadow: 0 6px 18px rgba(94,192,255,0.18); }
+      100% { color: #d18bff; text-shadow: 0 6px 18px rgba(209,139,255,0.18); }
+    }
+
+    /* gentle on/off blink (keeps it readable) */
+    @keyframes blinkOpacity {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.85; }
+      100% { opacity: 1; }
+    }
+
+    /* small badge below optional */
+    .sub {
+      display:block;
+      font-size: 0.85rem;
+      margin-top: .35rem;
+      color: rgba(0,0,0,0.55);
+      font-weight: 600;
+      opacity: .9;
+    }
+
+    /* Respect user's reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .wish-animate { animation: none; }
+    }
+
+    /* Responsive spacing on tiny screens */
+    @media (max-width:420px){
+      .exam-wish { margin: 1rem; padding: .9rem; }
+      .wish-text { font-size: 18px; }
+    }
+  </style>
+<style>
     #ai-chatbot {
       position: fixed;
       right: 20px;
@@ -713,7 +790,14 @@ footer {
       <button class="btn" id="btnToggle">Toggle Notices</button>
     </div>
   </header>
-
+  <div class="exam-wish" role="region" aria-label="Semester exam best wishes">
+    <div>
+      <div class="wish-text">
+        <span class="wish-animate">🎓 Best wishes for your semester exam! ✨</span>
+      </div>
+      <span class="sub">Study smart — you've got this 💪</span>
+    </div>
+  </div>
   <main>
     <div class="top-row">
       <div class="marquee-wrap left-col">
