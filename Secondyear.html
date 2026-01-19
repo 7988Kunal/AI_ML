@@ -20,7 +20,6 @@
   --transition:.25s ease;
 }
 
-/* Base */
 body{
   margin:0;
   font-family:"Segoe UI",system-ui,sans-serif;
@@ -37,7 +36,6 @@ a:hover{text-decoration:underline}
   padding:10px;
 }
 
-/* Header */
 header{
   background:linear-gradient(90deg,var(--primary),#1b0f6b);
   color:#fff;
@@ -83,11 +81,8 @@ header{
   border-radius:var(--radius);
   font-weight:600;
   cursor:pointer;
-  transition:var(--transition);
 }
-.btn:hover{background:var(--accent)}
 
-/* Layout */
 .section{margin-top:16px}
 
 .grid-2{
@@ -96,7 +91,6 @@ header{
   gap:14px;
 }
 
-/* Card */
 .card{
   background:var(--card);
   border-radius:var(--radius);
@@ -104,7 +98,6 @@ header{
   box-shadow:var(--shadow);
 }
 
-/* Notices */
 .notice-box{border-left:5px solid var(--secondary)}
 
 .notice-list div{
@@ -113,7 +106,6 @@ header{
   border-bottom:1px solid #eee;
 }
 
-/* Accordion */
 .accordion-header{
   display:flex;
   justify-content:space-between;
@@ -129,18 +121,9 @@ header{
 
 .accordion.open .accordion-body{display:block}
 
-/* Lists */
 ul{margin:6px 0;padding-left:18px}
-li{margin-bottom:4px;font-size:.85rem}
+li{margin-bottom:6px;font-size:.85rem}
 
-/* Status text */
-.status{
-  color:var(--danger);
-  font-weight:600;
-  font-size:.85rem;
-}
-
-/* Helpful links */
 .helpful-links{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -156,12 +139,7 @@ li{margin-bottom:4px;font-size:.85rem}
   font-size:.85rem;
   font-weight:600;
 }
-.helpful-links a:hover{
-  background:var(--accent);
-  color:#000;
-}
 
-/* Footer */
 footer{
   text-align:center;
   font-size:.8rem;
@@ -169,7 +147,6 @@ footer{
   margin:20px 0 10px;
 }
 
-/* Responsive */
 @media(min-width:768px){
   .grid-2{grid-template-columns:1fr 1fr}
 }
@@ -200,12 +177,12 @@ footer{
     <strong>📢 Live & Latest Updates</strong>
     <div class="notice-list">
       <div>• 4th Semester starts from <strong>27 January 2026</strong> (Tentative)</div>
-      <div>• Study resources currently under review</div>
+      <div>• 3rd Semester notes & question papers available</div>
     </div>
   </div>
 </section>
 
-<!-- Subjects & Resources -->
+<!-- Subjects & Notes -->
 <section class="section grid-2">
 
   <div class="card accordion open">
@@ -219,25 +196,69 @@ footer{
         <li>DSA</li>
         <li>Artificial Intelligence</li>
         <li>Python Programming</li>
-        <li>Mathematics for AI</li>
+        <li>Mathematics</li>
         <li>OOPs</li>
       </ul>
 
       <strong>4th Semester</strong>
-      <p class="status">Not Available (Will be updated soon)</p>
+      <p>Not Available (Will be updated soon)</p>
     </div>
   </div>
 
   <div class="card accordion open">
     <div class="accordion-header">
-      <span>📂 Study Resources</span><span>▾</span>
+      <span>📂 3rd Semester Notes</span><span>▾</span>
     </div>
     <div class="accordion-body">
-      <strong>3rd Semester</strong>
-      <p class="status">Study resource links have been removed</p>
 
-      <strong>4th Semester</strong>
-      <p class="status">Not Available</p>
+      <ul>
+        <li>
+          <strong>DBMS:</strong>
+          <a href="https://jmp.sh/4ozvFbEz" target="_blank">Unit 1 & 2</a>,
+          <a href="https://jmp.sh/65EXHNK1" target="_blank">Unit 3</a>,
+          <a href="https://jmp.sh/DJ43Ov4L" target="_blank">Unit 4</a>
+        </li>
+
+        <li>
+          <strong>DSA:</strong>
+          <a href="https://jmp.sh/D7YRvWaj" target="_blank">Unit 1</a>,
+          <a href="https://jmp.sh/rdSm11nR" target="_blank">Unit 2</a>,
+          <a href="https://jmp.sh/ELb5lBz8" target="_blank">Unit 3</a>,
+          <a href="https://jmp.sh/zDsri1ch" target="_blank">Unit 4</a>
+        </li>
+
+        <li>
+          <strong>AI:</strong>
+          <a href="https://jmp.sh/OtZ7TjgD" target="_blank">Unit 1</a>,
+          <a href="https://jmp.sh/S6bEkl4E" target="_blank">Unit 2</a>,
+          <a href="https://jmp.sh/o2blTHgx" target="_blank">Unit 3</a>,
+          <a href="https://jmp.sh/Ft0jVc9k" target="_blank">Unit 4</a>,
+          <a href="https://jmp.sh/67uBwQQ1" target="_blank">Expert System (Extra)</a>
+        </li>
+
+        <li>
+          <strong>Python / ML:</strong>
+          <a href="https://jmp.sh/z3dmjtZg" target="_blank">
+            Complete Syllabus Notes
+          </a>
+        </li>
+
+        <li>
+          <strong>Mathematics:</strong>
+          <a href="https://jmp.sh/xTpKabon" target="_blank">Unit 1</a>,
+          <a href="https://jmp.sh/9bgBMUFP" target="_blank">Unit 2</a>,
+          <a href="https://jmp.sh/lNEhsiEg" target="_blank">Unit 3</a>,
+          <a href="https://jmp.sh/DH9Gc0ol" target="_blank">Unit 4</a>
+        </li>
+
+        <li>
+          <strong>OOP in C++:</strong>
+          <a href="https://jmp.sh/CkXcOPYn" target="_blank">
+            Complete Syllabus Notes
+          </a>
+        </li>
+      </ul>
+
     </div>
   </div>
 
@@ -247,25 +268,22 @@ footer{
 <section class="section">
   <div class="card">
     <h3>📄 Previous Year Question Papers</h3>
-    <p class="status">Question papers are currently not available</p>
-  </div>
-</section>
-
-<!-- Assignments -->
-<section class="section">
-  <div class="card">
-    <h3>📝 Assignments</h3>
-    <p class="status">No assignments allotted</p>
+    <ul>
+      <li>DBMS – <a href="https://jmp.sh/RJTjG6iP" target="_blank">Question Paper</a></li>
+      <li>Python – <a href="https://jmp.sh/dyAeYklP" target="_blank">Question Paper</a></li>
+      <li>DSA – <a href="https://jmp.sh/KPQeyu1d" target="_blank">Question Paper</a></li>
+      <li>OOPs – <a href="https://jmp.sh/vEy5lpXS" target="_blank">Question Paper</a></li>
+    </ul>
   </div>
 </section>
 
 <!-- Important Links -->
 <section class="section">
   <div class="helpful-links">
-    <a href="https://mdu.ac.in/">MDU Rohtak</a>
-    <a href="https://mdu.samarth.edu.in/">Samarth Portal</a>
-    <a href="https://student.mdu.ac.in/">Student Portal</a>
-    <a href="https://result.mdurtk.in/">Results</a>
+    <a href="https://mdu.ac.in/" target="_blank">MDU Rohtak</a>
+    <a href="https://mdu.samarth.edu.in/" target="_blank">Samarth Portal</a>
+    <a href="https://student.mdu.ac.in/" target="_blank">Student Portal</a>
+    <a href="https://result.mdurtk.in/" target="_blank">Results</a>
   </div>
 </section>
 
