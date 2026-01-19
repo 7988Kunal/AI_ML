@@ -20,27 +20,37 @@
   --transition:.25s ease;
 }
 
+*{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:"Segoe UI",system-ui,sans-serif;
   background:var(--bg);
   color:var(--text);
+  line-height:1.55;
 }
 
-a{color:var(--secondary);text-decoration:none}
+a{
+  color:var(--secondary);
+  text-decoration:none;
+  font-weight:600;
+}
 a:hover{text-decoration:underline}
 
 .site{
   max-width:1200px;
   margin:auto;
-  padding:10px;
+  padding:12px;
 }
+
+/* ================= HEADER ================= */
 
 header{
   background:linear-gradient(90deg,var(--primary),#1b0f6b);
   color:#fff;
   border-radius:var(--radius);
-  padding:14px;
+  padding:18px;
+  box-shadow:var(--shadow);
 }
 
 .brand{
@@ -50,23 +60,23 @@ header{
 }
 
 .logo{
-  font-size:1.8rem;
+  font-size:2rem;
   font-weight:900;
 }
 
 .brand h1{
   margin:0;
-  font-size:1.2rem;
+  font-size:1.25rem;
 }
 
 .brand p{
-  margin:0;
+  margin:2px 0 0;
   font-size:.85rem;
   opacity:.9;
 }
 
 .actions{
-  margin-top:12px;
+  margin-top:14px;
   display:flex;
   gap:10px;
   justify-content:flex-end;
@@ -77,74 +87,111 @@ header{
   background:#fff;
   color:var(--primary);
   border:none;
-  padding:8px 14px;
+  padding:9px 16px;
   border-radius:var(--radius);
-  font-weight:600;
+  font-weight:700;
   cursor:pointer;
+  transition:var(--transition);
 }
+.btn:hover{transform:translateY(-2px)}
 
-.section{margin-top:16px}
+/* ================= LAYOUT ================= */
+
+.section{margin-top:18px}
 
 .grid-2{
   display:grid;
   grid-template-columns:1fr;
-  gap:14px;
+  gap:16px;
 }
 
 .card{
   background:var(--card);
   border-radius:var(--radius);
-  padding:14px;
+  padding:16px;
   box-shadow:var(--shadow);
 }
 
-.notice-box{border-left:5px solid var(--secondary)}
+/* ================= NOTICE ================= */
+
+.notice-box{border-left:6px solid var(--secondary)}
 
 .notice-list div{
-  font-size:.85rem;
-  padding:6px 0;
+  font-size:.9rem;
+  padding:8px 0;
   border-bottom:1px solid #eee;
 }
+.notice-list div:last-child{border-bottom:none}
+
+/* ================= ACCORDION ================= */
 
 .accordion-header{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   cursor:pointer;
-  font-weight:700;
+  font-weight:800;
+}
+
+.accordion-header span:last-child{
+  transition:var(--transition);
+}
+
+.accordion.open .accordion-header span:last-child{
+  transform:rotate(180deg);
 }
 
 .accordion-body{
   display:none;
-  margin-top:8px;
-  font-size:.85rem;
+  margin-top:12px;
+  font-size:.9rem;
 }
 
 .accordion.open .accordion-body{display:block}
 
-ul{margin:6px 0;padding-left:18px}
-li{margin-bottom:6px;font-size:.85rem}
+ul{margin:8px 0;padding-left:20px}
+li{margin-bottom:6px}
+
+/* ================= ASSIGNMENTS ================= */
+
+#assignments{margin-top:18px}
+
+.semester-block{
+  background:var(--card);
+  padding:16px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+
+.semester-block h4{margin:0 0 8px}
+
+/* ================= LINKS ================= */
 
 .helpful-links{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:10px;
+  gap:12px;
 }
 
 .helpful-links a{
   background:var(--secondary);
   color:#fff;
-  padding:10px;
+  padding:12px;
   text-align:center;
   border-radius:var(--radius);
-  font-size:.85rem;
-  font-weight:600;
+  font-weight:700;
+  transition:var(--transition);
 }
+.helpful-links a:hover{transform:translateY(-3px)}
+
+/* ================= FOOTER ================= */
 
 footer{
   text-align:center;
   font-size:.8rem;
   color:var(--muted);
-  margin:20px 0 10px;
+  margin:24px 0 10px;
 }
 
 @media(min-width:768px){
@@ -185,6 +232,7 @@ footer{
 <!-- Subjects & Notes -->
 <section class="section grid-2">
 
+  <!-- Subjects -->
   <div class="card accordion open">
     <div class="accordion-header">
       <span>📘 Subjects Offered</span><span>▾</span>
@@ -201,89 +249,74 @@ footer{
       </ul>
 
       <strong>4th Semester</strong>
-      <p style="color:red;font-weight:450;">Not Available (Will be updated soon)</p>
+      <p style="color:red;">Not Available (Will be updated soon)</p>
     </div>
   </div>
 
+  <!-- 3rd Sem Notes -->
   <div class="card accordion open">
     <div class="accordion-header">
       <span>📂 3rd Semester Notes</span><span>▾</span>
     </div>
     <div class="accordion-body">
-
       <ul>
-        <li>
-          <strong>DBMS:</strong>
+        <li><strong>DBMS:</strong>
           <a href="https://jmp.sh/4ozvFbEz" target="_blank">Unit 1 & 2</a>,
           <a href="https://jmp.sh/65EXHNK1" target="_blank">Unit 3</a>,
           <a href="https://jmp.sh/DJ43Ov4L" target="_blank">Unit 4</a>
         </li>
 
-        <li>
-          <strong>DSA:</strong>
+        <li><strong>DSA:</strong>
           <a href="https://jmp.sh/D7YRvWaj" target="_blank">Unit 1</a>,
           <a href="https://jmp.sh/rdSm11nR" target="_blank">Unit 2</a>,
           <a href="https://jmp.sh/ELb5lBz8" target="_blank">Unit 3</a>,
           <a href="https://jmp.sh/zDsri1ch" target="_blank">Unit 4</a>
         </li>
 
-        <li>
-          <strong>AI:</strong>
+        <li><strong>AI:</strong>
           <a href="https://jmp.sh/OtZ7TjgD" target="_blank">Unit 1</a>,
           <a href="https://jmp.sh/S6bEkl4E" target="_blank">Unit 2</a>,
           <a href="https://jmp.sh/o2blTHgx" target="_blank">Unit 3</a>,
           <a href="https://jmp.sh/Ft0jVc9k" target="_blank">Unit 4</a>,
-          <a href="https://jmp.sh/67uBwQQ1" target="_blank">Expert System (Extra)</a>
+          <a href="https://jmp.sh/67uBwQQ1" target="_blank">Expert System</a>
         </li>
 
-        <li>
-          <strong>Python / ML:</strong>
-          <a href="https://jmp.sh/z3dmjtZg" target="_blank">
-            Complete Syllabus Notes
-          </a>
+        <li><strong>Python / ML:</strong>
+          <a href="https://jmp.sh/z3dmjtZg" target="_blank">Complete Notes</a>
         </li>
 
-        <li>
-          <strong>Mathematics:</strong>
+        <li><strong>Mathematics:</strong>
           <a href="https://jmp.sh/xTpKabon" target="_blank">Unit 1</a>,
           <a href="https://jmp.sh/9bgBMUFP" target="_blank">Unit 2</a>,
           <a href="https://jmp.sh/lNEhsiEg" target="_blank">Unit 3</a>,
           <a href="https://jmp.sh/DH9Gc0ol" target="_blank">Unit 4</a>
         </li>
 
-        <li>
-          <strong>OOP in C++:</strong>
-          <a href="https://jmp.sh/CkXcOPYn" target="_blank">
-            Complete Syllabus Notes
-          </a>
+        <li><strong>OOP in C++:</strong>
+          <a href="https://jmp.sh/CkXcOPYn" target="_blank">Complete Notes</a>
         </li>
       </ul>
-
     </div>
   </div>
 
+  <!-- 4th Sem Notes -->
   <div class="card accordion open">
     <div class="accordion-header">
-      <span>📂 4TH Semester Notes</span><span>▾</span>
+      <span>📂 4th Semester Notes</span><span>▾</span>
     </div>
     <div class="accordion-body">
-
       <ul>
-        <li>
-          <strong style="color:red;">OOPs! Not Available</strong>
-        </li>
-
+        <li><strong style="color:red;">OOPs! Not Available</strong></li>
       </ul>
-
     </div>
   </div>
 
 </section>
 
-<!-- Question Papers -->
+<!-- Previous Year Question Papers -->
 <section class="section">
   <div class="card">
-    <h3>📄 Previous Year Question Papers for 3 Sem</h3>
+    <h3>📄 Previous Year Question Papers (3rd Semester)</h3>
     <ul>
       <li>DBMS – <a href="https://jmp.sh/RJTjG6iP" target="_blank">Question Paper</a></li>
       <li>Python – <a href="https://jmp.sh/dyAeYklP" target="_blank">Question Paper</a></li>
@@ -292,41 +325,29 @@ footer{
     </ul>
   </div>
 </section>
+
+<!-- Assignments -->
 <section id="assignments">
-  <h3>Assignments</h3>
+  <h3>📝 Assignments</h3>
 
-  <!-- 3rd Semester Assignments -->
   <div class="semester-block">
-    <h4>3rd Semester Assignments</h4>
+    <h4>3rd Semester</h4>
     <ul>
-      <li>DBMS Assignment No. 01 - Due: <strong>24 September 2025</strong></li>
-      <li>Python programming Assignment 01 - Due: <strong>18 September 2025</strong></li>
-      <li>DSA Assignment 01 – Due: <strong>October 2025</strong></li> 
-      <li>OOPs Assignment 01 – Due: <strong>27 October 2025</strong></li> 
-      <li>AI Assignment 01 &amp; 02 – Due: <strong>31 October 2025</strong></li>
-      <li>Python programming Assignment 02 – Due: <strong>13 November 2025</strong></li>
-      <li>DBMS Assignment 02 – Due: <strong>12 November 2025 </strong></li> 
-      <li>DSA Assignment 02 – Due: <strong>28 November 2025 </li>
+      <li>DBMS Assignment 01 – <strong>24 September 2025</strong></li>
+      <li>Python Assignment 01 – <strong>18 September 2025</strong></li>
+      <li>DSA Assignment 01 – <strong>October 2025</strong></li>
+      <li>OOPs Assignment 01 – <strong>27 October 2025</strong></li>
+      <li>AI Assignment 01 & 02 – <strong>31 October 2025</strong></li>
+      <li>Python Assignment 02 – <strong>13 November 2025</strong></li>
+      <li>DBMS Assignment 02 – <strong>12 November 2025</strong></li>
+      <li>DSA Assignment 02 – <strong>28 November 2025</strong></li>
     </ul>
   </div>
 
-  <!-- 4th Semester Assignments -->
   <div class="semester-block">
-    <h4>4th Semester Assignments</h4>
-
-    <ul>
-      <li>
-        <strong style="color:red;">No Assignment alloted !</strong>
-      </li>
-      <!-- <li><strong>DBMS:</strong> Not Available</li>
-      <li><strong>Operating Systems:</strong> Not Available</li>
-      <li><strong>Computer Networks:</strong> Not Available</li>
-      <li><strong>Software Engineering:</strong> Not Available</li>
-      <li><strong>Artificial Intelligence:</strong> Not Available</li>
-      <li><strong>Mathematics:</strong> Not Available</li> -->
-    </ul>
+    <h4>4th Semester</h4>
+    <strong style="color:red;">No Assignment allotted!</strong>
   </div>
-
 </section>
 
 <!-- Important Links -->
