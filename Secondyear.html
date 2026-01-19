@@ -3,1432 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSE-Artificial Intelligence Machine Learning  2 Year 2026 JULY</title>
+<title>AIML Second Year Dashboard (2025–26)</title>
+
 <style>
-    /* container (no body/* selectors used) */
-    .exam-wish {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 1.25rem 1.5rem;
-      border-radius: 14px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      backdrop-filter: blur(6px);
-    }
-
-    .wish-text {
-      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      font-size: clamp(18px, 3.4vw, 36px);
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      padding: .25rem .5rem;
-      border-radius: 8px;
-      text-align: center;
-      /* make text appear vivid using text-shadow glow */
-      text-shadow:
-        0 1px 0 rgba(0,0,0,0.15),
-        0 6px 18px rgba(0,0,0,0.15);
-    }
-
-    /* colorful cycling + blink */
-    .wish-animate {
-      display: inline-block;
-      animation: colorCycle 4s linear infinite, blinkOpacity 1.2s steps(2, end) infinite;
-      -webkit-background-clip: text;
-      background-clip: text;
-      /* fallback color */
-      color: #ff4da6;
-    }
-
-    /* Cycle through several bright colors */
-    @keyframes colorCycle {
-      0%   { color: #ff4da6; text-shadow: 0 6px 18px rgba(255,77,166,0.18); }
-      20%  { color: #ffb84d; text-shadow: 0 6px 18px rgba(255,184,77,0.18); }
-      40%  { color: #ffd04d; text-shadow: 0 6px 18px rgba(255,208,77,0.18); }
-      60%  { color: #6dff7b; text-shadow: 0 6px 18px rgba(109,255,123,0.18); }
-      80%  { color: #5ec0ff; text-shadow: 0 6px 18px rgba(94,192,255,0.18); }
-      100% { color: #d18bff; text-shadow: 0 6px 18px rgba(209,139,255,0.18); }
-    }
-
-    /* gentle on/off blink (keeps it readable) */
-    @keyframes blinkOpacity {
-      0%   { opacity: 1; }
-      50%  { opacity: 0.85; }
-      100% { opacity: 1; }
-    }
-
-    /* small badge below optional */
-    .sub {
-      display:block;
-      font-size: 0.85rem;
-      margin-top: .35rem;
-      color: rgba(0,0,0,0.55);
-      font-weight: 600;
-      opacity: .9;
-    }
-
-    /* Respect user's reduced-motion preference */
-    @media (prefers-reduced-motion: reduce) {
-      .wish-animate { animation: none; }
-    }
-
-    /* Responsive spacing on tiny screens */
-    @media (max-width:420px){
-      .exam-wish { margin: 1rem; padding: .9rem; }
-      .wish-text { font-size: 18px; }
-    }
-  </style>
-<style>
-    #ai-chatbot {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 99999;
-      font-family: "Poppins", sans-serif;
-    }
-
-    /* Floating Chat Icon */
-    #chat-icon {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #1e3a8a);
-      color: #fff;
-      border: none;
-      font-size: 30px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 5px 18px rgba(0,0,0,0.3);
-      transition: 0.3s ease;
-    }
-    #chat-icon:hover { transform: scale(1.1); }
-
-    /* Chat Window */
-    #chat-window {
-      width: 330px;
-      max-width: 90vw;
-      height: 470px;
-      background: #ffffff;
-      display: none;
-      flex-direction: column;
-      border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      overflow: hidden;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Header */
-    #chat-header {
-      background: linear-gradient(135deg, #1e40af, #1e3a8a);
-      color: white;
-      padding: 15px;
-      font-size: 18px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    /* Chat Area */
-    #chat-messages {
-      height: 350px;
-      padding: 12px;
-      background: #f2f5ff;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .msg-user {
-      background: #dbeafe;
-      padding: 10px 15px;
-      border-radius: 12px;
-      align-self: flex-end;
-      max-width: 75%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .msg-bot {
-      background: #e0e7ff;
-      padding: 10px 15px;
-      border-radius: 12px;
-      max-width: 75%;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      animation: botAnim 0.3s ease;
-    }
-
-    @keyframes botAnim {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Input Section */
-    #chat-input-box {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid #ddd;
-      background: #fff;
-    }
-
-    #user-input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-    #user-input:hover {
-      border:1px solid #081e48f5;
-      outline:none;
-    }
-    #send-btn {
-      margin-left: 8px;
-      padding: 10px 16px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.2s;
-    }
-    #send-btn:hover { background: #1e3a8a; }
-
-    /* Welcome Bubble */
-    #welcome-bubble {
-      position: absolute;
-      right: 75px;
-      bottom: 70px;
-      background: #1e40af;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 20px;
-      font-size: 14px;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.25);
-      animation: fadeBubble 1s ease;
-    }
-
-    @keyframes fadeBubble {
-      0% { opacity: 0; transform: translateY(5px); }
-      100% { opacity: 1; }
-    }
-
-    @media (max-width: 480px) {
-      #chat-window {
-        width: 90vw;
-        height: 80vh;
-      }
-      #chat-messages {
-        height: calc(80vh - 120px);
-      }
-    }
-/* Overlay */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.3s ease;
-    z-index: 999;
-}
-
-/* Popup box */
-.popup-box {
-    background: #fff;
-    width: 90%;
-    max-width: 400px;
-    padding: 20px;
-    border-radius: 15px;
-    position: relative;
-    animation: popupScale 0.4s ease;
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-}
-
-/* Close button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 25px;
-    cursor: pointer;
-    color: #444;
-}
-
-.popup-title {
-    font-size: 22px;
-    color: crimson;
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-.popup-message {
-    font-size: 16px;
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* OK button */
-.ok-btn {
-    width: 100%;
-    padding: 12px;
-    background: crimson;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.ok-btn:hover {
-    background: #b30000;
-}
-
-/* Animations */
-
-    /* ==== Variables & Theme ==== */
+/* ================= ROOT VARIABLES ================= */
 :root {
-  --primary: #2e86de;
-  --secondary: #ffb703;
+  --primary: #0E063B;
+  --secondary: #2563eb;
+  --accent: #ffb703;
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --text: #07122a;
   --muted: #64748b;
-  --bg-light: #f0f4f8;
-  --card-light: #ffffff;
-  --text-light: #07122a;
-  --accent: #f97316;
-  --success: #16a34a;
-  --warning: #eab308;
-  --danger: #dc2626;
-  --radius: 12px;
-  --transition: 0.3s ease-in-out;
+  --radius: 14px;
+  --shadow: 0 6px 18px rgba(0,0,0,0.1);
+  --transition: 0.25s ease;
 }
 
-/* ==== General Styling ==== */
+/* ================= BASE ================= */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--bg-light);
-  color: var(--text-light);
-  line-height: 1.5;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
+
+a {
+  color: var(--secondary);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
 
 .site {
-  display: flex;
-  flex-direction: column;
-  padding: 0 8px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
 }
 
-/* ==== Header ==== */
+/* ================= HEADER ================= */
 header {
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  color: white;
+  background: linear-gradient(90deg, var(--primary), #1b0f6b);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 14px;
   text-align: center;
-  padding: 12px 10px;
-  border-radius: var(--radius);
-  margin-bottom: 16px;
 }
 
-header .brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
-header .brand .logo {
+.brand .logo {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 900;
 }
 
-header .brand h1 {
+.brand h1 {
+  margin: 6px 0 2px;
   font-size: 1.2rem;
-  margin: 0;
 }
 
-header .brand p {
-  font-size: 0.8rem;
+.brand p {
   margin: 0;
-  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  opacity: 0.9;
 }
 
-header .actions {
+.actions {
+  margin-top: 12px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 10px;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-a{
-    text-decoration: none;
-    color:blue;
-}
-header .btn {
-  background: var(--primary);
+
+.btn {
+  background: #fff;
+  color: var(--primary);
   border: none;
+  padding: 8px 14px;
   border-radius: var(--radius);
-  padding: 8px 12px;
-  color: white;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
 }
-
-header .btn:hover {
-  background: var(--secondary);
+.btn:hover {
+  background: var(--accent);
 }
 
-/* ==== Cards ==== */
+/* ================= LAYOUT ================= */
+.section {
+  margin-top: 16px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+/* ================= CARD ================= */
 .card {
-  background: var(--card-light);
+  background: var(--card);
   border-radius: var(--radius);
-  padding: 12px 14px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  padding: 14px;
+  box-shadow: var(--shadow);
   transition: var(--transition);
 }
-
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
 }
 
-/* ==== Marquee / Notices ==== */
-.marquee-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ================= NOTICE ================= */
+.notice-box {
+  border-left: 5px solid var(--secondary);
 }
 
-.marquee {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin-top: 6px;
-}
-
-.notice-list .notice {
+.notice-list div {
   font-size: 0.85rem;
-  padding: 4px 0;
+  padding: 6px 0;
   border-bottom: 1px solid #eee;
 }
 
-/* ==== Tables ==== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.85rem;
-  margin-top: 8px;
-}
-
-th, td {
-  padding: 8px 6px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background: var(--primary);
-  color: white;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-td.status-today { color: var(--accent); font-weight: 600; }
-td.status-tomorrow { color: var(--warning); font-weight: 600; }
-td.status-overdue { color: var(--danger); font-weight: 600; }
-td.status-upcoming { color: var(--muted); font-weight: 500; }
-
-.practical-table { overflow-x: auto; }
-
-/* ==== Accordion ==== */
+/* ================= ACCORDION ================= */
 .accordion-header {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  padding: 6px 0;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .accordion-body {
-  padding-top: 4px;
+  margin-top: 8px;
   font-size: 0.85rem;
+  display: none;
 }
 
-.accordion-body ul {
-  padding-left: 16px;
-  margin: 0;
+.accordion.open .accordion-body {
+  display: block;
 }
 
-.accordion-body a {
-  color: var(--primary);
-  text-decoration: none;
+/* ================= LISTS ================= */
+ul {
+  margin: 6px 0;
+  padding-left: 18px;
 }
 
-.accordion-body a:hover {
-  color: var(--secondary);
-  text-decoration: underline;
-}
-
-/* ==== Assignments & Notices Styling ==== */
-.card ul li {
+li {
   font-size: 0.85rem;
   margin-bottom: 4px;
-  line-height: 1.3;
 }
 
-.card h3 {
-  font-size: 1rem;
-  margin-bottom: 6px;
-}
-
-/* ==== Helpful Links ==== */
+/* ================= HELPFUL LINKS ================= */
 .helpful-links {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
-  justify-content: center;
-  margin-top: 10px;
 }
 
-.helpful-links .card {
-  flex: 1 1 140px;
-  text-align: center;
-  padding: 8px 10px;
-  background: var(--primary);
-  color: white;
-  font-size: 0.85rem;
-}
-
-.helpful-links .card:hover {
+.helpful-links a {
   background: var(--secondary);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.helpful-links a:hover {
+  background: var(--accent);
+  color: #000;
 }
 
-/* ==== Footer ==== */
+/* ================= FOOTER ================= */
 footer {
   text-align: center;
-  padding: 12px 0;
   font-size: 0.8rem;
   color: var(--muted);
+  margin: 20px 0 10px;
 }
 
-/* ==== Responsive Adjustments ==== */
-@media (min-width: 600px) {
-  header .actions {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .marquee {
-    gap: 12px;
-  }
-}
-
-@media (min-width: 900px) {
-  .top-row {
-    display: flex;
-    gap: 16px;
-  }
-  
-  .top-row > div {
-    flex: 1;
-  }
-
+/* ================= RESPONSIVE ================= */
+@media (min-width: 768px) {
   .grid-2 {
-    display: flex;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .grid-2 > .card {
-    flex: 1;
-  }
-}
-
-@media (max-width: 450px) {
-  header .brand .logo {
-    font-size: 1.5rem;
-  }
-
-  header .brand h1 {
-    font-size: 1rem;
-  }
-
-  header .brand p {
-    font-size: 0.75rem;
-  }
-
-  th, td {
-    font-size: 0.78rem;
-    padding: 4px 3px;
-  }
-
-  .helpful-links .card {
-    font-size: 0.78rem;
-    padding: 6px 8px;
-  }
-}
-/* ==== Responsive Adjustments ==== */
-@media (min-width: 600px) {
-  header .actions {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .marquee {
-    gap: 12px;
-  }
-}
-
-@media (min-width: 900px) {
-  .top-row {
-    display: flex;
-    gap: 16px;
-  }
-  
-  .top-row > div {
-    flex: 1;
-  }
-
-  .grid-2 {
-    display: flex;
-    gap: 16px;
-  }
-
-  .grid-2 > .card {
-    flex: 1;
-  }
-}
-
-/* ==== Mobile Enhancements for Better Looks ==== */
-@media (max-width: 600px) {
-
-  /* Stack top-row vertically with spacing */
-  .top-row {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  /* Header adjustments */
-  header .brand .logo { font-size: 1.5rem; font-weight: 900; }
-  header .brand h1 { font-size: 1rem; }
-  header .brand p { font-size: 0.75rem; }
-
-  header .actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* Dot / Marquee */
-  .dot { width: 8px; height: 8px; margin-top: 4px; }
-
-  /* Cards padding adjustments */
-  .card { padding: 10px 12px; margin-bottom: 12px; border-radius: 14px; }
-
-  /* Practical Section Improvements */
-  .practical-section {
-    padding: 8px;
-    background: var(--bg-light);
-    border-radius: var(--radius);
-  }
-
-  .practical-section h2 {
-    font-size: 0.95rem;
-    margin-bottom: 6px;
-    color: var(--primary);
-  }
-
-  .practical-table,
-  .exam-table-container table {
-    width: 100%;
-    table-layout: fixed;
-    border-radius: var(--radius);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
-  }
-
-  th, td {
-    font-size: 0.78rem;
-    padding: 6px 5px;
+  header {
     text-align: left;
   }
 
-  th {
-    font-size: 0.8rem;
-    background: var(--primary);
-    color: #fff;
+  .brand {
+    display: flex;
+    gap: 14px;
+    align-items: center;
   }
 
-  td.status-today { color: var(--accent); font-weight: 600; }
-  td.status-tomorrow { color: var(--warning); font-weight: 600; }
-  td.status-overdue { color: var(--danger); font-weight: 600; }
-  td.status-upcoming { color: var(--muted); font-weight: 500; }
-
-  td {
-    white-space: normal;
-    word-wrap: break-word;
+  .actions {
+    justify-content: flex-end;
   }
-
-  /* Accordion adjustments */
-  .accordion-header h3 { font-size: 0.85rem; }
-  .accordion-body { font-size: 0.78rem; padding-left: 12px; }
-
-  /* Assignments & Notices */
-  .card ul li { font-size: 0.78rem; margin-bottom: 4px; line-height: 1.3; }
-
-  /* Helpful Links */
-  .helpful-links { gap: 6px; justify-content: center; }
-  .helpful-links .card { font-size: 0.75rem; padding: 6px 8px; border-radius: var(--radius); }
-
-  /* Footer adjustments */
-  footer { font-size: 0.75rem; padding: 10px 0; }
-
-  /* Improve spacing between sections */
-  .top-row > div, .grid-2, .helpful-links { margin-bottom: 14px; }
-
-  /* Smooth card shadow and hover effect */
-  .card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  /* Practical & Exam tables rounded corners */
-  .practical-section table,
-  .exam-table-container table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  th:first-child, td:first-child { border-top-left-radius: var(--radius); border-bottom-left-radius: var(--radius); }
-  th:last-child, td:last-child { border-top-right-radius: var(--radius); border-bottom-right-radius: var(--radius); }
-}  
-@keyframes popupScale {
-    0% {transform: scale(0.7); opacity: 0;}
-    100% {transform: scale(1); opacity: 1;}
 }
-
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .popup-box {
-        padding: 15px;
-    }
-    .popup-title {
-        font-size: 20px;
-    }
-    .popup-message {
-        font-size: 14px;
-    }
-                     }
 </style>
 </head>
+
 <body>
-    <!-- <div id="ai-chatbot">
 
-  <div id="welcome-bubble">Welcome to AI & ML Portal!</div>
+<div class="site">
 
-  <div id="chat-window">
-    <div id="chat-header">🤖 AI & ML Portal Chatbot</div>
-
-    <div id="chat-messages">
-      <div class="msg-bot">Hello! I am AI assistant. How can I help you today?</div>
-    </div>
-
-    <div id="chat-input-box">
-      <input id="user-input" type="text" placeholder="Ask something..." />
-      <button id="send-btn">➤</button>
+<header>
+  <div class="brand">
+    <div class="logo">AIML</div>
+    <div>
+      <h1>Artificial Intelligence & Machine Learning — Second Year</h1>
+      <p>Academic Year 2025–2026 | CSE Department</p>
     </div>
   </div>
 
-  <button id="chat-icon">💬</button>
-    </div> -->
- <!-- Popup -->
-<!--<div id="popup" class="popup-overlay">
-    <div class="popup-box">
-        <span class="close-btn" onclick="closePopup()">&times;</span>
-        <h2 class="popup-title">⚠ Important Update!</h2>
-        <p class="popup-message">
-            Previous Year Question Papers of AIML 3 Semester of ALL Subjects Available on Site .
-        </p>
-        <button class="ok-btn" onclick="closePopup()">OK</button>
-    </div>
-</div>-->
-<div class="site" style="margin-top:10px;background-color:#0E063B;">
-  <header>
-    <div class="brand">
-      <div class="logo">AIML</div>
-      <div>
-        <h1>Artificial Intelligence & Machine Learning — Second Year</h1>
-        <p>Academic Year 2025–2026 • AIML Department</p>
-      </div>
-    </div>
-    <div class="actions">
-      <button style="background-color:#fff;color:#0E063B;" class="btn" onclick="location.href='AIML.html'">Back to Main Website</button>
-      <button style="background-color:#fff;color:#0E063B;" class="btn" id="btnToggle">Toggle Notices</button>
-    </div>
-  </header>
-  <!-- <div class="exam-wish" role="region" aria-label="Semester exam best wishes">
-    <div>
-      <div class="wish-text">
-        <span class="wish-animate">🎓 Best wishes for your semester exam! ✨</span>
-      </div>
-      <span class="sub">Study smart — you've got this 💪</span>
-    </div>
-  </div> -->
-  <main>
-    <div class="top-row">
-      <div class="marquee-wrap left-col">
-        <div class="card marquee" style="border:2px solid #0E063B;">
-          <div class="dot"></div>
-          <div>
-            <p><marquee style="color:red;font-weight:bold;" scrollamount="8">✨ Welcome to the AIML Second Year Education Platform ✨ </marquee></p>
-            <small style="color:var(--muted)">Live updates, notes, practicals & exam schedule — keep this page bookmarked.</small>
-          </div>
-        </div>
-
-        <div class="card" style="border:2px solid #0E063B;margin-top:14px;">
-          <strong style="display:block;margin-bottom:8px">Live & Latest 4th SEM </strong>
-          <div class="notice-list" id="liveNews">
-            <div class="notice">• START OF 4th SEMESTER FROM 27 JAN 2026 Onwards (Tentative).<span style="color:#07122a;font-weight:700">New !</span></div>
-            <!-- <div class="notice">• Practical Examination Period 13 - 24 January 2026.<span style="color:#07122a;font-weight:700">New !</span></div> -->
-            <!-- <div class="notice">• Introducing AI chatbot new feature on site is on progress but you can test.   <span style="color:#07122a;font-weight:700">New !</span></div> -->
-            <!-- <div class="notice">• Notes Available for Semester Exam Preparation : Python, Maths, DBMS, OOPs , DSA & AI <span style="color:#07122a;font-weight:700">New !</span></div>
-            <div class="notice">• Checking of Practical files of AI on 22 December 2025. <span style="color:#07122a;font-weight:700">New !</span></div>
-            <div class="notice">• SEMESTER EXAM is going to START from 20 December 2025. <span style="color:#07122a;font-weight:700">New !</span></div>
-            <!-- <div class="notice">• Previous Year question papers RG AIML 3 Semester , 29 November 2025 .<!-- <span style="color:#07122a;font-weight:700">New !</span>--></div>
-            <!-- <div class="notice">• Checking of Practical  of remaining students of PP on 28  November 2025. <!--<span style="color:#07122a;font-weight:700">New !</span>--></div>
-            <!-- <div class="notice">• Internal Practical Viva of remaining students of OOPs on 26, 27,28  November 2025. <!--<span style="color:#07122a;font-weight:700">New !</span>--></div>
-            <!-- <div class="notice">• Checking of practical file & assignment submission of DSA on 28th November 2025. <!--<span style="color:#07122a;font-weight:700">New !</span>--></div> 
-            <!-- <div class="notice">• Completion of Seasonal II Exam. <!--<span style="color:#07122a;font-weight:700">New !</span>--></div> 
-            <!-- <div class="notice">• Checking of Practical file of DBMS on or before 28 November 2025. <!--<span style="color:#07122a;font-weight:700">New !</span>--></div> 
-         </div>
-        </div>
-      </div>
-
-      <!--<div style="flex:1;min-width:320px">
-        <!-- Examination Schedule Card -->
-        <!-- <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h3 style="margin:0">📅 Examination Schedule AIML 3 Semester</h3>
-              <small>Timing : 2 P.M. - 5 P.M. Except DSA Exam Time : 9:30 A.M. - 12:30 A.M.</small>
-            <!--<small id="updatedDate" style="color:var(--muted)">Updated: </small>-->
-          <!-- </div>
-
-          <div class="exam-table-container" style="margin-top:12px;overflow-x:auto">
-            <table id="examTable" aria-label="Examination Schedule">
-              <thead>
-                <tr>
-                  <th>Course Name</th>
-                  <th>Course Code</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-date="2026-01-10">
-            <td>Database Management Systems</td>
-            <td>PCC-CSE-201G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td>
-          </tr>
-          <tr data-date="2026-01-06">
-            <td>Data Structures & Algorithms</td>
-            <td>PCC-CSE-203G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td> 
-          </tr>
-          <tr data-date="2025-12-23">
-            <td>Artificial Intelligence</td>
-            <td>PCC-CSE-304G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td> 
-          </tr>
-          <tr data-date="2025-12-31">
-            <td>Python Programming</td>
-            <td>PCC-CSE-207G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td>
-          </tr>
-          <tr data-date="2025-12-20">
-            <td>Mathematics for AI</td>
-            <td>BSC-MATH-271G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td>
-          </tr>
-          <tr data-date="2025-12-29">
-            <td>Object Oriented Programming</td>
-            <td>PCC-CSE-208G</td>
-            <td class="date-cell"></td>
-            <td class="status-cell"></td>
-          </tr> --> 
-          <!--<tr data-date="2025-12-05">
-            <td>Database Management Systems LAB</td>
-            <td>LC-CSE-209G (Practical)</td>
-            <!--<td class="date-cell"></td>
-            <td class="status-cell"></td>-->
-          <!--</tr>
-          <tr data-date="2025-12-07">
-            <td>Artificial Intelligence Lab using Python</td>
-            <td>LC-CSE-326G (Practical)</td>
-            <!-- <td class="date-cell"></td>
-            <td class="status-cell"></td>-->
-          <!--</tr>
-          <tr data-date="2025-12-10">
-            <td>Data Structures & Algorithms LAB using C</td>
-            <td>LC-CSE-213G (Practical)</td>
-            <!-- <td class="date-cell"></td>
-            <td class="status-cell"></td> -->
-          <!--</tr>
-          <tr data-date="2025-12-12">
-            <td>Python Programming LAB</td>
-            <td>LC-CSE-215G (Practical)</td>
-            <!-- <td class="date-cell"></td>
-            <td class="status-cell"></td> -->
-          <!--</tr>
-          <tr data-date="2025-12-12">
-            <td>Object Oriented Programming LAB using C++</td>
-            <td>LC-CSE-214G (Practical)</td>
-            <!-- <td class="date-cell"></td>
-            <td class="status-cell"></td> -->
-           <!--</tr>-->
-              <!-- </tbody>
-            </table>
-          </div>
-        </div> -->
-
-        <!-- Practical Files & Due Section -->
-      <!-- <div class="card">
-        <div class="practical-section" style="margin-bottom: 15px;">
-          <h2>🧾 Practical File & Due Section</h2>
-          <div style="margin-top:10px;overflow:auto">
-            <table class="practical-table" aria-label="Practical Dues">
-              <thead>
-                <tr>
-                  <th>Subject</th>
-                  <th>Course Code</th>
-                  <th>Due Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-date="2025-11-28">
-          <td>Database Management Systems Lab</td>
-          <td>LC-CSE-209G</td>
-          <td class="due-cell"></td>
-          <td class="status-cell"></td>
-        </tr>
-        <tr data-date="2025-12-22">
-          <td>Artificial Intelligence Lab using Python</td>
-          <td>LC-CSE-326G</td>
-          <td class="due-cell"></td>
-          <td class="status-cell"></td>
-        </tr>
-        <tr data-date="2025-11-28">
-          <td>Data Structures & Algorithms Lab using C</td>
-          <td>LC-CSE-213G</td>
-          <td class="due-cell"></td>
-          <td class="status-cell"></td>
-        </tr>
-        <tr data-date="2025-11-28">
-          <td>Python Programming Lab</td>
-          <td>LC-CSE-215G</td>
-          <td class="due-cell"></td>
-          <td class="status-cell"></td>
-        </tr>
-        <tr data-date="2025-11-20">
-          <td>Object Oriented Programming Lab using C++</td>
-          <td>LC-CSE-214G</td>
-          <td class="due-cell"></td>
-          <td class="status-cell"></td>
-        </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </div>--> 
-    
-    <div class="grid-2" style="padding: 0 4px 20px;">
-      <div class="card" style="border:2px solid #0E063B">
-        <div class="accordion" style="border:2px solid #0E063B;border-radius:10px;padding:10px;margin-bottom:20px;margin-top:40px;">
-          <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="true">
-            <h3>📘 Subjects Offered</h3><div>▾</div>
-          </div>
-          <div class="accordion-body" style="display:block">
-            <h3>3RD SEM Subjects</h3>
-            <ul style="margin:0;padding-left:18px">
-              <li>Database Management Systems</li>
-              <li>Data Structures &amp; Algorithms</li>
-              <li>Artificial Intelligence</li>
-              <li>Python Programming</li>
-              <li>Mathematics for AI</li>
-              <li>Object Oriented Programming</li>
-              <li>DBMS Lab</li>
-              <li>AI Lab using Python</li>
-              <li>DSA Lab Using C</li>
-              <li>Python Lab</li>
-              <li>OOP Lab Using C++</li>
-            </ul>
-            <div class="accordion-body" style="display:block">
-            <h3>4TH SEM Subjects</h3>
-            <ul style="margin:0;padding-left:18px">
-              <li style="color:red;font-weight:450;">Upload soon...</li>
-              <!-- <li>Database Management Systems</li>
-              <li>Data Structures &amp; Algorithms</li>
-              <li>Artificial Intelligence</li>
-              <li>Python Programming</li>
-              <li>Mathematics for AI</li>
-              <li>Object Oriented Programming</li>
-              <li>DBMS Lab</li>
-              <li>AI Lab using Python</li>
-              <li>DSA Lab Using C</li>
-              <li>Python Lab</li>
-              <li>OOP Lab Using C++</li> -->
-            </ul>
-          </div>
-        </div>
-      </div>
-     <div class="grid-2" style="padding: 0 4px 20px;>
-      <div class="card" style="border:2px solid #0E063B">
-       <div class="accordion" style="border:2px solid #0E063B;border-radius:10px;padding:10px;">
-        <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="true">
-          <h3>📂 Study Resources &amp; Notes</h3><div>▾</div>
-        </div>
-        <div class="accordion-body" style="display:block">
-          <h3>3RD SEM Notes</h3>
-          <div >
-            <div><strong>DBMS Notes:</strong>• <a href="https://jmp.sh/4ozvFbEz">Unit 1 & 2</a> • <a href="https://jmp.sh/65EXHNK1">Unit 3</a> • <a href="https://jmp.sh/DJ43Ov4L">Unit 4</a></div>
-            <div><strong>DSA Notes:</strong> • <a href="https://jmp.sh/D7YRvWaj">Unit 1</a> • <a href="https://jmp.sh/rdSm11nR">Unit 2</a> • <a href="https://jmp.sh/ELb5lBz8">Unit 3</a> • <a href="https://jmp.sh/zDsri1ch">Unit 4</a></div>
-            <div><strong>AI Notes:</strong>  • <a href="https://jmp.sh/OtZ7TjgD">Unit 1 AI generated pdf</a> • <a href="https://jmp.sh/S6bEkl4E">Unit 2 </a> • <a href="https://jmp.sh/o2blTHgx ">Unit 3 </a>• <a href="https://jmp.sh/Ft0jVc9k">Unit 4 AI Generated pdf </a>• <a href="https://jmp.sh/67uBwQQ1">Expert System Unit - 4 More details</a> </div>
-            <div><strong>Python / ML Notes:</strong> • <a href="https://jmp.sh/z3dmjtZg">Complete syllabus notes of python</a></div>
-            <div><strong>Mathematics Notes:</strong> • <a href="https://jmp.sh/xTpKabon">Unit 1</a> • <a href="https://jmp.sh/9bgBMUFP">Unit 2</a> • <a href="https://jmp.sh/lNEhsiEg">Unit 3</a> • <a href="https://jmp.sh/DH9Gc0ol">Unit 4</a></div>
-            <div><strong>OOP in C++ Notes: </strong>  • <a href="https://jmp.sh/CkXcOPYn">Complete syllabus notes</a></div>
-          </div>
-          <h3>4TH SEM Notes</h3>
-          <div >
-            <div><strong style="color:red;">OOPs ! Not Available</strong></div>
-            <!-- <div><strong>DBMS Notes:</strong>• <a href="https://jmp.sh/4ozvFbEz">Unit 1 & 2</a> • <a href="https://jmp.sh/65EXHNK1">Unit 3</a> • <a href="https://jmp.sh/DJ43Ov4L">Unit 4</a></div>
-            <div><strong>DSA Notes:</strong> • <a href="https://jmp.sh/D7YRvWaj">Unit 1</a> • <a href="https://jmp.sh/rdSm11nR">Unit 2</a> • <a href="https://jmp.sh/ELb5lBz8">Unit 3</a> • <a href="https://jmp.sh/zDsri1ch">Unit 4</a></div>
-            <div><strong>AI Notes:</strong>  • <a href="https://jmp.sh/OtZ7TjgD">Unit 1 AI generated pdf</a> • <a href="https://jmp.sh/S6bEkl4E">Unit 2 </a> • <a href="https://jmp.sh/o2blTHgx ">Unit 3 </a>• <a href="https://jmp.sh/Ft0jVc9k">Unit 4 AI Generated pdf </a>• <a href="https://jmp.sh/67uBwQQ1">Expert System Unit - 4 More details</a> </div>
-            <div><strong>Python / ML Notes:</strong> • <a href="https://jmp.sh/z3dmjtZg">Complete syllabus notes of python</a></div>
-            <div><strong>Mathematics Notes:</strong> • <a href="https://jmp.sh/xTpKabon">Unit 1</a> • <a href="https://jmp.sh/9bgBMUFP">Unit 2</a> • <a href="https://jmp.sh/lNEhsiEg">Unit 3</a> • <a href="https://jmp.sh/DH9Gc0ol">Unit 4</a></div>
-            <div><strong>OOP in C++ Notes: </strong>  • <a href="https://jmp.sh/CkXcOPYn">Complete syllabus notes</a></div> -->
-          </div>
-        </div>
-       </div>
-      </div>
-      </div>
-    </div>
-   </div>
+  <div class="actions">
+    <button class="btn" onclick="location.href='AIML.html'">Back to Main Website</button>
+    <button class="btn" id="toggleNotices">Toggle Notices</button>
   </div>
-    <div>
-      <div class="card" style="border:2px solid #0E063B;margin:5px;margin-bottom:20px;">
-        <h3 style="margin-top:0">Previous Year Question Papers AIML 3 Semester</h3>
-        <div style="padding-top:8px">
-          <ul style="padding-left:18px;margin:0">
-            <li>DBMS <strong><a href="https://jmp.sh/RJTjG6iP">Previous Question paper</a></strong></li>
-            <li>Python Programming  <strong><a href="https://jmp.sh/dyAeYklP">Previous Question Paper</a></strong></li>
-            <li>DSA <strong><a href="https://jmp.sh/KPQeyu1d"> Previous Question Paper</a></strong></li>
-            <li>OOPs <strong><a href="https://jmp.sh/vEy5lpXS"> Previous question paper</a></strong></li>
-            <li>AI 01 <strong><a href="https://jmp.sh/IXmywFi9"> Previous question 01</a></strong></strong></li>
-            <li>AI 02 <strong><a href="https://jmp.sh/HQf3kAWq"> Previous question 02</a></strong></strong></li>
-            <li>Maths <strong><a href="https://jmp.sh/HJtHNsYo"> Previous Question paper CSE Based Not Containing Unit-4</a></strong></li>
-            <li>Common ALL <strong><a href="https://drive.google.com/drive/folders/1IvuCkt0Y_nPFogK1P26wWuS6eSlvj19s">Others Links</a></strong></li>
-          </ul>
-        </div>
-      </div>
-      <div>
-    <!-- Assignments & Notices -->
-    <div>
-      <div class="card" style="border:2px solid #0E063B;margin:5px;margin-bottom:20px;">
-        <h3 style="margin-top:0">📝 Assignments & Deadlines</h3>
-        <div style="padding-top:8px">
-          <ul style="padding-left:18px;margin:0">
-            <li><strong style="color:red;">No Assignment alloted !!!</strong></li>
-            <!-- <li>DBMS Assignment No. 01 - Due: <strong>24 September 2025</strong></li>
-            <li>Python programming Assignment 01 - Due: <strong>18 September 2025</strong></li>
-            <li>DSA Assignment 01 – Due: <strong>October 2025</strong></li>
-            <li>OOPs Assignment 01 – Due: <strong>27 October 2025</strong></li>
-            <li>AI Assignment 01 &amp; 02 – Due: <strong>31 October 2025</strong></li>
-            <li>Python programming Assignment 02 – Due: <strong>13 November 2025</strong></li>
-            <li>DBMS Assignment 02 – Due: <strong>12 November 2025 </strong></li>
-            <li>DSA Assignment 02 – Due: <strong>28 November 2025  <!--<span style="color:red">NEW !</span>--><!--</strong></li>-->
-          </ul>
-        </div>
-      </div>
-      <div>
-      <div class="card" style="border:2px solid #0E063B;margin:5px;margin-bottom:20px;">
-        <h3 style="margin-top:0">📢 Important Notices</h3>
-        <div style="padding-top:8px">
-          <ul style="padding-left:18px;margin:0">
-            <li>3RD semester complete syllabus available on website.<strong></strong></li>
-            <!-- <li>First Seasonal Exam 3 Semester 2025 From 24 September to 26 September 2025<strong></strong></li>
-            <li>Second Seasonal Exam 3 Semester 2025 From 26 November to 28 November 2025 <!--<span style="color:red;font-weight:bold">NEW !</span>--><!--<strong></strong></li>-->
-            <!-- <li>AIML 3rd Semester Examination is going to start from 20 December 2025 onwards.  <span style="color:red;font-weight:bold">NEW !</span><strong></strong></li> --> 
-            <li>📌 Syllabus PDF: <a href="https://jmp.sh/eFJlBK0e" target="_blank">View Syllabus</a><strong></strong></li>
-         </ul>
-        </div>
-      </div>
-        
+</header>
 
-    <!-- Helpful Links -->
-    <div class="helpful-links">
-      <a class="card" href="https://mdu.ac.in/default.aspx">~MDU, Rohtak~</a>
-      <a class="card" href="https://mdu.samarth.edu.in/index.php/site/login">~MDU Samarth Portal~</a>
-      <a class="card" href="https://student.mdu.ac.in/">~MDU Student Portal~</a>
-      <a class="card" href="https://result.mdurtk.in/postexam/result.aspx">~MDU Result, Rohtak~</a>
+<!-- ================= NOTICES ================= -->
+<section class="section">
+  <div class="card notice-box" id="notices">
+    <strong>📢 Live & Latest Updates</strong>
+    <div class="notice-list">
+      <div>• 4th Semester starts from <strong>27 January 2026</strong> (Tentative)</div>
+      <div>• Complete 3rd Semester syllabus available</div>
     </div>
+  </div>
+</section>
 
-    <footer>
-      &copy; 2026 | CSE-AIML Department | Second Year Dashboard
-    </footer>
-  </main>
+<!-- ================= SUBJECTS & NOTES ================= -->
+<section class="section grid-2">
+
+  <div class="card accordion open">
+    <div class="accordion-header">
+      <span>📘 Subjects Offered</span><span>▾</span>
+    </div>
+    <div class="accordion-body">
+      <strong>3rd Semester</strong>
+      <ul>
+        <li>DBMS</li>
+        <li>DSA</li>
+        <li>Artificial Intelligence</li>
+        <li>Python Programming</li>
+        <li>Mathematics for AI</li>
+        <li>OOPs</li>
+      </ul>
+      <strong>4th Semester</strong>
+      <ul>
+        <li style="color:red;">Upload soon...</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card accordion open">
+    <div class="accordion-header">
+      <span>📂 Study Resources</span><span>▾</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><strong>DBMS:</strong> <a href="https://jmp.sh/4ozvFbEz">Unit 1–2</a></li>
+        <li><strong>DSA:</strong> <a href="https://jmp.sh/D7YRvWaj">Unit 1</a></li>
+        <li><strong>AI:</strong> <a href="https://jmp.sh/OtZ7TjgD">Unit 1</a></li>
+        <li><strong>Python:</strong> <a href="https://jmp.sh/z3dmjtZg">Full Notes</a></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= QUESTION PAPERS ================= -->
+<section class="section">
+  <div class="card">
+    <h3>📄 Previous Year Question Papers</h3>
+    <ul>
+      <li><a href="https://jmp.sh/RJTjG6iP">DBMS</a></li>
+      <li><a href="https://jmp.sh/dyAeYklP">Python</a></li>
+      <li><a href="https://jmp.sh/KPQeyu1d">DSA</a></li>
+      <li><a href="https://jmp.sh/vEy5lpXS">OOPs</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= ASSIGNMENTS ================= -->
+<section class="section">
+  <div class="card">
+    <h3>📝 Assignments</h3>
+    <p style="color:red;font-weight:600;">No assignments allotted</p>
+  </div>
+</section>
+
+<!-- ================= IMPORTANT LINKS ================= -->
+<section class="section">
+  <div class="helpful-links">
+    <a href="https://mdu.ac.in/">MDU Rohtak</a>
+    <a href="https://mdu.samarth.edu.in/">Samarth Portal</a>
+    <a href="https://student.mdu.ac.in/">Student Portal</a>
+    <a href="https://result.mdurtk.in/">Results</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 | CSE–AIML Second Year Dashboard
+</footer>
+
 </div>
 
 <script>
-  function toggleAccordion(header){
-    const body = header.nextElementSibling;
-    const open = body.style.display === 'block' || getComputedStyle(body).display === 'block';
-    body.style.display = open ? 'none' : 'block';
-  }
-
-  document.getElementById('btnToggle').addEventListener('click', ()=>{
-    const notices = document.getElementById('liveNews');
-    notices.style.display = (getComputedStyle(notices).display === 'none') ? 'block' : 'none';
-    const btn = document.getElementById('btnToggle');
-    btn.textContent = (getComputedStyle(notices).display === 'none') ? 'Show Notices' : 'Toggle Notices';
-  });
-
-  function daysBetween(date1, date2){
-    const d1 = new Date(date1); d1.setHours(0,0,0,0);
-    const d2 = new Date(date2); d2.setHours(0,0,0,0);
-    return Math.floor((d1 - d2)/(1000*60*60*24));
-  }
-
-  // Practical Table
-  function updatePracticalStatuses(){
-    document.querySelectorAll('.practical-table tbody tr').forEach(row=>{
-      const dateStr = row.getAttribute('data-date');
-      const statusCell = row.querySelector('.status-cell');
-      const dueCell = row.querySelector('.due-cell');
-      if(!dateStr || !statusCell || !dueCell) return;
-
-      const dateObj = new Date(dateStr);
-      dueCell.textContent = dateObj.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
-
-      const diff = daysBetween(dateStr, new Date());
-      if(diff === 0){ 
-        statusCell.textContent='Due Today'; 
-        statusCell.className='status-cell status-today'; 
-      }
-      else if(diff === 1){ 
-        statusCell.textContent='Tomorrow'; 
-        statusCell.className='status-cell status-tomorrow'; 
-      }
-      else if(diff < 0){ 
-        statusCell.textContent='Overdue'; 
-        statusCell.className='status-cell status-overdue'; 
-      }
-      else{ 
-        statusCell.textContent='Upcoming'; 
-        statusCell.className='status-cell status-upcoming'; 
-      }
-    });
-  }
-
-  // Exam Table
-  function updateExamTableLabels(){
-    document.querySelectorAll('#examTable tbody tr').forEach(row=>{
-      const dateStr = row.getAttribute('data-date');
-      const dateCell = row.querySelector('.date-cell');
-      const statusCell = row.querySelector('.status-cell');
-      if(!dateStr || !dateCell || !statusCell) return;
-
-      const dateObj = new Date(dateStr);
-      dateCell.textContent = dateObj.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
-
-      const diff = daysBetween(dateStr, new Date());
-      if(diff === 0){ 
-        statusCell.textContent='Today'; 
-        statusCell.className='status-cell status-today'; 
-      }
-      else if(diff === 1){ 
-        statusCell.textContent='Tomorrow'; 
-        statusCell.className='status-cell status-tomorrow'; 
-      }
-      else if(diff < 0){ 
-        statusCell.textContent='Past'; 
-        statusCell.className='status-cell status-overdue'; 
-      }
-      else{ 
-        statusCell.textContent='Upcoming'; 
-        statusCell.className='status-cell status-upcoming'; 
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', ()=>{
-    updatePracticalStatuses();
-    updateExamTableLabels();
-  });
-
-  (function scheduleMidnightUpdate(){
-    const now = new Date();
-    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0,0,5);
-    const ms = nextMidnight - now;
-    setTimeout(()=>{
-      updatePracticalStatuses();
-      updateExamTableLabels();
-      scheduleMidnightUpdate();
-    }, ms);
-  })();
-
-  const today = new Date();
-  const options = { day: '2-digit', month: 'short', year: 'numeric' };
-  document.getElementById('updatedDate').textContent = 'Updated: ' + today.toLocaleDateString('en-GB', options);
-</script>
-<script>
-  // Show popup when page loads
-window.onload = function() {
-    document.getElementById("popup").style.display = "flex";
+document.getElementById("toggleNotices").onclick = () => {
+  const n = document.getElementById("notices");
+  n.style.display = n.style.display === "none" ? "block" : "none";
 };
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
-</script>
-<!--<script>
-const chatIcon = document.getElementById("chat-icon");
-const chatWindow = document.getElementById("chat-window");
-const sendBtn = document.getElementById("send-btn");
-const userInput = document.getElementById("user-input");
-const chatMessages = document.getElementById("chat-messages");
-const welcomeBubble = document.getElementById("welcome-bubble");
-
-// Hide welcome bubble after 4 seconds
-setTimeout(() => welcomeBubble.style.display = "none", 4000);
-
-// Toggle chatbot
-chatIcon.onclick = () => {
-  chatWindow.style.display =
-    chatWindow.style.display === "flex" ? "none" : "flex";
-};
-
-// Add message to UI
-function addMessage(text, sender) {
-  const msg = document.createElement("div");
-  msg.className = sender === "user" ? "msg-user" : "msg-bot";
-  msg.innerText = text;
-  chatMessages.appendChild(msg);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-// Send Message
-async function sendMessage() {
-  const text = userInput.value.trim();
-  if (!text) return;
-
-  addMessage(text, "user");
-  userInput.value = "";
-  addMessage("Typing...", "bot");
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer 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"
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are an AI assistant for Kunal's AI & ML Portal." },
-          { role: "user", content: text }
-        ]
-      })
-    });
-
-    const data = await response.json();
-
-    // Replace "Typing..." with actual bot response
-    document.querySelector(".msg-bot:last-child").innerText =
-      data?.choices?.[0]?.message?.content || "⚠️ API did not return a response";
-
-  } catch (error) {
-    document.querySelector(".msg-bot:last-child").innerText =
-      "❌ Error: " + error.message;
-  }
-}
-
-sendBtn.onclick = sendMessage;
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
+document.querySelectorAll(".accordion-header").forEach(h => {
+  h.onclick = () => h.parentElement.classList.toggle("open");
 });
-</script>-->
-<script type="module">
-const chatIcon = document.getElementById("chat-icon");
-const chatWindow = document.getElementById("chat-window");
-const sendBtn = document.getElementById("send-btn");
-const userInput = document.getElementById("user-input");
-const chatMessages = document.getElementById("chat-messages");
-const welcomeBubble = document.getElementById("welcome-bubble");
+</script>
 
-// Hide welcome bubble after 4 seconds
-setTimeout(() => welcomeBubble.style.display = "none", 4000);
-
-// Toggle chatbot
-chatIcon.onclick = () => {
-  chatWindow.style.display =
-    chatWindow.style.display === "flex" ? "none" : "flex";
-};
-
-// Add message to UI
-function addMessage(text, sender) {
-  const msg = document.createElement("div");
-  msg.className = sender === "user" ? "msg-user" : "msg-bot";
-  msg.innerText = text;
-  chatMessages.appendChild(msg);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-// Manual fallback Q&A
-const fallbackQA = [
-  { q: "hello", a: "Hello! How are you?" },
-  { q: "hi", a: "Hi there! How can I assist you today?" },
-  { q: "what is ai", a: "AI stands for Artificial Intelligence, it enables machines to mimic human intelligence." },
-  { q: "what is ml", a: "ML stands for Machine Learning, a subset of AI that lets machines learn from data." },
-  { q: "who made you", a: "I was created by Kunal for his AI & ML Portal." },
-  { q: "What is the main purpose of the AI Chatbot introduced in the AIML portal?", a: "To assist students in learning and provide quick information about AI topics." },
-  { q: "List two AI-related notes available for Second Year students according to the dashboard.", a: "Unit 1: Introduction to AI, Unit 4: Learning and Expert Systems." },
-  { q: "Which units of AI have AI-generated PDFs according to the study resources?", a: "Unit 1 and Unit 4." },
-  { q: "What is the purpose of an Expert System as mentioned in the resources?", a: "To simulate the decision-making ability of a human expert." },
-
-  // DBMS Section
-  { q: "Name the DBMS assignment due dates mentioned on the portal.", a: "Due dates are as per the portal's assignment section (specific dates to be filled)." },
-  { q: "Which students are required to submit DBMS assignments urgently according to the notices?", a: "All Second Year students (specific group can be filled based on portal)." },
-  { q: "Which course code corresponds to the DBMS subject in the examination schedule?", a: "Course code is provided in the exam schedule table on the portal." },
-  { q: "Where can you find previous year question papers for DBMS on the portal?", a: "In the 'Previous Year Question Papers' section for DBMS." },
-
-  // DSA Section
-  { q: "When is the DSA Semester Exam scheduled according to the table?", a: "As per the Examination Schedule table on the portal." },
-  { q: "Which assignments are listed for DSA, and what are their due dates?", a: "DSA Assignment 1 and Assignment 2, due dates as listed on portal." },
-  { q: "What practical lab corresponds to DSA, and what is its due date?", a: "DSA Practical Lab, due date as per portal." },
-
-  // Python Section
-  { q: "Which units of Python/ML notes are available on the portal?", a: "Unit 1, Unit 2, Unit 3, etc. (as per portal)." },
-  { q: "What is the date of Python Programming exam according to the schedule?", a: "As per the Examination Schedule table." },
-  { q: "How many assignments of Python programming are listed, and when are they due?", a: "Python Assignment 1 and Assignment 2, due dates on portal." },
-
-  // OOP Section
-  { q: "Name the OOP assignments and their due dates.", a: "OOP Assignment 1 and Assignment 2, due dates as per portal." },
-  { q: "What is the OOP lab due date according to the practical section?", a: "As per the portal's practical section." },
-  { q: "Which previous year question papers are available for OOP?", a: "Available in the 'Previous Year Question Papers' section for OOP." },
-
-  // Mathematics Section
-  { q: "When is the Mathematics for AI exam scheduled?", a: "As per the Examination Schedule table." },
-  { q: "How many units of Mathematics notes are available for study, and what are the links for Unit 1 and Unit 2?", a: "All units listed on portal, links available in notes section." },
-
-  // Practical Labs Section
-  { q: "List all practical files mentioned in the dashboard along with their due dates.", a: "Practical files are listed in the practicals section with specific dates." },
-  { q: "Which lab files were scheduled to be checked on 28 November 2025?", a: "Files for lab X (as per portal notice)." },
-  { q: "Which lab’s internal practical viva is scheduled for 26–28 November 2025?", a: "Lab Y (as per portal notice)." },
-
-  // Notices Section
-  { q: "What is the significance of the 'Live & Latest' section on the portal?", a: "To display latest notices, updates, and announcements for students." },
-  { q: "List three important notices mentioned for the semester exams.", a: "Notice 1, Notice 2, Notice 3 (as per portal)." },
-  { q: "According to the portal, which students need to submit assignments by tomorrow at the latest?", a: "All students pending assignment submissions." },
-
-  // Exams Section
-  { q: "What is the timing of exams for most courses, and what is the exception for DSA?", a: "Most exams 10:00 AM–1:00 PM, exception for DSA as per schedule." },
-  { q: "List all subjects with their exam dates as per the Examination Schedule.", a: "Subjects and dates listed in the Examination Schedule table." },
-  { q: "Which exams are considered upcoming, overdue, or today (based on data-date in the table)?", a: "Status shown dynamically in portal based on exam dates." },
-
-  // Website/Portal Features
-  { q: "Describe three features of the AIML Second Year Dashboard that help students stay updated.", a: "1. AI Chatbot 2. Live Notices 3. Exam Schedule." },
-  { q: "How does the AI chatbot enhance learning for Second Year students?", a: "Provides instant answers, guidance, and learning resources." },
-  { q: "What is the purpose of the 'Toggle Notices' button in the header?", a: "To show/hide notices for a cleaner interface." }
-  ,
-  { q: "default", a: "Sorry, I doesn't know the answer to that yet. You can ask something else or check online ! OUR SYSTEM ON PROGRESS ...THANK FOR YOUR PATIENCE" }
-];
-
-// Function to get fallback answer
-function getFallbackAnswer(text) {
-  const lowerText = text.toLowerCase();
-  for (const item of fallbackQA) {
-    if (lowerText.includes(item.q)) return item.a;
-  }
-  return fallbackQA.find(i => i.q === "default").a;
-}
-
-// Send Message
-async function sendMessage() {
-  const text = userInput.value.trim();
-  if (!text) return;
-
-  addMessage(text, "user");
-  userInput.value = "";
-  addMessage("Typing...", "bot");
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer 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"
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are an AI assistant for Kunal's AI & ML Portal." },
-          { role: "user", content: text }
-        ]
-      })
-    });
-
-    const data = await response.json();
-
-    const botReply =
-      data?.choices?.[0]?.message?.content ||
-      getFallbackAnswer(text); // Use fallback if API fails
-
-    document.querySelector(".msg-bot:last-child").innerText = botReply;
-
-  } catch (error) {
-    // If fetch fails, use fallback manual answer
-    document.querySelector(".msg-bot:last-child").innerText =
-      getFallbackAnswer(text);
-  }
-}
-
-sendBtn.onclick = sendMessage;
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
-    </script>
-    
 </body>
 </html>
