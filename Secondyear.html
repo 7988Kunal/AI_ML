@@ -3,75 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSE – AIML Second Year (2025–26)</title>
+<title>AIML Second Year Dashboard (2025–26)</title>
 
 <style>
 :root{
-  --primary:#2e86de;
-  --secondary:#ffb703;
-  --dark:#0E063B;
-  --bg:#f0f4f8;
+  --primary:#0E063B;
+  --secondary:#2563eb;
+  --accent:#ffb703;
+  --bg:#f4f6fb;
   --card:#ffffff;
-  --radius:12px;
+  --text:#07122a;
+  --muted:#64748b;
+  --danger:#dc2626;
+  --radius:14px;
+  --shadow:0 6px 18px rgba(0,0,0,.1);
+  --transition:.25s ease;
 }
 
 /* Base */
 body{
   margin:0;
-  font-family:Segoe UI,Arial,sans-serif;
+  font-family:"Segoe UI",system-ui,sans-serif;
   background:var(--bg);
-  color:#07122a;
+  color:var(--text);
 }
 
-.site{padding:10px}
+a{color:var(--secondary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.site{
+  max-width:1200px;
+  margin:auto;
+  padding:10px;
+}
 
 /* Header */
 header{
-  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  background:linear-gradient(90deg,var(--primary),#1b0f6b);
   color:#fff;
-  text-align:center;
-  padding:14px;
   border-radius:var(--radius);
+  padding:14px;
 }
 
-header .actions{
-  margin-top:10px;
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.logo{
+  font-size:1.8rem;
+  font-weight:900;
+}
+
+.brand h1{
+  margin:0;
+  font-size:1.2rem;
+}
+
+.brand p{
+  margin:0;
+  font-size:.85rem;
+  opacity:.9;
+}
+
+.actions{
+  margin-top:12px;
   display:flex;
   gap:10px;
-  justify-content:center;
+  justify-content:flex-end;
   flex-wrap:wrap;
 }
 
 .btn{
   background:#fff;
-  color:var(--dark);
+  color:var(--primary);
   border:none;
   padding:8px 14px;
   border-radius:var(--radius);
   font-weight:600;
   cursor:pointer;
+  transition:var(--transition);
 }
+.btn:hover{background:var(--accent)}
 
-/* Cards */
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-}
+/* Layout */
+.section{margin-top:16px}
 
-h3{margin-top:0}
-
-/* Grid */
 .grid-2{
   display:grid;
   grid-template-columns:1fr;
   gap:14px;
 }
 
-@media(min-width:900px){
-  .grid-2{grid-template-columns:1fr 1fr}
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+
+/* Notices */
+.notice-box{border-left:5px solid var(--secondary)}
+
+.notice-list div{
+  font-size:.85rem;
+  padding:6px 0;
+  border-bottom:1px solid #eee;
 }
 
 /* Accordion */
@@ -79,42 +118,60 @@ h3{margin-top:0}
   display:flex;
   justify-content:space-between;
   cursor:pointer;
-  font-weight:600;
+  font-weight:700;
 }
 
 .accordion-body{
+  display:none;
   margin-top:8px;
+  font-size:.85rem;
 }
 
-/* Lists */
-ul{padding-left:18px;margin:0}
-li{margin-bottom:6px}
+.accordion.open .accordion-body{display:block}
 
-/* Notices */
-.notice{font-size:.9rem;margin-bottom:6px}
+/* Lists */
+ul{margin:6px 0;padding-left:18px}
+li{margin-bottom:4px;font-size:.85rem}
+
+/* Status text */
+.status{
+  color:var(--danger);
+  font-weight:600;
+  font-size:.85rem;
+}
+
+/* Helpful links */
+.helpful-links{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+}
+
+.helpful-links a{
+  background:var(--secondary);
+  color:#fff;
+  padding:10px;
+  text-align:center;
+  border-radius:var(--radius);
+  font-size:.85rem;
+  font-weight:600;
+}
+.helpful-links a:hover{
+  background:var(--accent);
+  color:#000;
+}
 
 /* Footer */
 footer{
   text-align:center;
   font-size:.8rem;
-  color:#555;
-  margin-top:20px;
+  color:var(--muted);
+  margin:20px 0 10px;
 }
 
-/* Helpful Links */
-.helpful-links{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.helpful-links a{
-  background:var(--primary);
-  color:#fff;
-  padding:8px 12px;
-  border-radius:var(--radius);
-  text-decoration:none;
-  font-size:.85rem;
+/* Responsive */
+@media(min-width:768px){
+  .grid-2{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -123,107 +180,110 @@ footer{
 <div class="site">
 
 <header>
-  <h1>Artificial Intelligence & Machine Learning</h1>
-  <p>Second Year • Academic Session 2025–26</p>
+  <div class="brand">
+    <div class="logo">AIML</div>
+    <div>
+      <h1>Artificial Intelligence & Machine Learning — Second Year</h1>
+      <p>Academic Year 2025–2026 | CSE Department</p>
+    </div>
+  </div>
+
   <div class="actions">
     <button class="btn" onclick="location.href='AIML.html'">Back to Main Website</button>
-    <button class="btn" id="btnToggle">Toggle Notices</button>
+    <button class="btn" id="toggleNotices">Toggle Notices</button>
   </div>
 </header>
 
-<main>
-
-<!-- Live Notices -->
-<div class="card">
-  <h3>📢 Live & Latest (4th Semester)</h3>
-  <div id="liveNews">
-    <div class="notice">• 4th Semester tentative start: <strong>27 January 2026</strong></div>
+<!-- Notices -->
+<section class="section">
+  <div class="card notice-box" id="notices">
+    <strong>📢 Live & Latest Updates</strong>
+    <div class="notice-list">
+      <div>• 4th Semester starts from <strong>27 January 2026</strong> (Tentative)</div>
+      <div>• Study resources currently under review</div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- Subjects & Resources -->
-<div class="grid-2">
+<section class="section grid-2">
 
-<!-- Subjects -->
-<div class="card">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    <span>📘 Subjects Offered</span><span>▾</span>
+  <div class="card accordion open">
+    <div class="accordion-header">
+      <span>📘 Subjects Offered</span><span>▾</span>
+    </div>
+    <div class="accordion-body">
+      <strong>3rd Semester</strong>
+      <ul>
+        <li>DBMS</li>
+        <li>DSA</li>
+        <li>Artificial Intelligence</li>
+        <li>Python Programming</li>
+        <li>Mathematics for AI</li>
+        <li>OOPs</li>
+      </ul>
+
+      <strong>4th Semester</strong>
+      <p class="status">Not Available (Will be updated soon)</p>
+    </div>
   </div>
-  <div class="accordion-body">
-    <h4>3rd Semester</h4>
-    <ul>
-      <li>DBMS</li>
-      <li>DSA</li>
-      <li>Artificial Intelligence</li>
-      <li>Python Programming</li>
-      <li>Mathematics for AI</li>
-      <li>OOPs</li>
-    </ul>
 
-    <h4>4th Semester</h4>
-    <ul>
-      <li style="color:red">Not Available (Will be updated soon)</li>
-    </ul>
+  <div class="card accordion open">
+    <div class="accordion-header">
+      <span>📂 Study Resources</span><span>▾</span>
+    </div>
+    <div class="accordion-body">
+      <strong>3rd Semester</strong>
+      <p class="status">Study resource links have been removed</p>
+
+      <strong>4th Semester</strong>
+      <p class="status">Not Available</p>
+    </div>
   </div>
-</div>
 
-<!-- Study Resources -->
-<div class="card">
-  <div class="accordion-header" onclick="toggleAccordion(this)">
-    <span>📂 Study Resources & Notes</span><span>▾</span>
+</section>
+
+<!-- Question Papers -->
+<section class="section">
+  <div class="card">
+    <h3>📄 Previous Year Question Papers</h3>
+    <p class="status">Question papers are currently not available</p>
   </div>
-  <div class="accordion-body">
-    <h4>3rd Semester</h4>
-    <p style="color:red;font-weight:600">Links removed / Not available</p>
-
-    <h4>4th Semester</h4>
-    <p style="color:red;font-weight:600">Not Available (Coming Soon)</p>
-  </div>
-</div>
-
-</div>
-
-<!-- Previous Year Papers -->
-<div class="card">
-  <h3>📄 Previous Year Question Papers</h3>
-  <p style="color:red;font-weight:600">
-    Previous year question papers are currently not available.
-  </p>
-</div>
+</section>
 
 <!-- Assignments -->
-<div class="card">
-  <h3>📝 Assignments</h3>
-  <p style="color:red;font-weight:600">No assignments allotted.</p>
-</div>
+<section class="section">
+  <div class="card">
+    <h3>📝 Assignments</h3>
+    <p class="status">No assignments allotted</p>
+  </div>
+</section>
 
-<!-- Helpful Links -->
-<div class="helpful-links">
-  <a href="https://mdu.ac.in">MDU Rohtak</a>
-  <a href="https://mdu.samarth.edu.in">MDU Samarth</a>
-  <a href="https://student.mdu.ac.in">Student Portal</a>
-  <a href="https://result.mdurtk.in">MDU Results</a>
-</div>
+<!-- Important Links -->
+<section class="section">
+  <div class="helpful-links">
+    <a href="https://mdu.ac.in/">MDU Rohtak</a>
+    <a href="https://mdu.samarth.edu.in/">Samarth Portal</a>
+    <a href="https://student.mdu.ac.in/">Student Portal</a>
+    <a href="https://result.mdurtk.in/">Results</a>
+  </div>
+</section>
 
 <footer>
-  © 2026 • CSE–AIML Department • Second Year Dashboard
+  © 2026 | CSE–AIML Second Year Dashboard
 </footer>
 
-</main>
 </div>
 
 <script>
-function toggleAccordion(header){
-  const body = header.nextElementSibling;
-  body.style.display =
-    body.style.display === 'none' ? 'block' : 'none';
-}
-
-document.getElementById('btnToggle').onclick = ()=>{
-  const n=document.getElementById('liveNews');
-  n.style.display =
-    n.style.display==='none'?'block':'none';
+document.getElementById("toggleNotices").onclick=()=>{
+  const n=document.getElementById("notices");
+  n.style.display=n.style.display==="none"?"block":"none";
 };
+
+document.querySelectorAll(".accordion-header").forEach(h=>{
+  h.onclick=()=>h.parentElement.classList.toggle("open");
+});
 </script>
 
 </body>
