@@ -6,6 +6,60 @@
 <title>AIML Second Year Dashboard (2025–26)</title>
 
 <style>
+  .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.card {
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.today { background: #e3f2fd; border-left: 6px solid #2196f3; }
+.tomorrow { background: #fff3e0; border-left: 6px solid #ff9800; }
+.coming { background: #e8f5e9; border-left: 6px solid #4caf50; }
+.completed { background: #eeeeee; border-left: 6px solid #757575; }
+.noschedule { background: #ffebee; border-left: 6px solid #f44336; }
+
+.subject {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.code {
+    font-size: 14px;
+    color: #555;
+}
+
+.date {
+    margin-top: 5px;
+}
+
+.status {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.section-title {
+    margin-top: 25px;
+    font-size: 22px;
+    border-bottom: 2px solid #ddd;
+}
 :root{
   --primary:#0E063B;
   --secondary:#2563eb;
@@ -240,7 +294,10 @@ footer{
     </div>
   </div>
 </section>
-
+<div class="container">
+    <div class="title">📅 Exam Schedule Dashboard</div>
+    <div id="schedule"></div>
+</div>
 <!-- Subjects & Notes -->
 <section class="section grid-2">
 
@@ -440,6 +497,74 @@ document.querySelectorAll(".accordion-header").forEach(h=>{
   h.onclick=()=>h.parentElement.classList.toggle("open");
 });
 </script>
+<script>
 
+// ====== SET YOUR EXAM DATES HERE ======
+// Format: "YYYY-MM-DD"
+// If date = 0 → No schedule
+
+const exams = [
+    {id:1, code:"PCC-CSE-202G", name:"Discrete Mathematics", date:"0"},
+    {id:2, code:"PCC-CSE-204G", name:"Computer Organization & Architecture", date:"0"},
+    {id:3, code:"PCC-CSE-206G", name:"Operating System", date:"0"},
+    {id:4, code:"PCC-AIML-241G", name:"Introduction to Machine Learning", date:"0"},
+    {id:5, code:"PCC-CSE-307G", name:"Design & Analysis of Algorithms", date:"0"},
+    {id:6, code:"LC-CSE-325G", name:"DAA Using C++ Lab", date:"0"},
+    {id:7, code:"LC-CSE-212G", name:"Operating System Lab", date:"0"},
+    {id:8, code:"LC-AIML-281G", name:"ML Lab", date:"0"},
+    {id:9, code:"LC-CSE-323G", name:"Computer Networks Lab", date:"0"},
+    {id:10, code:"HS-150G", name:"Design Thinking", date:"0"},
+    {id:11, code:"PCC-CSE-303G", name:"Computer Networks", date:"0"}
+];
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+
+function getStatus(dateStr) {
+    if(dateStr === "0") return "noschedule";
+
+    const examDate = new Date(dateStr);
+    examDate.setHours(0,0,0,0);
+
+    if (examDate.getTime() === today.getTime()) return "today";
+    if (examDate.getTime() === tomorrow.getTime()) return "tomorrow";
+    if (examDate > today) return "coming";
+    return "completed";
+}
+
+function getStatusText(status) {
+    return {
+        today: "Today",
+        tomorrow: "Tomorrow",
+        coming: "Upcoming",
+        completed: "Completed",
+        noschedule: "Not Announced"
+    }[status];
+}
+
+const container = document.getElementById("schedule");
+
+exams.forEach(exam => {
+    const status = getStatus(exam.date);
+
+    const div = document.createElement("div");
+    div.className = "card " + status;
+
+    div.innerHTML = `
+        <div class="subject">${exam.name}</div>
+        <div class="code">${exam.code}</div>
+        <div class="date">
+            ${exam.date === "0" ? "Date: Not Available" : "Date: " + exam.date}
+        </div>
+        <div class="status">Status: ${getStatusText(status)}</div>
+    `;
+
+    container.appendChild(div);
+});
+
+      </script>
 </body>
 </html>
