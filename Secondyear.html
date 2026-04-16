@@ -4,7 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIML Second Year Dashboard (2025–26)</title>
+<style>
+#orbitStarA52{
+    display:inline-block;
+    font-size:24px;
+    line-height:1;
+    animation:
+        spinGlowR8 1.8s linear infinite,
+        rainbowToneK4 2s linear infinite;
+}
 
+@keyframes spinGlowR8{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes rainbowToneK4{
+    0%{
+        color:#ff0000;
+        text-shadow:0 0 4px #ff0000;
+    }
+    16%{
+        color:#ff7f00;
+        text-shadow:0 0 4px #ff7f00;
+    }
+    32%{
+        color:#ffff00;
+        text-shadow:0 0 4px #ffff00;
+    }
+    48%{
+        color:#00cc44;
+        text-shadow:0 0 4px #00cc44;
+    }
+    64%{
+        color:#0099ff;
+        text-shadow:0 0 4px #0099ff;
+    }
+    80%{
+        color:#6633ff;
+        text-shadow:0 0 4px #6633ff;
+    }
+    100%{
+        color:#ff1493;
+        text-shadow:0 0 4px #ff1493;
+    }
+}
+</style>
 <style>
   .container {
     max-width: 1000px;
@@ -279,7 +328,7 @@ footer{
 <!-- Notices -->
 <section class="section">
   <div class="card notice-box" id="notices">
-    <strong>📢 Live & Latest Updates</strong>
+    <strong><span id="orbitStarA52">⭐</span>  Live & Latest Updates</strong>
     <div class="notice-list">
       <div>• 4th Semester Exam Expected to Start : <strong>Second or Last week of May</strong> <strong style="color:red;">Upcoming ...</strong></div>
       <div>• CN Sessional 01 Topics Pdf : <strong><a href="https://jmp.sh/gX6Vf7Bu">View</a></strong></div>
