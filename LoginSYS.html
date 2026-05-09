@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI & ML Second Year Login </title>
+    <title>AI & ML Third Year Login </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@
 <body>
  
     <div class="login-container">
-        <h2>AI & ML Second Year Login</h2>
+        <h2>AI & ML Third Year Login</h2>
         <input type="text" id="username" placeholder="Username / Registration No. / Roll No.">
         <button onclick="validateLogin()">Login</button>
         <p class="error" id="error-message"></p>
@@ -155,7 +155,7 @@
 
             for (const [key, value] of Object.entries(users)) {
                 if (key === username || value.toLowerCase() === username) {
-                    window.location.href = "default.html";
+                    window.location.href = "Maintenance.html";
                     return;
                 }
             }
