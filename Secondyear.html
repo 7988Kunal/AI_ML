@@ -4,642 +4,893 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIML Second Year Dashboard (2025–26)</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-#orbitStarA52{
-    display:inline-block;
-    font-size:24px;
-    line-height:1;
-    animation:
-        spinGlowR8 1.8s linear infinite,
-        rainbowToneK4 2s linear infinite;
+
+/* =============================================
+   CSS VARIABLES & RESET
+   ============================================= */
+:root {
+  --primary:       #0E063B;
+  --primary-light: #1b0f6b;
+  --secondary:     #2563eb;
+  --accent:        #ffb703;
+  --accent2:       #ef4444;
+  --success:       #16a34a;
+  --bg:            #f0f2f9;
+  --card:          #ffffff;
+  --text:          #07122a;
+  --muted:         #64748b;
+  --border:        #e2e8f0;
+  --radius-sm:     8px;
+  --radius:        14px;
+  --radius-lg:     20px;
+  --shadow:        0 4px 20px rgba(14,6,59,.08);
+  --shadow-lg:     0 8px 32px rgba(14,6,59,.14);
+  --transition:    .22s ease;
 }
 
-@keyframes spinGlowR8{
-    0%{
-        transform:rotate(0deg);
-    }
-    100%{
-        transform:rotate(360deg);
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
-@keyframes rainbowToneK4{
-    0%{
-        color:#ff0000;
-        text-shadow:0 0 4px #ff0000;
-    }
-    16%{
-        color:#ff7f00;
-        text-shadow:0 0 4px #ff7f00;
-    }
-    32%{
-        color:#ffff00;
-        text-shadow:0 0 4px #ffff00;
-    }
-    48%{
-        color:#00cc44;
-        text-shadow:0 0 4px #00cc44;
-    }
-    64%{
-        color:#0099ff;
-        text-shadow:0 0 4px #0099ff;
-    }
-    80%{
-        color:#6633ff;
-        text-shadow:0 0 4px #6633ff;
-    }
-    100%{
-        color:#ff1493;
-        text-shadow:0 0 4px #ff1493;
-    }
-}
-</style>
-<style>
-  .container {
-    max-width: 1000px;
-    margin: 30px auto;
-    font-family: 'Segoe UI', sans-serif;
+a { color: var(--secondary); text-decoration: none; font-weight: 600; }
+a:hover { text-decoration: underline; }
+
+ul { padding-left: 18px; }
+li { margin-bottom: 6px; }
+
+/* =============================================
+   LAYOUT WRAPPER
+   ============================================= */
+.site {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 16px 14px 40px;
 }
 
-.title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+  background: linear-gradient(110deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 22px 24px 18px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
 }
 
+/* decorative ring behind header */
+header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 40px solid rgba(255,255,255,.06);
+  pointer-events: none;
+}
+
+.brand {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.logo-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.55rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--primary);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.brand-text h1 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.brand-text p {
+  font-size: .82rem;
+  opacity: .8;
+  margin-top: 2px;
+}
+
+.header-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,.3);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: .84rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+.btn:hover { background: rgba(255,255,255,.22); transform: translateY(-1px); }
+
+/* =============================================
+   MARQUEE TICKER
+   ============================================= */
+.ticker-wrap {
+  margin-top: 14px;
+  background: var(--accent2);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.ticker-wrap marquee {
+  color: #fff;
+  font-weight: 700;
+  font-size: .92rem;
+  padding: 9px 0;
+}
+
+/* =============================================
+   CARDS (base)
+   ============================================= */
 .card {
-    border-radius: 12px;
-    padding: 15px;
-    margin: 10px 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: 0.3s;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
 }
 
-.card:hover {
-    transform: scale(1.02);
-}
-
-.today { background: #e3f2fd; border-left: 6px solid #2196f3; }
-.tomorrow { background: #fff3e0; border-left: 6px solid #ff9800; }
-.coming { background: #e8f5e9; border-left: 6px solid #4caf50; }
-.completed { background: #eeeeee; border-left: 6px solid #757575; }
-.noschedule { background: #ffebee; border-left: 6px solid #f44336; }
-
-.subject {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.code {
-    font-size: 14px;
-    color: #555;
-}
-
-.date {
-    margin-top: 5px;
-}
-
-.status {
-    margin-top: 8px;
-    font-weight: bold;
-}
+/* =============================================
+   SECTION SPACING
+   ============================================= */
+.section { margin-top: 20px; }
 
 .section-title {
-    margin-top: 25px;
-    font-size: 22px;
-    border-bottom: 2px solid #ddd;
-}
-:root{
-  --primary:#0E063B;
-  --secondary:#2563eb;
-  --accent:#ffb703;
-  --bg:#f4f6fb;
-  --card:#ffffff;
-  --text:#07122a;
-  --muted:#64748b;
-  --danger:#dc2626;
-  --radius:14px;
-  --shadow:0 6px 18px rgba(0,0,0,.1);
-  --transition:.25s ease;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:"Segoe UI",system-ui,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.55;
+/* =============================================
+   NOTICES / LIVE UPDATES
+   ============================================= */
+.notice-card {
+  border-left: 5px solid var(--secondary);
 }
 
-a{
-  color:var(--secondary);
-  text-decoration:none;
-  font-weight:600;
-}
-a:hover{text-decoration:underline}
-
-.site{
-  max-width:1200px;
-  margin:auto;
-  padding:12px;
+.notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-/* ================= HEADER ================= */
-
-header{
-  background:linear-gradient(90deg,var(--primary),#1b0f6b);
-  color:#fff;
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow:var(--shadow);
+.notice-header strong {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.brand{
-  display:flex;
-  gap:14px;
-  align-items:center;
+.notice-list { display: flex; flex-direction: column; gap: 0; }
+
+.notice-item {
+  font-size: .88rem;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.55;
+}
+.notice-item:last-child { border-bottom: none; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+  margin-left: 6px;
+}
+.badge-red   { background: #fee2e2; color: #b91c1c; }
+.badge-green { background: #dcfce7; color: #15803d; }
+.badge-blue  { background: #dbeafe; color: #1d4ed8; }
+
+/* =============================================
+   SPINNING STAR ANIMATION
+   ============================================= */
+#orbitStar {
+  display: inline-block;
+  font-size: 1.1rem;
+  animation: spinStar 1.8s linear infinite, rainbowStar 2s linear infinite;
 }
 
-.logo{
-  font-size:2rem;
-  font-weight:900;
+@keyframes spinStar {
+  to { transform: rotate(360deg); }
 }
 
-.brand h1{
-  margin:0;
-  font-size:1.25rem;
+@keyframes rainbowStar {
+  0%   { color: #ff0000; text-shadow: 0 0 6px #ff0000; }
+  16%  { color: #ff7f00; text-shadow: 0 0 6px #ff7f00; }
+  33%  { color: #ffff00; text-shadow: 0 0 6px #ffff00; }
+  50%  { color: #00cc44; text-shadow: 0 0 6px #00cc44; }
+  66%  { color: #0099ff; text-shadow: 0 0 6px #0099ff; }
+  83%  { color: #6633ff; text-shadow: 0 0 6px #6633ff; }
+  100% { color: #ff1493; text-shadow: 0 0 6px #ff1493; }
 }
 
-.brand p{
-  margin:2px 0 0;
-  font-size:.85rem;
-  opacity:.9;
+/* =============================================
+   TWO-COLUMN GRID
+   ============================================= */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-.actions{
-  margin-top:14px;
-  display:flex;
-  gap:10px;
-  justify-content:flex-end;
-  flex-wrap:wrap;
+@media (min-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
 }
 
-.btn{
-  background:#fff;
-  color:var(--primary);
-  border:none;
-  padding:9px 16px;
-  border-radius:var(--radius);
-  font-weight:700;
-  cursor:pointer;
-  transition:var(--transition);
-}
-.btn:hover{transform:translateY(-2px)}
-
-/* ================= LAYOUT ================= */
-
-.section{margin-top:18px}
-
-.grid-2{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
+/* =============================================
+   ACCORDION (Subjects & Notes)
+   ============================================= */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: .96rem;
+  user-select: none;
 }
 
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:16px;
-  box-shadow:var(--shadow);
+.accordion-arrow {
+  font-size: 1rem;
+  transition: transform var(--transition);
+}
+.accordion.open .accordion-arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  display: none;
+  margin-top: 14px;
+  font-size: .87rem;
+}
+.accordion.open .accordion-body { display: block; }
+
+.accordion-body strong { display: block; margin: 10px 0 4px; font-size: .9rem; }
+.accordion-body ul { margin-top: 4px; }
+.accordion-body li { line-height: 1.6; }
+
+/* =============================================
+   EXAM SCHEDULE
+   ============================================= */
+.schedule-section { margin-top: 20px; }
+
+.schedule-header {
+  text-align: center;
+  margin-bottom: 6px;
 }
 
-/* ================= NOTICE ================= */
-
-.notice-box{border-left:6px solid var(--secondary)}
-
-.notice-list div{
-  font-size:.9rem;
-  padding:8px 0;
-  border-bottom:1px solid #eee;
-}
-.notice-list div:last-child{border-bottom:none}
-
-/* ================= ACCORDION ================= */
-
-.accordion-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  font-weight:800;
+.schedule-header h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
 }
 
-.accordion-header span:last-child{
-  transition:var(--transition);
+.schedule-note {
+  text-align: center;
+  font-size: .82rem;
+  color: var(--accent2);
+  font-weight: 600;
+  margin-bottom: 14px;
 }
 
-.accordion.open .accordion-header span:last-child{
-  transform:rotate(180deg);
+/* Status card styles */
+.exam-card {
+  border-radius: var(--radius-sm);
+  padding: 13px 15px;
+  margin-bottom: 10px;
+  border-left: 5px solid;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.exam-card:hover { transform: translateX(3px); box-shadow: var(--shadow-lg); }
+
+.exam-card.today     { background: #e0f2fe; border-color: #0284c7; }
+.exam-card.tomorrow  { background: #fff7ed; border-color: #ea580c; }
+.exam-card.coming    { background: #f0fdf4; border-color: #16a34a; }
+.exam-card.completed { background: #f8fafc; border-color: #94a3b8; color: #64748b; }
+.exam-card.noschedule{ background: #fff1f2; border-color: #f43f5e; }
+
+.exam-name { font-weight: 700; font-size: .95rem; }
+.exam-code { font-size: .78rem; color: var(--muted); margin-top: 2px; font-family: 'Space Mono', monospace; }
+.exam-date { margin-top: 4px; font-size: .84rem; }
+.exam-status { font-weight: 700; font-size: .8rem; margin-top: 4px; }
+
+.exam-card.today     .exam-status { color: #0284c7; }
+.exam-card.tomorrow  .exam-status { color: #ea580c; }
+.exam-card.coming    .exam-status { color: #16a34a; }
+.exam-card.completed .exam-status { color: #64748b; }
+.exam-card.noschedule .exam-status { color: #f43f5e; }
+
+/* Section labels inside schedule */
+.schedule-group-title {
+  font-size: .8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin: 16px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
 }
 
-.accordion-body{
-  display:none;
-  margin-top:12px;
-  font-size:.9rem;
+/* =============================================
+   PREVIOUS YEAR PAPERS
+   ============================================= */
+.papers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.accordion.open .accordion-body{display:block}
+.paper-item {
+  background: #f8fafc;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: .85rem;
+  transition: var(--transition);
+}
+.paper-item:hover { border-color: var(--secondary); background: #eff6ff; }
+.paper-item .paper-label { font-weight: 700; display: block; margin-bottom: 4px; }
 
-ul{margin:8px 0;padding-left:20px}
-li{margin-bottom:6px}
-
-/* ================= ASSIGNMENTS ================= */
-
-#assignments{margin-top:18px}
-
-.semester-block{
-  background:var(--card);
-  padding:16px;
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  margin-bottom:14px;
+/* =============================================
+   ASSIGNMENTS
+   ============================================= */
+.assignments-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 4px;
 }
 
-.semester-block h4{margin:0 0 8px}
-
-/* ================= LINKS ================= */
-
-.helpful-links{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
+@media (min-width: 768px) {
+  .assignments-grid { grid-template-columns: 1fr 1fr; }
 }
 
-.helpful-links a{
-  background:var(--secondary);
-  color:#fff;
-  padding:12px;
-  text-align:center;
-  border-radius:var(--radius);
-  font-weight:700;
-  transition:var(--transition);
-}
-.helpful-links a:hover{transform:translateY(-3px)}
-
-/* ================= FOOTER ================= */
-
-footer{
-  text-align:center;
-  font-size:.8rem;
-  color:var(--muted);
-  margin:24px 0 10px;
+.assignment-block {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
 }
 
-@media(min-width:768px){
-  .grid-2{grid-template-columns:1fr 1fr}
+.assignment-block h4 {
+  font-size: .95rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
 }
+
+.assignment-block ul { font-size: .84rem; }
+.assignment-block li { padding: 3px 0; }
+
+/* =============================================
+   IMPORTANT LINKS
+   ============================================= */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.link-btn {
+  background: var(--primary);
+  color: #fff !important;
+  padding: 12px 10px;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: .85rem;
+  transition: var(--transition);
+  display: block;
+  text-decoration: none !important;
+}
+.link-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  text-align: center;
+  font-size: .78rem;
+  color: var(--muted);
+  margin-top: 32px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* =============================================
+   SCROLLBAR (cosmetic)
+   ============================================= */
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #c7d2e7; border-radius: 4px; }
+
 </style>
 </head>
-
 <body>
-<br>
+
 <div class="site">
 
-<header>
-  <div class="brand">
-    <div class="logo">AIML</div>
-    <div>
-      <h1>Artificial Intelligence & Machine Learning — Second Year</h1>
-      <p>Academic Year 2025–2026 | CSE Department</p>
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header>
+    <div class="brand">
+      <div class="logo-badge">AIML</div>
+      <div class="brand-text">
+        <h1>Artificial Intelligence &amp; Machine Learning — Second Year</h1>
+        <p>Academic Year 2025–2026 &nbsp;|&nbsp; CSE Department</p>
+      </div>
     </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn" onclick="location.href='AIML.html'">Back to Main Website</button>
-    <button class="btn" id="toggleNotices">Toggle Notices</button>
-  </div>
-</header>
-<marquee behavior="scroll" direction="left" scrollamount="10"style="color:red;font-weight:700;margin-top:30px;margin-bottom:10px;font-size:19px;">
-  🚀 Welcome to AIML Second Year Dashboard (Academic Session 2025–2026) | Stay updated with notes, assignments & notices
-</marquee>
-
-<!-- Notices -->
-<section class="section">
-  <div class="card notice-box" id="notices">
-    <strong><span id="orbitStarA52">⭐</span>  Live & Latest Updates</strong>
-    <div class="notice-list">
-      <div>• 4th Semester Exam Start : <strong>on 19 May 2026</strong> <strong style="color:red;">Upcoming ...</strong></div>
-      <div>• <strong style="color:red;">Special News : </strong> <strong> The UHA subject has also been introduced in the current semester, although it was not specified from the beginning and was announced before the end of the second sessional exams.Additionally, there will be a theory examination for UHA in the final exams of the 4th semester. </strong></div>
-      <!--<div>• 4th Semester Practical Exam Schedule : <strong> 1 May - DT(M) and ML(M) , 4 May - DAA(M), 5 May - CN() & 6 May - OS(E) --2026 [ M - Morning , E - Evening ]</strong> <strong style="color:green;">Completed.</strong></div>
-      <div>• CN Sessional 01 Topics Pdf : <strong><a href="https://jmp.sh/gX6Vf7Bu">View</a></strong></div>
-      <div>• CN Sessional 02 Topics Pdf : <strong><a href="https://github.com/7988Kunal/AI_ML/blob/main/cn-sessional.pdf">View</a></strong></div>
-      <div>• First Sessional Exams on  <strong>24,25,27 March 2026</strong>   <strong style="color:green;"> Completed.</strong> </div>
-      <div>• Second Sessional Exams on  <strong>27,28,29 April 2026</strong>  <strong style="color:green;"> Completed.</strong></div>
-      <div>• Submission of DAA assignment 3 & Checking of DAA practical file - 2 part  on 24 April 2026 & internal Viva and remaining on 27 April 2026 ( Monday ) between seasonal exam.</div>
-      <div>• Complete OS Practical file's 10 programs.</div>
-      <div>• Complete ML Practical file's 15 programs.</div>
-      <div>• Take printout of DT Practical file with starting page.</div>
-      <div>• Complete CN Lab file's of 3 assignments with team of atmost 6 members.</div>
-      <div>• Submission for CAO assignment's 3rd & 4th after seasonal exams.   <strong style="color:green;"> Done.</strong></div>   
-      <div>• Last date of submission for CAO assignment's on 9 April 2026.   <strong style="color:green;"> Done.</strong></div>
-      <div>• 4th Semester starts from <strong>27 January 2026</strong></div>
-      <div>• 3rd Semester notes & question papers available</div>-->
-      <div>📌 Syllabus PDF: <a href="https://jmp.sh/eFJlBK0e" target="_blank">View Syllabus</a><strong></strong></div>
+    <div class="header-actions">
+      <button class="btn" onclick="location.href='AIML.html'">← Back to Main Website</button>
+      <button class="btn" id="toggleNotices">Toggle Notices</button>
     </div>
-  </div>
-</section>
-<div class="container">
-    <div class="title">4th semester Exam Schedule 2026 </div>
-    <p style="color:red;">All subjects Exam time : 2:00 PM - 5:00 PM Except COA & CN (9:30 AM - 12:30 PM)</p>
-    <div id="schedule"></div>
-</div>
-<!-- Subjects & Notes -->
-<section class="section grid-2">
+  </header>
 
-  <!-- Subjects -->
-  <div class="card accordion open">
-    <div class="accordion-header">
-      <span>📘 Subjects Offered</span><span>▾</span>
+  <!-- ============================================================
+       TICKER / MARQUEE
+       ============================================================ -->
+  <div class="ticker-wrap">
+    <marquee behavior="scroll" direction="left" scrollamount="8">
+      🚀 Welcome to AIML Second Year Dashboard (Academic Session 2025–2026) &nbsp;|&nbsp; Stay updated with notes, assignments &amp; notices
+    </marquee>
+  </div>
+
+
+  <!-- ============================================================
+       LIVE NOTICES
+       ============================================================ -->
+  <section class="section" id="noticesSection">
+    <div class="card notice-card">
+      <div class="notice-header">
+        <strong><span id="orbitStar">⭐</span> &nbsp;Live &amp; Latest Updates</strong>
+      </div>
+      <div class="notice-list">
+
+        <!-- ACTIVE NOTICE -->
+        <div class="notice-item">
+          📅 4th Semester Exam Start:
+          <strong>19 May 2026</strong>
+          <span class="badge badge-red">Upcoming</span>
+        </div>
+
+        <!-- SPECIAL NEWS -->
+        <div class="notice-item">
+          <strong style="color:#b91c1c;">Special News:</strong>
+          The UHA subject has been introduced in the current semester — announced before the end of the second sessional exams.
+          There will also be a <strong>theory examination for UHA</strong> in the final exams of the 4th semester.
+        </div>
+
+        <!-- COMMENTED NOTICES (kept for reference / future use) -->
+        <!--
+        <div class="notice-item">📋 4th Semester Practical Exam Schedule: 1 May - DT(M) and ML(M), 4 May - DAA(M), 5 May - CN() &amp; 6 May - OS(E) — 2026 [M = Morning, E = Evening] <span class="badge badge-green">Completed</span></div>
+        <div class="notice-item">CN Sessional 01 Topics PDF: <a href="https://jmp.sh/gX6Vf7Bu" target="_blank">View</a></div>
+        <div class="notice-item">CN Sessional 02 Topics PDF: <a href="https://github.com/7988Kunal/AI_ML/blob/main/cn-sessional.pdf" target="_blank">View</a></div>
+        <div class="notice-item">First Sessional Exams: <strong>24, 25, 27 March 2026</strong> <span class="badge badge-green">Completed</span></div>
+        <div class="notice-item">Second Sessional Exams: <strong>27, 28, 29 April 2026</strong> <span class="badge badge-green">Completed</span></div>
+        <div class="notice-item">DAA Assignment 3 &amp; Practical File part 2 submission: 24 April 2026 &amp; internal viva on 27 April 2026 (between sessional exam).</div>
+        <div class="notice-item">Complete OS Practical file — 10 programs.</div>
+        <div class="notice-item">Complete ML Practical file — 15 programs.</div>
+        <div class="notice-item">Take printout of DT Practical file with starting page.</div>
+        <div class="notice-item">Complete CN Lab file — 3 assignments (team of max 6 members).</div>
+        <div class="notice-item">CAO Assignments 3 &amp; 4 submission after sessional exams. <span class="badge badge-green">Done</span></div>
+        <div class="notice-item">Last date of submission for CAO assignments: 9 April 2026. <span class="badge badge-green">Done</span></div>
+        <div class="notice-item">4th Semester starts from <strong>27 January 2026</strong></div>
+        <div class="notice-item">3rd Semester notes &amp; question papers available.</div>
+        -->
+
+        <!-- SYLLABUS LINK -->
+        <div class="notice-item">
+          📌 Syllabus PDF:
+          <a href="https://jmp.sh/eFJlBK0e" target="_blank">View Syllabus</a>
+        </div>
+
+      </div>
     </div>
-    <div class="accordion-body">
-      <strong>3rd Semester</strong>
-      <ul>
-        <li>Database Management Systems</li> 
-        <li>Data Structures &amp; Algorithms</li>
-        <li>Artificial Intelligence</li> 
-        <li>Python Programming</li> 
-        <li>Mathematics for AI</li> 
-        <li>Object Oriented Programming</li> 
-        <li>DBMS Lab</li> 
-        <li>AI Lab using Python</li> 
-        <li>DSA Lab Using C</li> 
-        <li>Python Lab</li> 
-        <li>OOP Lab Using C++</li>
-      </ul>
+  </section>
 
-      <strong>4th Semester  <strong style="color:green;"> Current semester</strong></strong>
-      <!-- <p style="color:red;">Not Available (Will be updated soon)</p> -->
-      <ul>
-       <li>Discrete Mathematics</li>
-       <li>Computer Organization & Architecture</li>
-       <li>Operating System</li>
-       <li>Introduction to Machine Learning</li>
-       <li>Computer Networks</li>
-       <li>Design & Analysis of Algorithms</li>
-       <li>Design & Analysis of Algorithms Using C++ (Lab)</li>
-       <li>Operating System Lab</li>
-       <li>Introduction to Machine Learning Lab</li>
-       <li>Computer Networks Lab</li>
-       <li>Design Thinking</li>
-      </ul>
+
+  <!-- ============================================================
+       EXAM SCHEDULE
+       ============================================================ -->
+  <section class="section schedule-section">
+    <div class="card">
+      <div class="schedule-header">
+        <h2>📅 4th Semester Exam Schedule 2026</h2>
+      </div>
+      <p class="schedule-note">
+        All subjects: 2:00 PM – 5:00 PM &nbsp;|&nbsp; Except COA &amp; CN: 9:30 AM – 12:30 PM
+      </p>
+      <div id="schedule"></div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SUBJECTS & NOTES (two-column grid)
+       ============================================================ -->
+  <section class="section grid-2">
+
+    <!-- Subjects Offered -->
+    <div class="card accordion open">
+      <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>📘 Subjects Offered</span>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+
+        <strong>3rd Semester</strong>
+        <ul>
+          <li>Database Management Systems</li>
+          <li>Data Structures &amp; Algorithms</li>
+          <li>Artificial Intelligence</li>
+          <li>Python Programming</li>
+          <li>Mathematics for AI</li>
+          <li>Object Oriented Programming</li>
+          <li>DBMS Lab</li>
+          <li>AI Lab using Python</li>
+          <li>DSA Lab Using C</li>
+          <li>Python Lab</li>
+          <li>OOP Lab Using C++</li>
+        </ul>
+
+        <strong>4th Semester &nbsp;<span style="color:#16a34a;font-size:.8rem;">● Current</span></strong>
+        <ul>
+          <li>Discrete Mathematics</li>
+          <li>Computer Organization &amp; Architecture</li>
+          <li>Operating System</li>
+          <li>Introduction to Machine Learning</li>
+          <li>Computer Networks</li>
+          <li>Design &amp; Analysis of Algorithms</li>
+          <li>DAA Using C++ (Lab)</li>
+          <li>Operating System Lab</li>
+          <li>ML Lab</li>
+          <li>Computer Networks Lab</li>
+          <li>Design Thinking</li>
+          <li>Universal Human Values – II (UHA)</li>
+        </ul>
+
+      </div>
+    </div>
+
+    <!-- 3rd Semester Notes -->
+    <div class="card accordion open">
+      <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>📂 3rd Semester Notes</span>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>DBMS:</strong>
+            <a href="https://jmp.sh/4ozvFbEz" target="_blank">Unit 1 &amp; 2</a>,
+            <a href="https://jmp.sh/65EXHNK1" target="_blank">Unit 3</a>,
+            <a href="https://jmp.sh/DJ43Ov4L" target="_blank">Unit 4</a>
+          </li>
+          <li><strong>DSA:</strong>
+            <a href="https://jmp.sh/D7YRvWaj" target="_blank">Unit 1</a>,
+            <a href="https://jmp.sh/rdSm11nR" target="_blank">Unit 2</a>,
+            <a href="https://jmp.sh/ELb5lBz8" target="_blank">Unit 3</a>,
+            <a href="https://jmp.sh/zDsri1ch" target="_blank">Unit 4</a>
+          </li>
+          <li><strong>AI:</strong>
+            <a href="https://jmp.sh/OtZ7TjgD" target="_blank">Unit 1</a>,
+            <a href="https://jmp.sh/S6bEkl4E" target="_blank">Unit 2</a>,
+            <a href="https://jmp.sh/o2blTHgx" target="_blank">Unit 3</a>,
+            <a href="https://jmp.sh/Ft0jVc9k" target="_blank">Unit 4</a>,
+            <a href="https://jmp.sh/67uBwQQ1" target="_blank">Expert System</a>
+          </li>
+          <li><strong>Python / ML:</strong>
+            <a href="https://jmp.sh/z3dmjtZg" target="_blank">Complete Notes</a>
+          </li>
+          <li><strong>Mathematics:</strong>
+            <a href="https://jmp.sh/xTpKabon" target="_blank">Unit 1</a>,
+            <a href="https://jmp.sh/9bgBMUFP" target="_blank">Unit 2</a>,
+            <a href="https://jmp.sh/lNEhsiEg" target="_blank">Unit 3</a>,
+            <a href="https://jmp.sh/DH9Gc0ol" target="_blank">Unit 4</a>
+          </li>
+          <li><strong>OOP in C++:</strong>
+            <a href="https://jmp.sh/CkXcOPYn" target="_blank">Complete Notes</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4th Semester Notes -->
+    <div class="card accordion open">
+      <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+        <span>📂 4th Semester Notes &nbsp;<span style="color:#ef4444;font-size:.78rem;font-weight:700;">NEW!</span></span>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>Discrete Mathematics:</strong>
+            <a href="https://jmp.sh/XOUP3QDc" target="_blank">Unit 01</a>,
+            <a href="https://jmp.sh/dBIpT1oB" target="_blank">Unit 02</a>,
+            <a href="https://jmp.sh/Pc0BH35K" target="_blank">Unit 03</a>,
+            <a href="https://jmp.sh/9csGSWkV" target="_blank">Unit 04</a>
+          </li>
+          <li><strong>Machine Learning:</strong>
+            <a href="https://jmp.sh/uSNycsdK" target="_blank">Unit 01</a>,
+            <a href="https://jmp.sh/bDx8NP2E" target="_blank">Unit 02</a>,
+            <a href="https://jmp.sh/mwkD3XeV" target="_blank">Unit 03</a>,
+            <a href="https://jmp.sh/IuAjWj2X" target="_blank">Unit 04</a>
+          </li>
+          <li><strong>Design &amp; Analysis of Algorithms (DAA):</strong>
+            <a href="https://jmp.sh/8igm3di1" target="_blank">Unit 01</a>,
+            <a href="https://jmp.sh/LRMvWglV" target="_blank">Unit 02</a>,
+            <a href="https://jmp.sh/Smn99sKK" target="_blank">Unit 03</a>,
+            <a href="https://jmp.sh/Aqxa3Wu9" target="_blank">Unit 04</a>
+          </li>
+          <li><strong>Operating Systems:</strong>
+            <a href="https://jmp.sh/W2XipOor" target="_blank">Unit 01</a>,
+            <a href="https://jmp.sh/mxs4gWOP" target="_blank">Unit 02</a>,
+            <a href="https://jmp.sh/ihF8t1bc" target="_blank">Unit 03</a>,
+            <a href="https://jmp.sh/jNLsNEYP" target="_blank">Unit 04</a>
+          </li>
+          <li><strong>Computer Networks:</strong>
+            <a href="https://github.com/7988Kunal/AI_ML/blob/main/CN-unit2.pdf" target="_blank">Unit 02</a>,
+            <a href="https://github.com/7988Kunal/AI_ML/blob/main/CN%20unit-3.pdf" target="_blank">Unit 03</a>,
+            <span style="color:#ea580c;font-size:.82rem;">Unit 04 — Upcoming soon…</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       PREVIOUS YEAR QUESTION PAPERS
+       ============================================================ -->
+  <section class="section">
+    <div class="card">
+      <h3 class="section-title">📄 Previous Year Question Papers (3rd Semester)</h3>
+      <div class="papers-grid">
+
+        <div class="paper-item">
+          <span class="paper-label">DBMS</span>
+          <a href="https://jmp.sh/RJTjG6iP" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">Python Programming</span>
+          <a href="https://jmp.sh/dyAeYklP" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">DSA</span>
+          <a href="https://jmp.sh/KPQeyu1d" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">OOPs</span>
+          <a href="https://jmp.sh/vEy5lpXS" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">AI — Paper 01</span>
+          <a href="https://jmp.sh/IXmywFi9" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">AI — Paper 02</span>
+          <a href="https://jmp.sh/HQf3kAWq" target="_blank">Previous Paper →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">Mathematics</span>
+          <a href="https://jmp.sh/HJtHNsYo" target="_blank">CSE-based (no Unit 4) →</a>
+        </div>
+
+        <div class="paper-item">
+          <span class="paper-label">All / Others</span>
+          <a href="https://drive.google.com/drive/folders/1IvuCkt0Y_nPFogK1P26wWuS6eSlvj19s" target="_blank">Google Drive →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ASSIGNMENTS
+       ============================================================ -->
+  <section class="section">
+    <h3 class="section-title">📝 Assignments</h3>
+    <div class="assignments-grid">
+
+      <!-- 3rd Semester -->
+      <div class="assignment-block">
+        <h4>3rd Semester</h4>
+        <ul>
+          <li>DBMS Assignment 01 – <strong>24 September 2025</strong></li>
+          <li>Python Assignment 01 – <strong>18 September 2025</strong></li>
+          <li>DSA Assignment 01 – <strong>October 2025</strong></li>
+          <li>OOPs Assignment 01 – <strong>27 October 2025</strong></li>
+          <li>AI Assignments 01 &amp; 02 – <strong>31 October 2025</strong></li>
+          <li>Python Assignment 02 – <strong>13 November 2025</strong></li>
+          <li>DBMS Assignment 02 – <strong>12 November 2025</strong></li>
+          <li>DSA Assignment 02 – <strong>28 November 2025</strong></li>
+        </ul>
+      </div>
+
+      <!-- 4th Semester -->
+      <div class="assignment-block">
+        <h4>4th Semester <span style="color:#16a34a;font-size:.78rem;">● Current</span></h4>
+        <ul>
+          <li>CN Assignment 01 LAB (Networks: types, advantages &amp; disadvantages) – <strong>10 Feb 2026</strong></li>
+          <li>CN Assignment 02 LAB (Transmission Media) – <strong>24 Feb 2026</strong></li>
+          <li>CN Assignment 03 LAB (Topology) – <strong>24 Feb 2026</strong></li>
+          <li>CN Assignment 01 – <strong>03 Mar 2026</strong></li>
+          <li>DAA Assignment 01 – <strong>10 Mar 2026</strong></li>
+          <li>DAA Practical File Part 1 – <strong>10 Mar 2026</strong></li>
+          <li>COA Assignment 01 – <strong>17 Mar 2026</strong></li>
+          <li>COA Assignment 02 – <strong>17 Mar 2026</strong></li>
+          <li>DAA Assignment 02 – <strong>31 Mar 2026</strong></li>
+          <li>Discrete Maths Assignment – <strong>8 Apr 2026</strong></li>
+          <li>DAA Practical File Part 2 (Final) – <strong>24 &amp; 27 Apr 2026</strong></li>
+          <li>DAA Assignment 03 – <strong>21 Apr 2026</strong></li>
+          <li>COA Assignment 03 – <strong>25 Apr 2026</strong></li>
+          <li>COA Assignment 04 – <strong>25 Apr 2026</strong></li>
+          <li>ML Assignment – <strong>24 Apr 2026</strong></li>
+        </ul>
+      </div>
 
     </div>
-  </div>
+  </section>
 
-  <!-- 3rd Sem Notes -->
-  <div class="card accordion open">
-    <div class="accordion-header">
-      <span>📂 3rd Semester Notes</span><span>▾</span>
+
+  <!-- ============================================================
+       IMPORTANT LINKS
+       ============================================================ -->
+  <section class="section">
+    <div class="card">
+      <h3 class="section-title">🔗 Important Links</h3>
+      <div class="links-grid">
+        <a class="link-btn" href="https://mdu.ac.in/" target="_blank">MDU Rohtak</a>
+        <a class="link-btn" href="https://mdu.samarth.edu.in/" target="_blank">Samarth Portal</a>
+        <a class="link-btn" href="https://student.mdu.ac.in/" target="_blank">Student Portal</a>
+        <a class="link-btn" href="https://result.mdu.ac.in/postexam/result.aspx" target="_blank">Results</a>
+      </div>
     </div>
-    <div class="accordion-body">
-      <ul>
-        <li><strong>DBMS:</strong>
-          <a href="https://jmp.sh/4ozvFbEz" target="_blank">Unit 1 & 2</a>,
-          <a href="https://jmp.sh/65EXHNK1" target="_blank">Unit 3</a>,
-          <a href="https://jmp.sh/DJ43Ov4L" target="_blank">Unit 4</a>
-        </li>
+  </section>
 
-        <li><strong>DSA:</strong>
-          <a href="https://jmp.sh/D7YRvWaj" target="_blank">Unit 1</a>,
-          <a href="https://jmp.sh/rdSm11nR" target="_blank">Unit 2</a>,
-          <a href="https://jmp.sh/ELb5lBz8" target="_blank">Unit 3</a>,
-          <a href="https://jmp.sh/zDsri1ch" target="_blank">Unit 4</a>
-        </li>
 
-        <li><strong>AI:</strong>
-          <a href="https://jmp.sh/OtZ7TjgD" target="_blank">Unit 1</a>,
-          <a href="https://jmp.sh/S6bEkl4E" target="_blank">Unit 2</a>,
-          <a href="https://jmp.sh/o2blTHgx" target="_blank">Unit 3</a>,
-          <a href="https://jmp.sh/Ft0jVc9k" target="_blank">Unit 4</a>,
-          <a href="https://jmp.sh/67uBwQQ1" target="_blank">Expert System</a>
-        </li>
+  <footer>
+    © 2026 &nbsp;|&nbsp; CSE–AIML Second Year Dashboard
+  </footer>
 
-        <li><strong>Python / ML:</strong>
-          <a href="https://jmp.sh/z3dmjtZg" target="_blank">Complete Notes</a>
-        </li>
+</div><!-- /.site -->
 
-        <li><strong>Mathematics:</strong>
-          <a href="https://jmp.sh/xTpKabon" target="_blank">Unit 1</a>,
-          <a href="https://jmp.sh/9bgBMUFP" target="_blank">Unit 2</a>,
-          <a href="https://jmp.sh/lNEhsiEg" target="_blank">Unit 3</a>,
-          <a href="https://jmp.sh/DH9Gc0ol" target="_blank">Unit 4</a>
-        </li>
 
-        <li><strong>OOP in C++:</strong>
-          <a href="https://jmp.sh/CkXcOPYn" target="_blank">Complete Notes</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4th Sem Notes -->
-  <div class="card accordion open">
-    <div class="accordion-header">
-      <span>📂 4th Semester Notes <strong style="color:red;"> New !</strong></span><span>▾</span>
-    </div>
-    <div class="accordion-body">
-      <ul>
-        <li><strong>Discrete Mathematics:</strong>  
-           <a href="https://jmp.sh/XOUP3QDc" target="_blank">Unit 01</a> ,
-           <a href="https://jmp.sh/dBIpT1oB" target="_blank">Unit 02</a> ,
-           <a href="https://jmp.sh/Pc0BH35K" target="_blank">Unit 03</a> ,
-           <a href="https://jmp.sh/9csGSWkV" target="_blank">Unit 04</a> 
-        </li>
-        <li><strong>Machine Learning:</strong>  
-          <a href="https://jmp.sh/uSNycsdK" target="_blank">Unit 01</a> ,
-          <a href="https://jmp.sh/bDx8NP2E" target="_blank">Unit 02</a> ,
-          <a href="https://jmp.sh/mwkD3XeV" target="_blank">Unit 03</a> ,
-          <a href="https://jmp.sh/IuAjWj2X" target="_blank">Unit 04</a>
-        </li>
-        <li><strong>Design & Algorithms Analysis (DAA):</strong>  
-          <a href="https://jmp.sh/8igm3di1" target="_blank">Unit 01</a> ,
-          <a href="https://jmp.sh/LRMvWglV" target="_blank">Unit 02</a> ,
-          <a href="https://jmp.sh/Smn99sKK" target="_blank">Unit 03</a> , 
-          <a href="https://jmp.sh/Aqxa3Wu9" target="_blank">Unit 04</a> 
-          
-        </li>
-        <li><strong>Operating Systems:</strong>  
-          <a href="https://jmp.sh/W2XipOor" target="_blank">Unit 01</a>  ,
-          <a href="https://jmp.sh/mxs4gWOP" target="_blank">Unit 02</a>  ,
-          <a href="https://jmp.sh/ihF8t1bc" target="_blank">Unit 03</a>  , 
-          <a href="https://jmp.sh/jNLsNEYP" target="_blank">Unit 04</a>  
-        </li>
-        <li><strong>Computer Networks:</strong>
-          <a href="https://github.com/7988Kunal/AI_ML/blob/main/CN-unit2.pdf" target="_blank">Unit 02</a>  ,
-          <a href="https://github.com/7988Kunal/AI_ML/blob/main/CN%20unit-3.pdf" target="_blank">Unit 03</a>  , 
-          <a href="#" target="_blank">Unit 04 <span style="color:red;"> Upcoming soon..</span></a>  
-        </li>  
-      </ul>
-    </div>
-  </div>
-
-</section>
-
-<!-- Previous Year Question Papers -->
-<section class="section">
-  <div class="card">
-    <h3>📄 Previous Year Question Papers (3rd Semester)</h3>
-    <ul>
-      <li>DBMS <strong><a href="https://jmp.sh/RJTjG6iP">Previous Question paper</a></strong></li>
-      <li>Python Programming <strong><a href="https://jmp.sh/dyAeYklP">Previous Question Paper</a></strong></li>
-      <li>DSA <strong><a href="https://jmp.sh/KPQeyu1d"> Previous Question Paper</a></strong></li> 
-      <li>OOPs <strong><a href="https://jmp.sh/vEy5lpXS"> Previous question paper</a></strong></li> 
-      <li>AI 01 <strong><a href="https://jmp.sh/IXmywFi9"> Previous question 01</a></strong></strong></li> 
-      <li>AI 02 <strong><a href="https://jmp.sh/HQf3kAWq"> Previous question 02</a></strong></strong></li> 
-      <li>Maths <strong><a href="https://jmp.sh/HJtHNsYo"> Previous Question paper CSE Based Not Containing Unit-4</a></strong></li> 
-      <li>Common ALL <strong><a href="https://drive.google.com/drive/folders/1IvuCkt0Y_nPFogK1P26wWuS6eSlvj19s">Others Links</a></strong></li>
-    </ul>
-  </div>
-</section>
-
-<!-- Assignments -->
-<section id="assignments">
-  <h3>📝 Assignments</h3>
-
-  <div class="semester-block">
-    <h4>3rd Semester</h4>
-    <ul>
-      <li>DBMS Assignment 01 – <strong>24 September 2025</strong></li>
-      <li>Python Assignment 01 – <strong>18 September 2025</strong></li>
-      <li>DSA Assignment 01 – <strong>October 2025</strong></li>
-      <li>OOPs Assignment 01 – <strong>27 October 2025</strong></li>
-      <li>AI Assignment 01 & 02 – <strong>31 October 2025</strong></li>
-      <li>Python Assignment 02 – <strong>13 November 2025</strong></li>
-      <li>DBMS Assignment 02 – <strong>12 November 2025</strong></li>
-      <li>DSA Assignment 02 – <strong>28 November 2025</strong></li>
-    </ul>
-  </div>
-
-  <div class="semester-block">
-    <h4>4th Semester</h4>
-    <!--<strong style="color:red;">No Assignment alloted!</strong>-->
-    <ul>
-      <li>CN Assignment 01 LAB ( What is networks? Types,advantages & disadvantages ) – <strong>10 February 2026</strong></li>
-      <li>CN Assignment 02 LAB ( Transmission Media ) – <strong>24 February 2026</strong></li>
-      <li>CN Assignment 03 LAB ( Topology ) – <strong>24 February 2026</strong></li>
-      <li>CN Assignment 01  – <strong>03 March 2026</strong></li>
-      <li>DAA Assignment 01  – <strong>10 March  2026</strong></li>
-      <li>DAA Practical File part1 – <strong>10 March  2026</strong></li>
-      <li>COA Assignment 01  – <strong>17 March  2026</strong></li>
-      <li>COA Assignment 02 – <strong>17 March  2026</strong></li>
-      <li>DAA Assignment 02 – <strong>31 March  2026</strong></li>
-      <li>Dis.Maths Assignment – <strong>8 April  2026</strong></li>
-      <li>DAA Practical File part-2 Final – <strong>24 & 27 April  2026</strong></li>
-      <li>DAA Assignment 03 – <strong>21 April  2026</strong></li>
-      <li>COA Assignment 03  – <strong>25 April  2026</strong></li>
-      <li>COA Assignment 04 – <strong>25 April  2026</strong></li>
-      <li>ML Assignment – <strong>24 April  2026</strong></li>  
-    </ul>
-  </div>
-</section>
-
-<!-- Important Links -->
-<section class="section">
-  <div class="helpful-links">
-    <a href="https://mdu.ac.in/" target="_blank">MDU Rohtak</a>
-    <a href="https://mdu.samarth.edu.in/" target="_blank">Samarth Portal</a>
-    <a href="https://student.mdu.ac.in/" target="_blank">Student Portal</a>
-    <a href="https://result.mdu.ac.in/postexam/result.aspx" target="_blank">Results</a>
-  </div>
-</section>
-
-<footer>
-  © 2026 | CSE–AIML Second Year Dashboard
-</footer>
-
-</div>
-
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
 <script>
-document.getElementById("toggleNotices").onclick=()=>{
-  const n=document.getElementById("notices");
-  n.style.display=n.style.display==="none"?"block":"none";
+
+/* -------- Toggle Notices -------- */
+document.getElementById('toggleNotices').onclick = () => {
+  const s = document.getElementById('noticesSection');
+  s.style.display = s.style.display === 'none' ? 'block' : 'none';
 };
 
-document.querySelectorAll(".accordion-header").forEach(h=>{
-  h.onclick=()=>h.parentElement.classList.toggle("open");
-});
-</script>
-<script>
 
-// ====== SET YOUR EXAM DATES HERE ======
-// Format: "YYYY-MM-DD"
-// If date = 0 → No schedule
-
+/* -------- Exam Schedule Data -------- */
+// Format: date = "YYYY-MM-DD" | set date = "0" if not yet announced
 const exams = [
-    {id:1, code:"PCC-CSE-202G", name:"Discrete Mathematics", date:"2026-05-19"},
-    {id:2, code:"PCC-CSE-204G", name:"Computer Organization & Architecture", date:"2026-05-26"},
-    {id:3, code:"PCC-CSE-206G", name:"Operating System", date:"2026-05-30"},
-    {id:4, code:"PCC-AIML-241G", name:"Introduction to Machine Learning", date:"2026-05-21"},
-    {id:5, code:"PCC-CSE-307G", name:"Design & Analysis of Algorithms", date:"2026-05-23"},
-    {id:6, code:"LC-CSE-325G", name:"DAA Using C++ Lab", date:"2026-05-04"},
-    {id:7, code:"LC-CSE-212G", name:"Operating System Lab", date:"2026-05-06"},
-    {id:8, code:"LC-AIML-281G", name:"ML Lab", date:"2026-05-01"},
-    {id:9, code:"LC-CSE-323G", name:"Computer Networks Lab", date:"2026-05-05"},
-    {id:10, code:"HS-150G", name:"Design Thinking", date:"2026-05-01"},
-    {id:11, code:"PCC-CSE-303G", name:"Computer Networks", date:"2026-06-09"},
-    {id:12, code:"MC-UHV-II", name:"Universal human values-II: Understanding Harmony.", date:"2026-06-11"}
+  { id: 1,  code: "PCC-CSE-202G",    name: "Discrete Mathematics",                                    date: "2026-05-19", time: "2:00 PM – 5:00 PM"   },
+  { id: 2,  code: "PCC-CSE-204G",    name: "Computer Organization &amp; Architecture",                date: "2026-05-26", time: "9:30 AM – 12:30 PM"  },
+  { id: 3,  code: "PCC-CSE-206G",    name: "Operating System",                                        date: "2026-05-30", time: "2:00 PM – 5:00 PM"   },
+  { id: 4,  code: "PCC-AIML-241G",   name: "Introduction to Machine Learning",                        date: "2026-05-21", time: "2:00 PM – 5:00 PM"   },
+  { id: 5,  code: "PCC-CSE-307G",    name: "Design &amp; Analysis of Algorithms",                     date: "2026-05-23", time: "2:00 PM – 5:00 PM"   },
+  { id: 6,  code: "LC-CSE-325G",     name: "DAA Using C++ Lab",                                       date: "2026-05-04", time: "Practical"             },
+  { id: 7,  code: "LC-CSE-212G",     name: "Operating System Lab",                                    date: "2026-05-06", time: "Practical"             },
+  { id: 8,  code: "LC-AIML-281G",    name: "ML Lab",                                                  date: "2026-05-01", time: "Practical"             },
+  { id: 9,  code: "LC-CSE-323G",     name: "Computer Networks Lab",                                   date: "2026-05-05", time: "Practical"             },
+  { id: 10, code: "HS-150G",         name: "Design Thinking",                                         date: "2026-05-01", time: "Practical"             },
+  { id: 11, code: "PCC-CSE-303G",    name: "Computer Networks",                                       date: "2026-06-09", time: "9:30 AM – 12:30 PM"  },
+  { id: 12, code: "MC-UHV-II",       name: "Universal Human Values – II: Understanding Harmony",      date: "2026-06-11", time: "2:00 PM – 5:00 PM"   }
 ];
 
-const today = new Date();
-today.setHours(0,0,0,0);
-
-const tomorrow = new Date(today);
-tomorrow.setDate(today.getDate() + 1);
+/* -------- Helpers -------- */
+const today    = (() => { const d = new Date(); d.setHours(0,0,0,0); return d; })();
+const tomorrow = (() => { const d = new Date(today); d.setDate(d.getDate()+1); return d; })();
 
 function getStatus(dateStr) {
-    if(dateStr === "0") return "noschedule";
-
-    const examDate = new Date(dateStr);
-    examDate.setHours(0,0,0,0);
-
-    if (examDate.getTime() === today.getTime()) return "today";
-    if (examDate.getTime() === tomorrow.getTime()) return "tomorrow";
-    if (examDate > today) return "coming";
-    return "completed";
+  if (dateStr === "0") return "noschedule";
+  const d = new Date(dateStr);
+  d.setHours(0,0,0,0);
+  if (d.getTime() === today.getTime())    return "today";
+  if (d.getTime() === tomorrow.getTime()) return "tomorrow";
+  if (d > today)                          return "coming";
+  return "completed";
 }
 
-function getStatusText(status) {
-    return {
-        today: "Today",
-        tomorrow: "Tomorrow",
-        coming: "Upcoming",
-        completed: "Completed",
-        noschedule: "Not Announced"
-    }[status];
+function statusLabel(s) {
+  return { today: "📌 Today!", tomorrow: "⏰ Tomorrow", coming: "🗓 Upcoming", completed: "✅ Completed", noschedule: "❓ Not Announced" }[s];
 }
 
-const container = document.getElementById("schedule");
+function formatDate(dateStr) {
+  if (dateStr === "0") return "TBA";
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+}
 
-exams.forEach(exam => {
-    const status = getStatus(exam.date);
+/* -------- Render Schedule -------- */
+function renderSchedule() {
+  const container = document.getElementById('schedule');
 
-    const div = document.createElement("div");
-    div.className = "card " + status;
+  // Sort by date (noschedule last, completed last-ish)
+  const order   = { today:0, tomorrow:1, coming:2, noschedule:3, completed:4 };
+  const sorted  = [...exams].map(e => ({ ...e, status: getStatus(e.date) }))
+                            .sort((a, b) => {
+                              if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
+                              return new Date(a.date === "0" ? "9999" : a.date) - new Date(b.date === "0" ? "9999" : b.date);
+                            });
 
-    div.innerHTML = `
-        <div class="subject">${exam.name}</div>
-        <div class="code">${exam.code}</div>
-        <div class="date">
-            ${exam.date === "0" ? "Date: Not Available" : "Date: " + exam.date}
-        </div>
-        <div class="status">Status: ${getStatusText(status)}</div>
-    `;
+  // Group labels
+  const groupMap = { today:"🔴 Today's Exam", tomorrow:"🟠 Tomorrow", coming:"🟢 Upcoming Exams", completed:"⬜ Completed", noschedule:"❓ Not Yet Announced" };
+  let lastGroup  = null;
+  let html       = '';
 
-    container.appendChild(div);
-});
+  sorted.forEach(ex => {
+    if (ex.status !== lastGroup) {
+      html += `<div class="schedule-group-title">${groupMap[ex.status]}</div>`;
+      lastGroup = ex.status;
+    }
+    html += `
+      <div class="exam-card ${ex.status}">
+        <div class="exam-name">${ex.name}</div>
+        <div class="exam-code">${ex.code}</div>
+        <div class="exam-date">📅 ${formatDate(ex.date)} &nbsp;|&nbsp; 🕑 ${ex.time}</div>
+        <div class="exam-status">${statusLabel(ex.status)}</div>
+      </div>`;
+  });
 
-      </script>
+  container.innerHTML = html;
+}
+
+renderSchedule();
+
+</script>
 </body>
 </html>
