@@ -798,8 +798,66 @@ footer {
       </div>
     </div>
   </section>
+  <div class="vx-update-wrapper">
+  <p class="vx-update-text">
+    Last Updated:
+    <span id="vx-last-updated"></span>
+  </p>
+</div>
 
+<style>
+  .vx-update-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 12px;
+    box-sizing: border-box;
+  }
 
+  .vx-update-text {
+    margin: 0;
+    padding: 12px 22px;
+    font-size: clamp(14px, 2vw, 18px);
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    color: #222;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    width: fit-content;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  #vx-last-updated {
+    color: #000;
+  }
+
+  @media (max-width: 480px) {
+    .vx-update-text {
+      width: 100%;
+      padding: 10px 14px;
+    }
+  }
+</style>
+
+<script>
+  const vxLastUpdated = document.lastModified;
+
+  const vxDate = new Date(vxLastUpdated);
+
+  const vxOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  };
+
+  document.getElementById("vx-last-updated").innerHTML =
+    vxDate.toLocaleDateString('en-GB', vxOptions);
+</script>
   <footer>
     © 2026 &nbsp;|&nbsp; CSE–AIML Second Year Dashboard
   </footer>
