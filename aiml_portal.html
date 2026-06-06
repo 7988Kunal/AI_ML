@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSE-AIML Academic Portal | 3rd Year</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #050b14;
+    --surface: #0d1b2a;
+    --surface2: #112233;
+    --border: #1e3a5f;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --text: #e2eaf4;
+    --text-dim: #7a9bb5;
+    --text-muted: #405570;
+    --glow: 0 0 20px rgba(0,212,255,0.15);
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .4;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,11,20,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; gap: 1.5rem;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: .75rem;
+    text-decoration: none; flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 14px; color: #fff;
+    box-shadow: 0 0 16px rgba(124,58,237,.4);
+  }
+
+  .logo-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; line-height: 1.2; }
+  .logo-text span { display: block; color: var(--accent); font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+
+  nav { display: flex; align-items: center; gap: .25rem; }
+
+  nav a {
+    color: var(--text-dim); text-decoration: none;
+    padding: .45rem .85rem; border-radius: 8px;
+    font-size: .88rem; font-weight: 500;
+    transition: all .2s; white-space: nowrap;
+    border: 1px solid transparent;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--accent);
+    background: rgba(0,212,255,.06);
+    border-color: rgba(0,212,255,.15);
+  }
+
+  .header-badge {
+    background: linear-gradient(135deg,var(--accent2),var(--accent));
+    color: #fff; font-size: .72rem; font-weight: 700;
+    padding: .2rem .65rem; border-radius: 20px;
+    letter-spacing: .05em; flex-shrink: 0;
+  }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 6px; background: none; border: none;
+  }
+
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--text); border-radius: 2px;
+    transition: all .3s;
+  }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 4rem 2rem 3.5rem;
+    background: linear-gradient(160deg, #0d1b2a 0%, #050b14 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none;
+  }
+
+  .orb1 { width: 400px; height: 400px; top: -100px; right: -80px; background: rgba(124,58,237,.2); }
+  .orb2 { width: 300px; height: 300px; bottom: -60px; left: 10%; background: rgba(0,212,255,.12); }
+
+  .hero-content { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(0,212,255,.08); border: 1px solid rgba(0,212,255,.2);
+    color: var(--accent); font-size: .78rem; font-weight: 600;
+    padding: .35rem .9rem; border-radius: 20px; letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 1.25rem;
+  }
+
+  .hero-tag::before { content: '●'; font-size: .5rem; animation: blink 2s infinite; }
+
+  @keyframes blink { 0%,100% { opacity:1 } 50% { opacity:.3 } }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 em { font-style: normal; color: var(--accent); }
+
+  .hero p { color: var(--text-dim); max-width: 560px; font-size: 1rem; margin-bottom: 2rem; }
+
+  .hero-stats {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--accent); }
+  .stat-lbl { font-size: .78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── QUICK NAV PILLS ── */
+  .quicknav {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: .85rem 2rem; overflow-x: auto;
+  }
+
+  .quicknav-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; gap: .6rem; align-items: center;
+  }
+
+  .qpill {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem 1rem; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text-dim); font-size: .82rem; font-weight: 500;
+    text-decoration: none; white-space: nowrap;
+    transition: all .2s; cursor: pointer;
+  }
+
+  .qpill:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,255,.05); }
+  .qpill .icon { font-size: 1rem; }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1280px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  /* ── SECTION BLOCK ── */
+  .section {
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: var(--card-shadow);
+    background: var(--surface);
+  }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 1.5rem;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+    transition: background .2s;
+  }
+
+  .section-header:hover { background: rgba(30,58,95,.5); }
+
+  .section-title {
+    display: flex; align-items: center; gap: .75rem;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .section-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: grid; place-items: center; font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .icon-news    { background: rgba(239,68,68,.15); }
+  .icon-exam    { background: rgba(245,158,11,.15); }
+  .icon-syl     { background: rgba(16,185,129,.15); }
+  .icon-sem     { background: rgba(0,212,255,.15); }
+  .icon-notes   { background: rgba(124,58,237,.15); }
+  .icon-assign  { background: rgba(244,114,182,.15); }
+  .icon-res     { background: rgba(99,102,241,.15); }
+  .icon-timetable { background: rgba(34,211,238,.15); }
+
+  .section-meta { display: flex; align-items: center; gap: .75rem; }
+
+  .badge {
+    font-size: .7rem; font-weight: 700;
+    padding: .2rem .55rem; border-radius: 12px;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+
+  .badge-red    { background: rgba(239,68,68,.15);  color: #ef4444; border: 1px solid rgba(239,68,68,.25); }
+  .badge-amber  { background: rgba(245,158,11,.15); color: #f59e0b; border: 1px solid rgba(245,158,11,.25); }
+  .badge-green  { background: rgba(16,185,129,.15); color: #10b981; border: 1px solid rgba(16,185,129,.25); }
+  .badge-blue   { background: rgba(0,212,255,.12);  color: #00d4ff; border: 1px solid rgba(0,212,255,.25); }
+  .badge-purple { background: rgba(124,58,237,.15); color: #a855f7; border: 1px solid rgba(124,58,237,.25); }
+
+  .chevron {
+    width: 24px; height: 24px; display: grid; place-items: center;
+    color: var(--text-muted); transition: transform .3s;
+    font-size: 1.1rem;
+  }
+
+  .section.open .chevron { transform: rotate(180deg); }
+
+  .section-body {
+    display: none; padding: 1.5rem;
+    animation: slideDown .25s ease;
+  }
+
+  @keyframes slideDown { from { opacity:0; transform: translateY(-8px); } to { opacity:1; transform: translateY(0); } }
+
+  .section.open .section-body { display: block; }
+
+  /* ── NEWS ── */
+  .news-list { display: flex; flex-direction: column; gap: .85rem; }
+
+  .news-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem 1.2rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; transition: border-color .2s;
+  }
+
+  .news-item:hover { border-color: var(--accent); }
+
+  .news-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+
+  .news-content { flex: 1; }
+  .news-content h4 { font-weight: 600; font-size: .95rem; margin-bottom: .2rem; }
+  .news-content p  { color: var(--text-dim); font-size: .84rem; }
+  .news-date { font-size: .76rem; color: var(--text-muted); white-space: nowrap; margin-top: 3px; }
+
+  /* ── EXAM TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+
+  thead { background: var(--surface2); }
+
+  th {
+    padding: .8rem 1.1rem; text-align: left;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .78rem; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--text-dim); border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: .85rem 1.1rem; border-bottom: 1px solid rgba(30,58,95,.5);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(0,212,255,.03); }
+  .td-subject { font-weight: 500; }
+  .td-code { color: var(--accent); font-family: monospace; font-size: .85rem; }
+
+  /* ── SYLLABUS ── */
+  .syl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1rem; }
+
+  .syl-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.2rem;
+    transition: all .25s;
+  }
+
+  .syl-card:hover { border-color: var(--accent3); box-shadow: 0 0 16px rgba(16,185,129,.08); transform: translateY(-2px); }
+
+  .syl-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: .25rem; }
+  .syl-card .code { font-family: monospace; color: var(--accent3); font-size: .8rem; margin-bottom: .6rem; }
+
+  .unit-list { list-style: none; display: flex; flex-direction: column; gap: .3rem; }
+
+  .unit-list li {
+    font-size: .82rem; color: var(--text-dim);
+    padding: .25rem .5rem; background: rgba(16,185,129,.05);
+    border-left: 2px solid var(--accent3); border-radius: 0 6px 6px 0;
+  }
+
+  .syl-footer { display: flex; align-items: center; justify-content: space-between; margin-top: .85rem; }
+  .credits { font-size: .78rem; color: var(--text-muted); }
+
+  /* ── SEM DETAILS ── */
+  .sem-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1rem; }
+
+  .sem-stat-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.2rem 1.4rem;
+    display: flex; flex-direction: column; gap: .3rem;
+  }
+
+  .sem-stat-card .lbl { font-size: .76rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+  .sem-stat-card .val { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--accent); }
+  .sem-stat-card .sub { font-size: .82rem; color: var(--text-dim); }
+
+  .sem-subjects { margin-top: 1.5rem; }
+
+  .sem-subjects h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: 1rem; color: var(--text-dim); }
+
+  .subject-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .7rem 1rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: .5rem;
+    transition: border-color .2s;
+  }
+
+  .subject-row:hover { border-color: var(--accent2); }
+  .subject-row .name { font-weight: 500; font-size: .9rem; }
+  .subject-row .info { display: flex; gap: .75rem; align-items: center; }
+  .subject-row .cr { font-size: .8rem; color: var(--text-muted); }
+
+  /* ── NOTES ── */
+  .notes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; }
+
+  .note-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.2rem;
+    transition: all .25s; cursor: pointer;
+  }
+
+  .note-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(124,58,237,.12); }
+
+  .note-icon { font-size: 2rem; margin-bottom: .6rem; }
+  .note-card h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .92rem; margin-bottom: .3rem; }
+  .note-card .unit { font-size: .8rem; color: var(--text-muted); margin-bottom: .6rem; }
+  .note-footer { display: flex; align-items: center; justify-content: space-between; }
+  .note-size { font-size: .75rem; color: var(--text-muted); }
+
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: .3rem;
+    font-size: .78rem; font-weight: 600;
+    padding: .3rem .75rem; border-radius: 8px;
+    border: 1px solid var(--accent2); color: var(--accent2);
+    background: rgba(124,58,237,.08); cursor: pointer;
+    text-decoration: none; transition: all .2s;
+  }
+
+  .btn-dl:hover { background: var(--accent2); color: #fff; }
+
+  /* ── ASSIGNMENTS ── */
+  .assign-list { display: flex; flex-direction: column; gap: .85rem; }
+
+  .assign-card {
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 1rem; align-items: center;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    transition: border-color .2s;
+  }
+
+  .assign-card:hover { border-color: var(--warn); }
+
+  .assign-num {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: .9rem;
+    background: rgba(245,158,11,.1); color: var(--warn);
+    border: 1px solid rgba(245,158,11,.2); flex-shrink: 0;
+  }
+
+  .assign-info h4 { font-weight: 600; font-size: .93rem; margin-bottom: .2rem; }
+  .assign-info p  { font-size: .82rem; color: var(--text-dim); }
+
+  .assign-due { text-align: right; }
+  .due-label { font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+  .due-date  { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .88rem; }
+  .due-urgent { color: var(--danger); }
+  .due-ok     { color: var(--accent3); }
+  .due-near   { color: var(--warn); }
+
+  /* ── RESOURCES ── */
+  .res-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1rem; }
+
+  .res-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.1rem;
+    text-align: center; transition: all .25s; cursor: pointer;
+  }
+
+  .res-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .res-card .ri { font-size: 2.2rem; margin-bottom: .5rem; }
+  .res-card h4 { font-weight: 600; font-size: .9rem; }
+  .res-card p  { font-size: .8rem; color: var(--text-muted); margin-top: .2rem; }
+
+  /* ── TIMETABLE ── */
+  .tt-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(6, 1fr);
+    gap: 4px; font-size: .8rem;
+  }
+
+  .tt-head {
+    background: var(--surface2); color: var(--text-dim);
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+    padding: .5rem .4rem; border-radius: 6px; text-align: center;
+  }
+
+  .tt-time {
+    color: var(--text-muted); font-size: .76rem;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: .5rem; font-family: monospace;
+  }
+
+  .tt-cell {
+    padding: .5rem .4rem; border-radius: 8px; text-align: center;
+    border: 1px solid var(--border); background: var(--surface2);
+    min-height: 56px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px;
+  }
+
+  .tt-cell.empty { background: transparent; border-color: transparent; }
+  .tt-cell .sub  { font-weight: 600; font-size: .78rem; line-height: 1.2; }
+  .tt-cell .room { font-size: .7rem; color: var(--text-muted); }
+
+  .tt-ml   { background: rgba(0,212,255,.08);   border-color: rgba(0,212,255,.2); }
+  .tt-dl   { background: rgba(124,58,237,.08);  border-color: rgba(124,58,237,.2); }
+  .tt-cv   { background: rgba(16,185,129,.08);  border-color: rgba(16,185,129,.2); }
+  .tt-nlp  { background: rgba(245,158,11,.08);  border-color: rgba(245,158,11,.2); }
+  .tt-ds   { background: rgba(239,68,68,.08);   border-color: rgba(239,68,68,.2); }
+  .tt-lab  { background: rgba(99,102,241,.08);  border-color: rgba(99,102,241,.2); }
+  .tt-free { background: rgba(30,58,95,.2);     border-color: rgba(30,58,95,.3); }
+
+  /* ── PROGRESS BARS ── */
+  .progress-list { display: flex; flex-direction: column; gap: .85rem; }
+
+  .prog-item .prog-top { display: flex; justify-content: space-between; font-size: .84rem; margin-bottom: .35rem; }
+  .prog-bar { height: 6px; background: var(--surface2); border-radius: 10px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 10px; transition: width 1s ease; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+  }
+
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.1rem; margin-bottom: .5rem;
+  }
+
+  .footer-brand p { font-size: .84rem; color: var(--text-muted); max-width: 300px; line-height: 1.7; }
+
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .82rem; text-transform: uppercase; letter-spacing: .07em;
+    color: var(--text-dim); margin-bottom: .75rem;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
+  .footer-col ul li a { color: var(--text-muted); text-decoration: none; font-size: .84rem; transition: color .2s; }
+  .footer-col ul li a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: 1280px; margin: 1.5rem auto 0;
+    padding-top: 1.2rem; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: .5rem;
+  }
+
+  .footer-bottom p { font-size: .8rem; color: var(--text-muted); }
+  .footer-bottom strong { color: var(--accent); }
+
+  .footer-bottom .updated {
+    display: flex; align-items: center; gap: .4rem;
+    font-size: .78rem; color: var(--text-muted);
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: .3rem .75rem; border-radius: 20px;
+  }
+
+  .footer-bottom .updated::before { content: '🕐'; font-size: .75rem; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    nav.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: .75rem 1.5rem; z-index: 99; }
+    .hamburger { display: flex; }
+    .header-badge { display: none; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .tt-grid { font-size: .7rem; }
+    .sem-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HEADER ══════════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">AI</div>
+      <div class="logo-text">
+        CSE–AIML
+        <span>Academic Portal · 3rd Year</span>
+      </div>
+    </a>
+
+    <nav id="nav">
+      <a href="#news"      class="active" onclick="scrollTo('#news')">News</a>
+      <a href="#exams"     onclick="scrollTo('#exams')">Exams</a>
+      <a href="#syllabus"  onclick="scrollTo('#syllabus')">Syllabus</a>
+      <a href="#semester"  onclick="scrollTo('#semester')">Semester</a>
+      <a href="#notes"     onclick="scrollTo('#notes')">Notes</a>
+      <a href="#assignments" onclick="scrollTo('#assignments')">Assignments</a>
+      <a href="#timetable" onclick="scrollTo('#timetable')">Timetable</a>
+      <a href="#resources" onclick="scrollTo('#resources')">Resources</a>
+    </nav>
+
+    <div class="header-badge">Sem V · 2025–26</div>
+
+    <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════ HERO ══════════════════════════════ -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">B.Tech CSE &nbsp;|&nbsp; Artificial Intelligence &amp; Machine Learning</div>
+    <h1>Your <em>Academic Hub</em><br/>Third Year · Semester V</h1>
+    <p>All your study materials, exam schedules, assignments, and announcements — organised in one intelligent portal.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">6</span><span class="stat-lbl">Subjects</span></div>
+      <div class="stat"><span class="stat-num">24</span><span class="stat-lbl">Credits</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-lbl">Labs</span></div>
+      <div class="stat"><span class="stat-num">5</span><span class="stat-lbl">Assignments Due</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ QUICK NAV ══════════════════════════════ -->
+<div class="quicknav">
+  <div class="quicknav-inner">
+    <a class="qpill" onclick="openSection('news')"><span class="icon">📰</span> News</a>
+    <a class="qpill" onclick="openSection('exams')"><span class="icon">📋</span> Exams</a>
+    <a class="qpill" onclick="openSection('syllabus')"><span class="icon">📚</span> Syllabus</a>
+    <a class="qpill" onclick="openSection('semester')"><span class="icon">🎓</span> Semester</a>
+    <a class="qpill" onclick="openSection('notes')"><span class="icon">📝</span> Notes</a>
+    <a class="qpill" onclick="openSection('assignments')"><span class="icon">📌</span> Assignments</a>
+    <a class="qpill" onclick="openSection('timetable')"><span class="icon">🗓️</span> Timetable</a>
+    <a class="qpill" onclick="openSection('resources')"><span class="icon">🔗</span> Resources</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ MAIN ══════════════════════════════ -->
+<main class="main">
+
+  <!-- ─── NEWS ─── -->
+  <div class="section open" id="news">
+    <div class="section-header" onclick="toggleSection('news')">
+      <div class="section-title">
+        <div class="section-icon icon-news">📰</div>
+        Announcements &amp; News
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-red">3 New</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="news-list">
+
+        <div class="news-item">
+          <div class="news-dot" style="background:#ef4444"></div>
+          <div class="news-content">
+            <h4>Mid-Semester Examinations Announced</h4>
+            <p>MSE for Semester V will be conducted from <strong>10 July – 18 July 2025</strong>. Timetable released on the college ERP. Hall tickets will be distributed 3 days prior.</p>
+          </div>
+          <div class="news-date">02 Jun 2025</div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-dot" style="background:#f59e0b"></div>
+          <div class="news-content">
+            <h4>ML Lab File Submission Extended</h4>
+            <p>Due to the lab re-assessment schedule, submission of ML Lab files has been extended to <strong>20 June 2025</strong>. Ensure all programs are documented.</p>
+          </div>
+          <div class="news-date">30 May 2025</div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-dot" style="background:#10b981"></div>
+          <div class="news-content">
+            <h4>Guest Lecture: Transformers &amp; LLM Architectures</h4>
+            <p>Industry expert from Google DeepMind will deliver a guest lecture on <strong>LLM fine-tuning techniques</strong> on 8 June 2025 at 10:00 AM in Seminar Hall.</p>
+          </div>
+          <div class="news-date">28 May 2025</div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-dot" style="background:#7c3aed"></div>
+          <div class="news-content">
+            <h4>Project Group Allocation – AI Mini Project</h4>
+            <p>Groups of 3–4 students to be finalised by 7 June 2025. Submit group form through class representative or directly on the department portal.</p>
+          </div>
+          <div class="news-date">25 May 2025</div>
+        </div>
+
+        <div class="news-item">
+          <div class="news-dot" style="background:#00d4ff"></div>
+          <div class="news-content">
+            <h4>Attendance Shortage Warning</h4>
+            <p>Students with attendance below 75% in any subject have been notified by the HOD. Medical certificates must be submitted before 10 June 2025.</p>
+          </div>
+          <div class="news-date">20 May 2025</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── EXAMS ─── -->
+  <div class="section" id="exams">
+    <div class="section-header" onclick="toggleSection('exams')">
+      <div class="section-title">
+        <div class="section-icon icon-exam">📋</div>
+        Examination Schedule
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-amber">MSE · Jul 2025</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--text-dim);margin-bottom:1rem;">📅 Mid-Semester Examination (MSE) — Semester V</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Day</th><th>Code</th><th>Subject</th><th>Time</th><th>Venue</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10 Jul 2025</td><td>Thu</td>
+              <td class="td-code">CSAI501</td>
+              <td class="td-subject">Machine Learning</td>
+              <td>10:00 – 12:00</td><td>Block A – 301</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>11 Jul 2025</td><td>Fri</td>
+              <td class="td-code">CSAI502</td>
+              <td class="td-subject">Deep Learning</td>
+              <td>10:00 – 12:00</td><td>Block A – 302</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>14 Jul 2025</td><td>Mon</td>
+              <td class="td-code">CSAI503</td>
+              <td class="td-subject">Computer Vision</td>
+              <td>10:00 – 12:00</td><td>Block B – 201</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>15 Jul 2025</td><td>Tue</td>
+              <td class="td-code">CSAI504</td>
+              <td class="td-subject">NLP &amp; Text Analytics</td>
+              <td>10:00 – 12:00</td><td>Block B – 202</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>17 Jul 2025</td><td>Thu</td>
+              <td class="td-code">CSAI505</td>
+              <td class="td-subject">Data Science &amp; Analytics</td>
+              <td>10:00 – 12:00</td><td>Block A – 303</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+            <tr>
+              <td>18 Jul 2025</td><td>Fri</td>
+              <td class="td-code">CSHS501</td>
+              <td class="td-subject">Humanities Elective (Ethics in AI)</td>
+              <td>10:00 – 11:30</td><td>Block C – 101</td>
+              <td><span class="badge badge-amber">Upcoming</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--text-dim);margin:1.5rem 0 1rem;">📊 Syllabus Coverage Progress</h3>
+      <div class="progress-list">
+        <div class="prog-item">
+          <div class="prog-top"><span>Machine Learning (CSAI501)</span><span style="color:var(--accent)">72%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:72%;background:var(--accent)"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>Deep Learning (CSAI502)</span><span style="color:var(--accent2)">60%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--accent2)"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>Computer Vision (CSAI503)</span><span style="color:var(--accent3)">55%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:55%;background:var(--accent3)"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>NLP &amp; Text Analytics (CSAI504)</span><span style="color:var(--warn)">48%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:48%;background:var(--warn)"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-top"><span>Data Science &amp; Analytics (CSAI505)</span><span style="color:var(--accent)">65%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:65%;background:var(--accent)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SYLLABUS ─── -->
+  <div class="section" id="syllabus">
+    <div class="section-header" onclick="toggleSection('syllabus')">
+      <div class="section-title">
+        <div class="section-icon icon-syl">📚</div>
+        Syllabus — Semester V
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-green">6 Subjects</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="syl-grid">
+
+        <div class="syl-card">
+          <h4>Machine Learning</h4>
+          <div class="code">CSAI501 · Theory</div>
+          <ul class="unit-list">
+            <li>Unit 1 · Introduction &amp; Regression Models</li>
+            <li>Unit 2 · Classification Algorithms</li>
+            <li>Unit 3 · Unsupervised Learning &amp; Clustering</li>
+            <li>Unit 4 · Ensemble Methods &amp; Boosting</li>
+            <li>Unit 5 · Model Evaluation &amp; Feature Engineering</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">4 Credits · 60 Hrs</span>
+            <span class="badge badge-green">Core</span>
+          </div>
+        </div>
+
+        <div class="syl-card">
+          <h4>Deep Learning</h4>
+          <div class="code">CSAI502 · Theory</div>
+          <ul class="unit-list">
+            <li>Unit 1 · Neural Networks &amp; Backpropagation</li>
+            <li>Unit 2 · Convolutional Neural Networks</li>
+            <li>Unit 3 · Recurrent Networks &amp; LSTM</li>
+            <li>Unit 4 · Generative Models (VAE, GAN)</li>
+            <li>Unit 5 · Transformers &amp; Attention Mechanism</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">4 Credits · 60 Hrs</span>
+            <span class="badge badge-green">Core</span>
+          </div>
+        </div>
+
+        <div class="syl-card">
+          <h4>Computer Vision</h4>
+          <div class="code">CSAI503 · Theory</div>
+          <ul class="unit-list">
+            <li>Unit 1 · Image Processing Fundamentals</li>
+            <li>Unit 2 · Feature Detection &amp; Matching</li>
+            <li>Unit 3 · Object Detection (YOLO, R-CNN)</li>
+            <li>Unit 4 · Image Segmentation</li>
+            <li>Unit 5 · 3D Vision &amp; Depth Estimation</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">4 Credits · 60 Hrs</span>
+            <span class="badge badge-green">Core</span>
+          </div>
+        </div>
+
+        <div class="syl-card">
+          <h4>NLP &amp; Text Analytics</h4>
+          <div class="code">CSAI504 · Theory</div>
+          <ul class="unit-list">
+            <li>Unit 1 · Text Preprocessing &amp; Representation</li>
+            <li>Unit 2 · Sequence Models &amp; Language Models</li>
+            <li>Unit 3 · Sentiment Analysis &amp; Classification</li>
+            <li>Unit 4 · Named Entity Recognition &amp; QA</li>
+            <li>Unit 5 · Transformers &amp; BERT/GPT</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">4 Credits · 60 Hrs</span>
+            <span class="badge badge-green">Core</span>
+          </div>
+        </div>
+
+        <div class="syl-card">
+          <h4>Data Science &amp; Analytics</h4>
+          <div class="code">CSAI505 · Theory</div>
+          <ul class="unit-list">
+            <li>Unit 1 · Data Wrangling &amp; EDA</li>
+            <li>Unit 2 · Statistical Inference &amp; Hypothesis Testing</li>
+            <li>Unit 3 · Time-Series Analysis</li>
+            <li>Unit 4 · Data Visualisation Techniques</li>
+            <li>Unit 5 · Big Data Tools (Spark, Hadoop)</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">4 Credits · 60 Hrs</span>
+            <span class="badge badge-green">Core</span>
+          </div>
+        </div>
+
+        <div class="syl-card">
+          <h4>Ethics in Artificial Intelligence</h4>
+          <div class="code">CSHS501 · Elective</div>
+          <ul class="unit-list">
+            <li>Unit 1 · AI Bias &amp; Fairness</li>
+            <li>Unit 2 · Privacy, Surveillance &amp; Law</li>
+            <li>Unit 3 · Accountability &amp; Transparency</li>
+            <li>Unit 4 · AI in Society &amp; Economy</li>
+            <li>Unit 5 · Future Risks &amp; Governance</li>
+          </ul>
+          <div class="syl-footer">
+            <span class="credits">2 Credits · 30 Hrs</span>
+            <span class="badge badge-blue">Elective</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SEMESTER DETAILS ─── -->
+  <div class="section" id="semester">
+    <div class="section-header" onclick="toggleSection('semester')">
+      <div class="section-title">
+        <div class="section-icon icon-sem">🎓</div>
+        Semester Details
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-blue">Sem V · Ongoing</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="sem-grid">
+        <div class="sem-stat-card">
+          <div class="lbl">Academic Year</div>
+          <div class="val">2025–26</div>
+          <div class="sub">Third Year · Sem V</div>
+        </div>
+        <div class="sem-stat-card">
+          <div class="lbl">Semester Start</div>
+          <div class="val">01 Jun</div>
+          <div class="sub">2025</div>
+        </div>
+        <div class="sem-stat-card">
+          <div class="lbl">Semester End</div>
+          <div class="val">30 Nov</div>
+          <div class="sub">2025</div>
+        </div>
+        <div class="sem-stat-card">
+          <div class="lbl">Total Credits</div>
+          <div class="val">24</div>
+          <div class="sub">Theory + Lab</div>
+        </div>
+        <div class="sem-stat-card">
+          <div class="lbl">Subjects</div>
+          <div class="val">6</div>
+          <div class="sub">5 Theory + 1 Elective</div>
+        </div>
+        <div class="sem-stat-card">
+          <div class="lbl">Lab Courses</div>
+          <div class="val">3</div>
+          <div class="sub">ML · CV · NLP Labs</div>
+        </div>
+      </div>
+
+      <div class="sem-subjects">
+        <h3>Subject–Credit Matrix</h3>
+        <div class="subject-row">
+          <span class="name">Machine Learning</span>
+          <div class="info">
+            <span class="badge badge-green">Theory</span>
+            <span class="cr">4 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">Deep Learning</span>
+          <div class="info">
+            <span class="badge badge-green">Theory</span>
+            <span class="cr">4 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">Computer Vision</span>
+          <div class="info">
+            <span class="badge badge-green">Theory</span>
+            <span class="cr">4 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">NLP &amp; Text Analytics</span>
+          <div class="info">
+            <span class="badge badge-green">Theory</span>
+            <span class="cr">4 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">Data Science &amp; Analytics</span>
+          <div class="info">
+            <span class="badge badge-green">Theory</span>
+            <span class="cr">4 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">ML Laboratory</span>
+          <div class="info">
+            <span class="badge badge-purple">Lab</span>
+            <span class="cr">2 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">CV &amp; DL Laboratory</span>
+          <div class="info">
+            <span class="badge badge-purple">Lab</span>
+            <span class="cr">1 Cr</span>
+          </div>
+        </div>
+        <div class="subject-row">
+          <span class="name">Ethics in AI (Elective)</span>
+          <div class="info">
+            <span class="badge badge-blue">Elective</span>
+            <span class="cr">2 Cr</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── NOTES ─── -->
+  <div class="section" id="notes">
+    <div class="section-header" onclick="toggleSection('notes')">
+      <div class="section-title">
+        <div class="section-icon icon-notes">📝</div>
+        Study Notes &amp; Materials
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-purple">18 Files</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="notes-grid">
+
+        <div class="note-card">
+          <div class="note-icon">🤖</div>
+          <h4>ML – Unit 1–3 Notes</h4>
+          <div class="unit">Machine Learning · CSAI501</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 4.2 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">🧠</div>
+          <h4>Deep Learning Complete Notes</h4>
+          <div class="unit">Deep Learning · CSAI502</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 6.8 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">👁️</div>
+          <h4>Computer Vision Handouts</h4>
+          <div class="unit">Computer Vision · CSAI503</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 3.1 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">💬</div>
+          <h4>NLP Tokenization &amp; Embeddings</h4>
+          <div class="unit">NLP &amp; Text Analytics · CSAI504</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 2.9 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">📊</div>
+          <h4>Data Science – EDA &amp; Stats</h4>
+          <div class="unit">Data Science · CSAI505</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 5.0 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">⚖️</div>
+          <h4>AI Ethics – Lecture Slides</h4>
+          <div class="unit">Ethics in AI · CSHS501</div>
+          <div class="note-footer">
+            <span class="note-size">PPT · 8.3 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">🔬</div>
+          <h4>ML Lab Manual – All Expts</h4>
+          <div class="unit">ML Lab · CSAI5L1</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 1.8 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-icon">📐</div>
+          <h4>CNN Architecture Diagrams</h4>
+          <div class="unit">Deep Learning · CSAI502</div>
+          <div class="note-footer">
+            <span class="note-size">PDF · 2.4 MB</span>
+            <a class="btn-dl" href="#">⬇ Download</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ASSIGNMENTS ─── -->
+  <div class="section" id="assignments">
+    <div class="section-header" onclick="toggleSection('assignments')">
+      <div class="section-title">
+        <div class="section-icon icon-assign">📌</div>
+        Assignments &amp; Submissions
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-red">5 Pending</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="assign-list">
+
+        <div class="assign-card">
+          <div class="assign-num">A1</div>
+          <div class="assign-info">
+            <h4>Implement Linear Regression from Scratch</h4>
+            <p>CSAI501 · Machine Learning &nbsp;|&nbsp; Must use NumPy only, no sklearn. Report + code submission.</p>
+          </div>
+          <div class="assign-due">
+            <div class="due-label">Due</div>
+            <div class="due-date due-urgent">08 Jun 2025</div>
+          </div>
+        </div>
+
+        <div class="assign-card">
+          <div class="assign-num">A2</div>
+          <div class="assign-info">
+            <h4>CNN Image Classifier – CIFAR-10</h4>
+            <p>CSAI502 · Deep Learning &nbsp;|&nbsp; PyTorch implementation. Achieve &gt;85% accuracy. Include confusion matrix.</p>
+          </div>
+          <div class="assign-due">
+            <div class="due-label">Due</div>
+            <div class="due-date due-near">15 Jun 2025</div>
+          </div>
+        </div>
+
+        <div class="assign-card">
+          <div class="assign-num">A3</div>
+          <div class="assign-info">
+            <h4>Edge Detection &amp; Feature Matching Report</h4>
+            <p>CSAI503 · Computer Vision &nbsp;|&nbsp; Implement Canny, SIFT, ORB. Compare results with analysis.</p>
+          </div>
+          <div class="assign-due">
+            <div class="due-label">Due</div>
+            <div class="due-date due-near">18 Jun 2025</div>
+          </div>
+        </div>
+
+        <div class="assign-card">
+          <div class="assign-num">A4</div>
+          <div class="assign-info">
+            <h4>Sentiment Analysis – Twitter Dataset</h4>
+            <p>CSAI504 · NLP &nbsp;|&nbsp; Use BERT fine-tuning. Compare with LSTM baseline. Colab notebook required.</p>
+          </div>
+          <div class="assign-due">
+            <div class="due-label">Due</div>
+            <div class="due-date due-ok">25 Jun 2025</div>
+          </div>
+        </div>
+
+        <div class="assign-card">
+          <div class="assign-num">A5</div>
+          <div class="assign-info">
+            <h4>EDA Report – IPL Dataset</h4>
+            <p>CSAI505 · Data Science &nbsp;|&nbsp; Full exploratory analysis using Pandas, Seaborn, Plotly. 5-page report.</p>
+          </div>
+          <div class="assign-due">
+            <div class="due-label">Due</div>
+            <div class="due-date due-ok">30 Jun 2025</div>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size:.8rem;color:var(--text-muted);margin-top:1rem;">🔴 Urgent (&lt;7 days) &nbsp; 🟡 Approaching (7–14 days) &nbsp; 🟢 Comfortable (&gt;14 days)</p>
+    </div>
+  </div>
+
+  <!-- ─── TIMETABLE ─── -->
+  <div class="section" id="timetable">
+    <div class="section-header" onclick="toggleSection('timetable')">
+      <div class="section-title">
+        <div class="section-icon icon-timetable">🗓️</div>
+        Weekly Timetable
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-blue">Sem V · 2025</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div style="overflow-x:auto;">
+        <div class="tt-grid" style="min-width:600px;">
+
+          <!-- Headers -->
+          <div class="tt-head">Time</div>
+          <div class="tt-head">Mon</div>
+          <div class="tt-head">Tue</div>
+          <div class="tt-head">Wed</div>
+          <div class="tt-head">Thu</div>
+          <div class="tt-head">Fri</div>
+          <div class="tt-head">Sat</div>
+
+          <!-- 9–10 -->
+          <div class="tt-time">09:00</div>
+          <div class="tt-cell tt-ml"><span class="sub">ML</span><span class="room">A-301</span></div>
+          <div class="tt-cell tt-dl"><span class="sub">DL</span><span class="room">A-302</span></div>
+          <div class="tt-cell tt-cv"><span class="sub">CV</span><span class="room">B-201</span></div>
+          <div class="tt-cell tt-ml"><span class="sub">ML</span><span class="room">A-301</span></div>
+          <div class="tt-cell tt-nlp"><span class="sub">NLP</span><span class="room">B-202</span></div>
+          <div class="tt-cell tt-ds"><span class="sub">DS</span><span class="room">A-303</span></div>
+
+          <!-- 10–11 -->
+          <div class="tt-time">10:00</div>
+          <div class="tt-cell tt-dl"><span class="sub">DL</span><span class="room">A-302</span></div>
+          <div class="tt-cell tt-nlp"><span class="sub">NLP</span><span class="room">B-202</span></div>
+          <div class="tt-cell tt-ml"><span class="sub">ML</span><span class="room">A-301</span></div>
+          <div class="tt-cell tt-ds"><span class="sub">DS</span><span class="room">A-303</span></div>
+          <div class="tt-cell tt-cv"><span class="sub">CV</span><span class="room">B-201</span></div>
+          <div class="tt-cell tt-free"><span class="sub" style="color:var(--text-muted)">Free</span></div>
+
+          <!-- 11–12 -->
+          <div class="tt-time">11:00</div>
+          <div class="tt-cell tt-cv"><span class="sub">CV</span><span class="room">B-201</span></div>
+          <div class="tt-cell tt-ds"><span class="sub">DS</span><span class="room">A-303</span></div>
+          <div class="tt-cell tt-lab"><span class="sub">ML Lab</span><span class="room">Lab-1</span></div>
+          <div class="tt-cell tt-lab"><span class="sub">ML Lab</span><span class="room">Lab-1</span></div>
+          <div class="tt-cell tt-dl"><span class="sub">DL</span><span class="room">A-302</span></div>
+          <div class="tt-cell tt-free"><span class="sub" style="color:var(--text-muted)">Free</span></div>
+
+          <!-- 12–1 Lunch -->
+          <div class="tt-time">12:00</div>
+          <div class="tt-cell" style="grid-column: span 6; background:rgba(5,11,20,.5); border-color:transparent; color:var(--text-muted); font-size:.78rem;">🍽️ &nbsp; Lunch Break &nbsp; 12:00 – 13:00</div>
+
+          <!-- 1–2 -->
+          <div class="tt-time">13:00</div>
+          <div class="tt-cell tt-nlp"><span class="sub">NLP</span><span class="room">B-202</span></div>
+          <div class="tt-cell tt-cv"><span class="sub">CV</span><span class="room">B-201</span></div>
+          <div class="tt-cell tt-lab"><span class="sub">CV Lab</span><span class="room">Lab-2</span></div>
+          <div class="tt-cell tt-nlp"><span class="sub">NLP</span><span class="room">B-202</span></div>
+          <div class="tt-cell tt-ds"><span class="sub">DS</span><span class="room">A-303</span></div>
+          <div class="tt-cell empty"></div>
+
+          <!-- 2–3 -->
+          <div class="tt-time">14:00</div>
+          <div class="tt-cell tt-ds"><span class="sub">DS</span><span class="room">A-303</span></div>
+          <div class="tt-cell tt-ml"><span class="sub">ML</span><span class="room">A-301</span></div>
+          <div class="tt-cell tt-lab"><span class="sub">CV Lab</span><span class="room">Lab-2</span></div>
+          <div class="tt-cell tt-dl"><span class="sub">DL</span><span class="room">A-302</span></div>
+          <div class="tt-cell tt-free"><span class="sub" style="color:var(--text-muted)">Tutorial</span></div>
+          <div class="tt-cell empty"></div>
+
+        </div>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem;">
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(0,212,255,.3)"></span>ML</span>
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(124,58,237,.3)"></span>DL</span>
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(16,185,129,.3)"></span>CV</span>
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(245,158,11,.3)"></span>NLP</span>
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(239,68,68,.3)"></span>DS</span>
+        <span class="qpill" style="font-size:.75rem;gap:.3rem;"><span style="width:10px;height:10px;border-radius:3px;background:rgba(99,102,241,.3)"></span>Lab</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── RESOURCES ─── -->
+  <div class="section" id="resources">
+    <div class="section-header" onclick="toggleSection('resources')">
+      <div class="section-title">
+        <div class="section-icon icon-res">🔗</div>
+        Important Resources &amp; Links
+      </div>
+      <div class="section-meta">
+        <span class="badge badge-blue">Quick Access</span>
+        <div class="chevron">▾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="res-grid">
+
+        <div class="res-card" onclick="alert('Opening ERP Portal…')">
+          <div class="ri">🏫</div>
+          <h4>College ERP Portal</h4>
+          <p>Attendance, marks &amp; fee</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening Google Classroom…')">
+          <div class="ri">🎒</div>
+          <h4>Google Classroom</h4>
+          <p>Assignments &amp; class content</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening NPTEL…')">
+          <div class="ri">🎓</div>
+          <h4>NPTEL Courses</h4>
+          <p>Free online AIML courses</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening Kaggle…')">
+          <div class="ri">📦</div>
+          <h4>Kaggle Datasets</h4>
+          <p>Datasets for projects</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening Colab…')">
+          <div class="ri">💻</div>
+          <h4>Google Colab</h4>
+          <p>Cloud GPU notebooks</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening IEEE Xplore…')">
+          <div class="ri">📄</div>
+          <h4>IEEE Xplore</h4>
+          <p>Research papers library</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening HuggingFace…')">
+          <div class="ri">🤗</div>
+          <h4>Hugging Face</h4>
+          <p>Pre-trained models &amp; datasets</p>
+        </div>
+
+        <div class="res-card" onclick="alert('Opening PapersWithCode…')">
+          <div class="ri">🧪</div>
+          <h4>Papers With Code</h4>
+          <p>State-of-the-art benchmarks</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <h3>CSE–AIML Academic Portal</h3>
+      <p>A centralised academic resource hub for Third Year B.Tech CSE (Artificial Intelligence &amp; Machine Learning) students. Built to make studies organised, accessible, and efficient.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#news">Announcements</a></li>
+        <li><a href="#exams">Exam Schedule</a></li>
+        <li><a href="#syllabus">Syllabus</a></li>
+        <li><a href="#timetable">Timetable</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#notes">Study Notes</a></li>
+        <li><a href="#assignments">Assignments</a></li>
+        <li><a href="#semester">Semester Info</a></li>
+        <li><a href="#resources">Useful Links</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 <strong>CSE–AIML Dept.</strong> · All Rights Reserved. Designed for Third Year B.Tech AIML Engineering Students.</p>
+    <div class="updated">Last Updated: <strong id="lastUpdated"></strong></div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════ JS ══════════════════════════════ -->
+<script>
+  // ── Last Updated ──
+  const now = new Date();
+  document.getElementById('lastUpdated').textContent =
+    now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) +
+    ' · ' + now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+
+  // ── Section Toggle ──
+  function toggleSection(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  function openSection(id) {
+    const el = document.getElementById(id);
+    if (!el.classList.contains('open')) el.classList.add('open');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Nav Toggle (mobile) ──
+  function toggleNav() {
+    document.getElementById('nav').classList.toggle('open');
+  }
+
+  // ── Nav active link on scroll ──
+  const sections = ['news','exams','syllabus','semester','notes','assignments','timetable','resources'];
+  const navLinks = document.querySelectorAll('nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 120) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // ── Animate progress bars on scroll ──
+  const fills = document.querySelectorAll('.prog-fill');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.getAttribute('style').match(/width:([^;]+)/)?.[1] ?? '0%';
+      }
+    });
+  }, { threshold: 0.2 });
+  fills.forEach(f => { const w = f.style.width; f.style.width = '0%'; setTimeout(() => obs.observe(f), 200); });
+</script>
+</body>
+</html>
