@@ -3,38 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI & ML Complete Roadmap</title>
+    <title>Comprehensive ML Engineer Roadmap</title>
     <style>
-        .roadmap-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            background: linear-gradient(120deg, #f0f8ff, #e0f7fa);
+        :root {
+            --bg-base: #121212;
+            --bg-surface: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #bb86fc;
+            --accent-hover: #9965f4;
+            --border: #333333;
         }
 
-        .roadmap-container {
-            max-width: 1200px;
-            width: 95%;
-            padding: 30px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
 
-        .roadmap-title {
+        header {
+            background-color: var(--bg-surface);
+            padding: 60px 20px;
             text-align: center;
-            color: #007acc;
-            margin-bottom: 20px;
-            font-size: 32px;
-            font-weight: bold;
+            border-bottom: 1px solid var(--border);
         }
 
-        .roadmap-step {
-            background: #f9f9f9;
-            border-left: 6px solid #007acc;
-            padding: 20px;
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 15px auto 0;
+        }
+
+        nav {
+            background-color: #1a1a1a;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav a {
+            color: var(--text-primary);
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .phase-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .phase-card h2 {
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .content-group {
+            margin-bottom: 20px;
+        }
+
+        .content-group strong {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 0;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a.resource-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a.resource-link:hover {
+            text-decoration: underline;
+            color: var(--accent-hover);
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background-color: #2c2c2c;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .gate-section {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+            border-left: 5px solid var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>The Ultimate ML Engineer Roadmap</h1>
+    <p>From foundational programming to advanced Generative AI and MLOps. Your path to becoming a job-ready AI Engineer.</p>
+</header>
+
+<nav>
+    <a href="#basics">Basics (0-3)</a>
+    <a href="#core-ml">Core ML (4-6)</a>
+    <a href="#advanced">Advanced AI (7-9)</a>
+    <a href="#systems">Systems & Projects (10-12)</a>
+    <a href="#gate">GATE DA Strategy</a>
+</nav>
+
+<div class="container">
+
+    <div id="basics" class="phase-card">
+        <h2>Phase 0: Prerequisites (1–2 Months)</h2>
+        <div class="content-group">
+            <strong>Concepts to Master:</strong>
+            <div class="tag-container">
+                <span class="tag">Variables & Data Types</span> <span class="tag">Loops & Functions</span> 
+                <span class="tag">OOP</span> <span class="tag">File Handling</span> <span class="tag">Exception Handling</span> 
+                <span class="tag">Modules & Packages</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Action Items:</strong>
+            <ul>
+                <li>Solve 100+ Python problems to build muscle memory.</li>
+                <li>Build basic terminal or script-based projects.</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Top Study Resources:</strong>
+            <ul>
+                <li><a class="resource-link" href="https://docs.python.org/3/" target="_blank">Official Python Documentation</a></li>
+                <li><a class="resource-link" href="https://www.freecodecamp.org/learn/scientific-computing-with-python/" target="_blank">freeCodeCamp: Scientific Computing with Python</a></li>
+                <li><a class="resource-link" href="https://neetcode.io/" target="_blank">NeetCode (For logic and problem solving)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 1: Mathematics for ML (2–3 Months)</h2>
+        <div class="content-group">
+            <strong>Linear Algebra (Important for PCA & Deep Learning):</strong>
+            <div class="tag-container">
+                <span class="tag">Vectors</span> <span class="tag">Matrices & Operations</span> <span class="tag">Rank</span> 
+                <span class="tag">Eigenvalues & Eigenvectors</span> <span class="tag">SVD</span> <span class="tag">Orthogonality</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Probability & Statistics:</strong>
+            <div class="tag-container">
+                <span class="tag">Mean, Median, Mode</span> <span class="tag">Variance & Std Dev</span> <span class="tag">Bayes Theorem</span> 
+                <span class="tag">Normal Distribution & CLT</span> <span class="tag">Hypothesis Testing</span> <span class="tag">Z/T/Chi-square Tests</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Calculus:</strong>
+            <div class="tag-container">
+                <span class="tag">Differentiation</span> <span class="tag">Partial Derivatives</span> <span class="tag">Chain Rule</span> 
+                <span class="tag">Gradient Descent</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Top Study Resources:</strong>
+            <ul>
+                <li><a class="resource-link" href="https://www.3blue1brown.com/topics/linear-algebra" target="_blank">3Blue1Brown: Essence of Linear Algebra (YouTube)</a></li>
+                <li><a class="resource-link" href="https://www.khanacademy.org/math/statistics-probability" target="_blank">Khan Academy: Statistics & Probability</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 2: Data Analysis (1–2 Months)</h2>
+        <div class="content-group">
+            <strong>Libraries & Concepts:</strong>
+            <div class="tag-container">
+                <span class="tag">NumPy</span> <span class="tag">Pandas</span> <span class="tag">Matplotlib</span> 
+                <span class="tag">Data Cleaning</span> <span class="tag">Feature Engineering</span> <span class="tag">EDA & Visualization</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Practice Projects:</strong>
+            <ul>
+                <li>IPL Match Data Analysis.</li>
+                <li>Netflix Content Strategy Analysis.</li>
+                <li>Interactive Sales Dashboard.</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Top Study Resources:</strong>
+            <ul>
+                <li><a class="resource-link" href="https://www.kaggle.com/learn" target="_blank">Kaggle Free Courses (Pandas & Data Vis)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 3: SQL for Data Science</h2>
+        <div class="content-group">
+            <strong>Core Commands:</strong>
+            <div class="tag-container">
+                <span class="tag">SELECT, WHERE</span> <span class="tag">GROUP BY, HAVING</span> <span class="tag">JOINs</span> 
+                <span class="tag">Subqueries</span> <span class="tag">Window Functions</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Action Items & Platforms:</strong>
+            <ul>
+                <li>Practice 200+ SQL Questions.</li>
+                <li><a class="resource-link" href="https://leetcode.com/studyplan/top-sql-50/" target="_blank">LeetCode Top SQL 50</a></li>
+                <li><a class="resource-link" href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank SQL Domain</a></li>
+                <li><a class="resource-link" href="https://mode.com/sql-tutorial/" target="_blank">Mode Analytics SQL Tutorial</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="core-ml" class="phase-card">
+        <h2>Phase 4: Machine Learning Fundamentals (3 Months)</h2>
+        <div class="content-group">
+            <strong>Supervised Learning:</strong>
+            <ul>
+                <li>Regression: Linear, Polynomial, Ridge, Lasso.</li>
+                <li>Classification: Logistic, KNN, Naive Bayes, SVM, Decision Trees, Random Forest, XGBoost.</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Unsupervised Learning:</strong>
+            <ul>
+                <li>Clustering & Reduction: K-Means, Hierarchical Clustering, DBSCAN, PCA.</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Evaluation Metrics:</strong>
+            <ul>
+                <li>Classification: Accuracy, Precision, Recall, F1 Score, ROC-AUC.</li>
+                <li>Regression: MAE, MSE, RMSE, R².</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: House Price, Loan, Heart Disease Prediction, and Customer Segmentation.</li>
+                <li><a class="resource-link" href="https://www.coursera.org/specializations/machine-learning-introduction" target="_blank">Coursera: Machine Learning Specialization (Andrew Ng)</a></li>
+                <li><a class="resource-link" href="https://scikit-learn.org/stable/" target="_blank">Scikit-learn Documentation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 5: Deep Learning (2–3 Months)</h2>
+        <div class="content-group">
+            <strong>Neural Network Architecture:</strong>
+            <div class="tag-container">
+                <span class="tag">Forward/Backpropagation</span> <span class="tag">Optimizers</span> <span class="tag">Activation Functions</span> 
+                <span class="tag">Batch Normalization</span> <span class="tag">Dropout</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: Image Classification, Handwritten Digit Recognition (MNIST).</li>
+                <li><a class="resource-link" href="https://pytorch.org/tutorials/" target="_blank">PyTorch Official Tutorials</a></li>
+                <li><a class="resource-link" href="https://www.deeplearning.ai/courses/deep-learning-specialization/" target="_blank">DeepLearning.AI: Deep Learning Specialization</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 6: Computer Vision</h2>
+        <div class="content-group">
+            <strong>Concepts & Libraries:</strong>
+            <div class="tag-container">
+                <span class="tag">CNNs</span> <span class="tag">Transfer Learning</span> <span class="tag">Object Detection</span> 
+                <span class="tag">Image Segmentation</span> <span class="tag">OpenCV</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: Face Detection, Mask Detection, Number Plate Detection.</li>
+                <li><a class="resource-link" href="https://course.fast.ai/" target="_blank">fast.ai: Practical Deep Learning for Coders</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="advanced" class="phase-card">
+        <h2>Phase 7: Natural Language Processing</h2>
+        <div class="content-group">
+            <strong>Text Processing & Models:</strong>
+            <div class="tag-container">
+                <span class="tag">Tokenization</span> <span class="tag">Lemmatization</span> <span class="tag">Word Embeddings</span> 
+                <span class="tag">RNN, LSTM, GRU</span> <span class="tag">Transformers</span> <span class="tag">BERT</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: Sentiment Analysis, Chatbot, Resume Screening.</li>
+                <li><a class="resource-link" href="https://huggingface.co/learn/nlp-course/chapter1/1" target="_blank">Hugging Face Free NLP Course</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 8: Generative AI & LLMs</h2>
+        <div class="content-group">
+            <strong>Concepts & Tools:</strong>
+            <div class="tag-container">
+                <span class="tag">Attention Mechanism</span> <span class="tag">Prompt Engineering</span> <span class="tag">Fine-Tuning</span> 
+                <span class="tag">RAG</span> <span class="tag">Vector Databases</span> <span class="tag">LangChain</span> <span class="tag">LlamaIndex</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: PDF Chatbot, AI Assistant, Document Search Engine.</li>
+                <li><a class="resource-link" href="https://www.deeplearning.ai/short-courses/" target="_blank">DeepLearning.AI Short Courses (LangChain, RAG)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 9: MLOps (Critical for Engineering Roles)</h2>
+        <div class="content-group">
+            <strong>Deployment & Monitoring:</strong>
+            <div class="tag-container">
+                <span class="tag">Docker</span> <span class="tag">Linux</span> <span class="tag">CI/CD</span> 
+                <span class="tag">MLflow</span> <span class="tag">Flask / FastAPI</span>
+            </div>
+        </div>
+        <div class="content-group">
+            <strong>Projects & Resources:</strong>
+            <ul>
+                <li>Projects: End-to-End ML Pipeline, Production ML API.</li>
+                <li><a class="resource-link" href="https://madewithml.com/" target="_blank">Made With ML by Goku Mohandas (Excellent MLOps guide)</a></li>
+                <li><a class="resource-link" href="https://fastapi.tiangolo.com/" target="_blank">FastAPI Documentation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="systems" class="phase-card">
+        <h2>Phase 10 & 11: Cloud Computing & DSA</h2>
+        <div class="content-group">
+            <strong>Cloud Infrastructure:</strong>
+            <ul>
+                <li>Understand basics of AWS, Google Cloud, or Azure (Compute, Storage, Databases, ML Services).</li>
+            </ul>
+        </div>
+        <div class="content-group">
+            <strong>Data Structures & Algorithms:</strong>
+            <ul>
+                <li>Master Arrays, Linked Lists, Trees, Graphs, and Dynamic Programming for technical interviews.</li>
+                <li>Practice 300+ problems on LeetCode.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="phase-card">
+        <h2>Phase 12: Real-World Portfolio</h2>
+        <div class="content-group">
+            <strong>Project Tiers (Host all on GitHub):</strong>
+            <ul>
+                <li><strong>Beginner:</strong> Titanic Survival Prediction, House Price Prediction.</li>
+                <li><strong>Intermediate:</strong> Customer Churn Prediction, Recommendation System, Stock Market Analysis.</li>
+                <li><strong>Advanced:</strong> End-to-End MLOps Project, RAG Chatbot, Resume Analyzer, AI Interview Assistant.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="gate" class="phase-card gate-section">
+        <h2>Targeting GATE DA + ML Engineer?</h2>
+        <div class="content-group">
+            <strong>Top Priorities for GATE DA:</strong>
+            <ol>
+                <li>Python Programming</li>
+                <li>Linear Algebra</li>
+                <li>Probability & Statistics</li>
+                <li>SQL</li>
+                <li>Machine Learning Algorithms</li>
+                <li>Deep Learning Basics</li>
+                <li>MLOps Fundamentals</li>
+                <li>LLMs/GenAI</li>
+            </ol>
+        </div>
+        <div class="content-group">
+            <strong>Realistic Timeline Strategy:</strong>
+            <ul>
+                <li><strong>Months 1–3:</strong> Python + Math + SQL</li>
+                <li><strong>Months 4–6:</strong> Data Analysis + ML</li>
+                <li><strong>Months 7–9:</strong> Deep Learning + Projects</li>
+                <li><strong>Months 10–12:</strong> MLOps + Deployment + GenAI</li>
+                <li><strong>Months 13–18:</strong> Advanced Projects + Interview Preparation</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 AIML Department. All rights reserved.</p>
+    <p>Focus heavily on end-to-end projects. Real-world engineering bridges the gap between models and architecture.</p>
+</footer>
+
+</body>
+</html>
+padding: 20px;
             margin: 15px 0;
             border-radius: 8px;
             transition: transform 0.3s, background 0.3s;
