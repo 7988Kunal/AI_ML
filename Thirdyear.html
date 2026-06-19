@@ -63,7 +63,7 @@
             flex-wrap: wrap; gap: 10px;
         }
         
-        /* FIX: Tabular numbers prevent the 1-second jitter */
+        /* Tabular numbers prevent the 1-second jitter */
         #real-time-clock {
             font-variant-numeric: tabular-nums;
             text-align: center;
@@ -104,7 +104,7 @@
             .nav-links a { padding: 20px 5%; border-bottom: 1px solid var(--border); width: 100%; display: block; }
             .menu-toggle { display: block; }
             
-            /* FIX: Stack the utility bar perfectly so elements never push each other */
+            /* Stack the utility bar perfectly so elements never push each other */
             .utility-bar { 
                 flex-direction: column; 
                 justify-content: center; 
@@ -115,7 +115,7 @@
         /* === MAIN LAYOUT & GRID === */
         main { max-width: 1400px; margin: 30px auto; padding: 0 5%; }
         
-        /* === RESPONSIVE SEARCH BAR FIX === */
+        /* === RESPONSIVE SEARCH BAR === */
         .search-wrapper {
             display: flex; background: var(--surface); border-radius: 30px;
             padding: 5px 5px 5px 20px; box-shadow: var(--shadow); margin-bottom: 30px;
@@ -133,11 +133,10 @@
             padding: 12px 25px; border-radius: 25px; font-weight: 600; 
             cursor: pointer; transition: 0.3s;
             display: flex; align-items: center; gap: 8px;
-            white-space: nowrap; /* Prevents button text from breaking to two lines */
+            white-space: nowrap; /* Prevents button text from breaking */
         }
         .search-wrapper button:hover { background: var(--accent-hover); }
 
-        /* Search Bar Mobile Tweaks */
         @media (max-width: 600px) {
             .search-wrapper { padding: 4px 4px 4px 15px; }
             .search-wrapper input { font-size: 0.9rem; }
@@ -164,7 +163,6 @@
         }
         .card-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
 
-        /* Card Content Styles */
         .item-list { list-style: none; }
         .item-list li {
             padding: 12px 0; border-bottom: 1px solid var(--border);
@@ -178,13 +176,11 @@
         .badge.red { background: rgba(238, 93, 80, 0.1); color: var(--danger); }
         .badge.green { background: rgba(1, 181, 116, 0.1); color: var(--success); }
 
-        /* Form Inputs */
         .input-box { width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg-color); color: var(--text-primary); margin-bottom: 15px; font-family: 'Poppins', sans-serif; outline: none; }
         .input-box:focus { border-color: var(--accent); }
         .btn-primary { width: 100%; background: var(--accent); color: white; padding: 12px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-primary:hover { background: var(--accent-hover); }
 
-        /* Locked State */
         .locked-state { text-align: center; padding: 20px 0; }
         .locked-state i { font-size: 3rem; color: var(--danger); margin-bottom: 15px; opacity: 0.8; }
         .locked-state h3 { color: var(--text-primary); margin-bottom: 5px; }
@@ -283,7 +279,7 @@
                     <div class="card-title">Study Material</div>
                 </div>
                 <ul class="item-list">
-                  <li style="color:red;">No data found.</li>
+                  <li style="color:red;">No data found</li>
                     <!--<li>
                         <div><div class="item-title"><i class="fa-solid fa-file-pdf" style="color: var(--danger);"></i> ML Unit 1-2 Notes</div><div class="item-sub">Prof. Sharma</div></div>
                         <a href="#"><i class="fa-solid fa-download"></i></a>
@@ -305,7 +301,7 @@
                     <div class="card-title">Assignments</div>
                 </div>
                 <ul class="item-list">
-                   <li style="color:red;">No assignment found.</li>
+                  <li style="color:red;">No assignments found.</li>
                     <!--<li>
                         <div><div class="item-title">Linear Regression from Scratch</div><div class="item-sub">CS-501</div></div>
                         <span class="badge red">Due: Sep 10</span>
@@ -347,8 +343,8 @@
             <div class="stat-box">
                 <i class="fa-solid fa-users"></i>
                 <div>
-                    <div style="font-weight: 600; color: var(--text-primary);" id="visitor-count">Loading...</div>
-                    <div style="font-size: 0.75rem;">Unique Visitors</div>
+                    <div style="font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums;" id="visitor-count">Loading Live Count...</div>
+                    <div style="font-size: 0.75rem;">Users Currently Online</div>
                 </div>
             </div>
             <div class="stat-box">
@@ -373,7 +369,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        // Includes pushing and disconnection handlers required for Active User tracking
+        import { getDatabase, ref, get, set, onValue, push, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         // 1. Firebase Config
         const firebaseConfig = {
@@ -396,7 +393,7 @@
         }, 1000);
         document.getElementById('last-mod').innerText = new Date(document.lastModified).toLocaleDateString();
 
-       // 3. UI Controls
+        // 3. UI Controls
         document.getElementById('mobile-menu').onclick = () => {
             document.getElementById('nav-links').classList.toggle('active');
             const icon = document.querySelector('#mobile-menu i');
@@ -404,7 +401,7 @@
             icon.classList.toggle('fa-xmark');
         };
 
-        // Close mobile menu when a link is clicked
+// Close mobile menu when a link is clicked
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('nav-links').classList.remove('active');
@@ -460,39 +457,50 @@
                 <div class="locked-state">
                     <i class="fa-solid fa-lock"></i>
                     <h3>Schedule Locked</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">The semester datesheet will reveal in <strong>Dec, 2026</strong>.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">The semester datesheet will reveal on <strong>Dec,2026</strong>.</p>
                 </div>`;
         }
 
-        // 7. Secure Visitor Tracking & IP (Using LocalStorage)
-        async function runTracking() {
-            try {
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ip = (await ipRes.json()).ip;
-                document.getElementById('ip-address').innerText = ip;
+        // 7. REAL-TIME ACTIVE USERS (Currently Online)
+        async function runLiveTracking() {
+            const activeUsersRef = ref(db, 'v3_modern_portal/active_users');
+            const connectedRef = ref(db, '.info/connected');
 
-                const counterRef = ref(db, 'v3_modern_portal/visitor_count');
-                const hasVisited = localStorage.getItem('aiml_v3_visited');
-
-                if (!hasVisited) {
-                    get(counterRef).then(snapshot => {
-                        let count = snapshot.exists() ? snapshot.val() + 1 : 1;
-                        set(counterRef, count);
-                        document.getElementById('visitor-count').innerText = count;
-                        
-                        localStorage.setItem('aiml_v3_visited', 'true'); 
-                        set(ref(db, `v3_modern_portal/ips/${ip.replace(/\./g, '_')}`), new Date().toISOString());
-                    });
-                } else {
-                    get(counterRef).then(snapshot => {
-                        document.getElementById('visitor-count').innerText = snapshot.exists() ? snapshot.val() : 0;
+            // --- PART 1: ADD/REMOVE USER ON CONNECT/DISCONNECT ---
+            onValue(connectedRef, (snap) => {
+                if (snap.val() === true) {
+                    // Generate a unique session key for this specific visitor
+                    const mySessionRef = push(activeUsersRef);
+                    
+                    // Tell the Firebase server to automatically delete this key when the user closes the tab
+                    onDisconnect(mySessionRef).remove().then(() => {
+                        // Only mark as active AFTER the disconnect hook is successfully registered
+                        set(mySessionRef, true);
                     });
                 }
+            });
+
+            // --- PART 2: LIVE DISPLAY LISTENER ---
+            // Count how many session keys currently exist in the database
+            onValue(activeUsersRef, (snapshot) => {
+                // snapshot.size returns the exact number of active children
+                document.getElementById('visitor-count').innerText = snapshot.size || 0;
+            });
+
+            // --- PART 3: IP LOGGING ---
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ip = await ipRes.json().then(data => data.ip);
+                document.getElementById('ip-address').innerText = ip;
+                
+                // Store IP securely in the database
+                set(ref(db, `v3_modern_portal/logged_ips/${ip.replace(/\./g, '_')}`), new Date().toISOString());
             } catch(e) {
-                document.getElementById('visitor-count').innerText = "Offline";
+                document.getElementById('ip-address').innerText = "Unavailable";
             }
         }
-        runTracking();
+        
+        runLiveTracking();
 
     </script>
 </body>
