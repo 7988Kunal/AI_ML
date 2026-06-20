@@ -23,7 +23,15 @@
             --shadow: 0px 18px 40px rgba(112, 144, 176, 0.12);
             --base-size: 16px;
         }
-
+                .blink{color:var(--danger);font-size:14px;animation:alter 2s ease-in-out infinite;}
+         @keyframes alter{
+         0%{
+           color:#fff;
+          }
+         100%{
+          color:var(--danger);
+         }
+         }
         .dark-theme {
             --bg-color: #0b1437;
             --surface: #111c44;
@@ -259,6 +267,11 @@
                     <li>
                         <div><div class="item-title"><i class="fa-solid fa-file-pdf" style="color: var(--danger);"></i>Third year official syllabus</div><div class="item-sub">CSE - Artificial Intelligence & Machine Learning</div></div>
                         <a href="https://github.com/7988Kunal/AI_ML/blob/main/4_09-19-2024_16-50-45_NEW%20BTech(%20CSE%20(AI%20%26%20ML)%2C%20B.Tech.%20(AI%20%26%20ML)%2C%20B.Tech.%20CSE%20(AI)%20and%20B.Tech.%20(AI)%203rd%20%26%204th%20years%20from%20the%20session%202024-25.pdf"><i class="fa-solid fa-download"></i></a>
+                    </li>
+                    <li>
+                       <div>
+                         <div class="item-title blink">COMPLETE PYTHON NOTES FOR AI/ML</div><div class="item-sub">For some important topics for AI/ML like APIs,import random,time,math & decorators,JSON,ZIP function,Match case, scopes & oops refer to <a href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a> link.</div></div>
+                        <a href="https://github.com/7988Kunal/AI_ML/blob/main/Complete%20python%20programming%20language%20for%20AIML.pdf"><i class="fa-solid fa-download"></i></a>
                     </li>
                 </ul>
             </div>
